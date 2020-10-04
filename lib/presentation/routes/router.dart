@@ -4,7 +4,7 @@ import 'package:study_buddy/presentation/auth/register/register_screen.dart';
 import 'package:study_buddy/presentation/create/create_new_card.dart';
 import 'package:study_buddy/presentation/create/create_new_deck.dart';
 import 'package:study_buddy/presentation/study/deck_study_page.dart';
-import 'package:study_buddy/presentation/main/home_page.dart';
+import 'package:study_buddy/presentation/home/home_page.dart';
 import 'package:study_buddy/presentation/splash/splash_page.dart';
 
 @MaterialAutoRouter(

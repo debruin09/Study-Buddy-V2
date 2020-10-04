@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' hide User;
+import 'package:study_buddy/domain/auth/auth_failure.dart';
 import 'package:study_buddy/domain/auth/user.dart';
 import 'package:study_buddy/infrastructure/core/database_service.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
@@ -18,10 +19,15 @@ class AuthService implements AuthRepository {
     try {
       return _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-    } catch (e) {}
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'ERROR_WRONG_PASSWORD' ||
+          e.code == 'ERROR_USER_NOT_FOUND') {
+        return const AuthFailure.invalidEmailAndPasswordCombination();
+      } else {
+        return const AuthFailure.serverError();
+      }
+    }
   }
-
-  /// Once the user is registered or authenticated their data will be added to the database
 
   /// This will log the user out
   @override
@@ -48,16 +54,24 @@ class AuthService implements AuthRepository {
 
   @override
   Future<void> signUp(String username, String email, String password) async {
-    final result = await _firebaseAuth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    try {
+      final result = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-    await FirestoreService(uid: result.user.uid).updateUserData(
-      email: email,
-      password: password,
-      uid: result.user.uid,
-      username: username,
-    );
+      await FirestoreService(uid: result.user.uid).updateUserData(
+        email: email,
+        password: password,
+        uid: result.user.uid,
+        username: username,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
+        return const AuthFailure.emailAlreadyInUse();
+      } else {
+        return const AuthFailure.serverError();
+      }
+    }
   }
 }

@@ -5,7 +5,7 @@ import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
-import 'package:study_buddy/presentation/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:study_buddy/domain/core/utils/custom_extensions.dart';
 
 class CustomMyCard extends StatelessWidget {

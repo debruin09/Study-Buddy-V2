@@ -8,7 +8,7 @@ import 'package:study_buddy/domain/core/tag_entity.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
-import 'package:study_buddy/presentation/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateNewCardPage extends StatefulWidget {

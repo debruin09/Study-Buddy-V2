@@ -6,7 +6,7 @@ import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
-import 'package:study_buddy/presentation/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomCard extends StatelessWidget {

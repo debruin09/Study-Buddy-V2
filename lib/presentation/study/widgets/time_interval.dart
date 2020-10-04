@@ -5,7 +5,7 @@ import 'package:study_buddy/application/card/card_list_notifier.dart';
 import 'package:study_buddy/application/deck/deck_notifier.dart';
 import 'package:study_buddy/presentation/study/widgets/folding_cell_card_wrapper.dart';
 import 'package:study_buddy/domain/core/local_notification_repository.dart';
-import 'package:study_buddy/presentation/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
 final showAnswerProvider = StateProvider((ref) => false);
 

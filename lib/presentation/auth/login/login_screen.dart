@@ -4,7 +4,7 @@ import 'package:study_buddy/application/auth/login/login_bloc.dart';
 import 'package:study_buddy/domain/auth/auth_repository.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/auth/login/login_form.dart';
-import 'package:study_buddy/presentation/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
 /// Login Screen UI
 class LoginScreen extends StatelessWidget {

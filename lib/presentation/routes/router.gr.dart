@@ -8,16 +8,17 @@
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:study_buddy/domain/card/mycard.dart';
-import 'package:study_buddy/domain/deck/deck.dart';
-import 'package:study_buddy/presentation/auth/login/login_screen.dart';
-import 'package:study_buddy/presentation/auth/register/register_screen.dart';
 
+import '../../domain/auth/user.dart';
+import '../../domain/card/mycard.dart';
+import '../../domain/deck/deck.dart';
+import '../auth/login/login_screen.dart';
+import '../auth/register/register_screen.dart';
 import '../create/create_new_card.dart';
 import '../create/create_new_deck.dart';
-import '../study/deck_study_page.dart';
-import '../main/home_page.dart';
+import '../home/home_page.dart';
 import '../splash/splash_page.dart';
+import '../study/deck_study_page.dart';
 
 class Routes {
   static const String homePage = '/home-page';
@@ -54,8 +55,14 @@ class Router extends RouterBase {
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, AutoRouteFactory>{
     HomePage: (data) {
+      final args = data.getArgs<HomePageArguments>(
+        orElse: () => HomePageArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const HomePage(),
+        builder: (context) => HomePage(
+          key: args.key,
+          user: args.user,
+        ),
         settings: data,
       );
     },
@@ -122,7 +129,14 @@ class Router extends RouterBase {
 /// *************************************************************************
 
 extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
-  Future<dynamic> pushHomePage() => push<dynamic>(Routes.homePage);
+  Future<dynamic> pushHomePage({
+    Key key,
+    User user,
+  }) =>
+      push<dynamic>(
+        Routes.homePage,
+        arguments: HomePageArguments(key: key, user: user),
+      );
 
   Future<dynamic> pushLandingPage() => push<dynamic>(Routes.landingPage);
 
@@ -161,6 +175,13 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
+
+/// HomePage arguments holder class
+class HomePageArguments {
+  final Key key;
+  final User user;
+  HomePageArguments({this.key, this.user});
+}
 
 /// CreateNewCardPage arguments holder class
 class CreateNewCardPageArguments {

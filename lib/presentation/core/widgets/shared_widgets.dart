@@ -4,7 +4,7 @@ import 'package:flutter_tagging/flutter_tagging.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/domain/core/tag_entity.dart';
 import 'package:study_buddy/domain/core/tag_repository.dart';
-import 'package:study_buddy/presentation/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
 class Loading extends StatelessWidget {
   @override

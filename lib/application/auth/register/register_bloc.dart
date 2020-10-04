@@ -1,10 +1,12 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:study_buddy/domain/auth/auth_repository.dart';
 import 'package:study_buddy/domain/core/utils/validators.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';
+
+part 'register_bloc.freezed.dart';
 
 /// This is the registtation bloc that maps the register events to states
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
@@ -16,19 +18,13 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   @override
   Stream<RegisterState> mapEventToState(RegisterEvent event) async* {
-    if (event is RegisterEmailChanged) {
-      yield* _mapRegisterEmailChangeToState(event.email);
-    } else if (event is RegisterPasswordChanged) {
-      yield* _mapRegisterPasswordChangeToState(event.password);
-    } else if (event is RegisterUsernameChanged) {
-      yield* _mapRegisterUsernameChangeToState(event.username);
-    } else if (event is RegisterSubmitted) {
-      yield* _mapRegisterSubmittedToState(
-        email: event.email,
-        password: event.password,
-        username: event.username,
-      );
-    }
+    yield* event.map(
+      emailChanged: (e) => _mapRegisterEmailChangeToState(e.email),
+      usernameChanged: (e) => _mapRegisterUsernameChangeToState(e.username),
+      passwordChanged: (e) => _mapRegisterPasswordChangeToState(e.password),
+      regiserWithCredentials: (e) => _mapRegisterSubmittedToState(
+          email: e.email, password: e.password, username: e.username),
+    );
   }
 
   Stream<RegisterState> _mapRegisterEmailChangeToState(String email) async* {
@@ -59,7 +55,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       );
       yield RegisterState.success();
     } catch (error) {
-      print(error);
+      print("This was the register error; $error ");
       yield RegisterState.failure();
     }
   }

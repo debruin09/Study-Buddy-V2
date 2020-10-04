@@ -7,7 +7,7 @@ import 'package:study_buddy/presentation/routes/router.gr.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_buddy/presentation/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:study_buddy/presentation/core/widgets/auth_button.dart';
 
 /// This is the register form UI

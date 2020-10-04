@@ -2,21 +2,26 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_buddy/application/deck/deck_bloc/deck_bloc.dart';
 
 import 'package:study_buddy/application/core/status/status_cubit.dart';
+import 'package:study_buddy/application/deck/deck_bloc/deck_bloc.dart';
+import 'package:study_buddy/domain/auth/user.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/core/drawer/custom_drawer.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
-import 'package:study_buddy/presentation/main/search/deck_search.dart';
-import 'package:study_buddy/presentation/study/widgets/custom_card.dart';
+import 'package:study_buddy/presentation/home/search/deck_search.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
-import 'package:study_buddy/presentation/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/study/widgets/custom_card.dart';
+import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key key}) : super(key: key);
+  final User user;
+  const HomePage({
+    Key key,
+    this.user,
+  }) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }

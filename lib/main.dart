@@ -9,7 +9,7 @@ import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/study/widgets/folding_cell_card_wrapper.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
 
-import 'presentation/theme/theme_styles.dart';
+import 'presentation/core/theme/theme_styles.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

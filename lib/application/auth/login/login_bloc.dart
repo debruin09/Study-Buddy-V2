@@ -1,10 +1,11 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:study_buddy/domain/auth/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_buddy/domain/core/utils/validators.dart';
 
 part 'login_state.dart';
 part 'login_event.dart';
+part 'login_bloc.freezed.dart';
 
 /// This is the login bloc that maps incoming login events to states
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -16,14 +17,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    if (event is LoginEmailChange) {
-      yield* _mapLoginEmailChangeToState(event.email);
-    } else if (event is LoginPasswordChanged) {
-      yield* _mapLoginPasswordChangeToState(event.password);
-    } else if (event is LoginWithCredentialsPressed) {
-      yield* _mapLoginWithCredentialsPressedToState(
-          email: event.email, password: event.password);
-    }
+    yield* event.map(
+      emailChanged: (e) => _mapLoginEmailChangeToState(e.email),
+      passwordChanged: (e) => _mapLoginPasswordChangeToState(e.password),
+      loginWithCredentials: (e) => _mapLoginWithCredentialsPressedToState(
+          email: e.email, password: e.password),
+    );
   }
 
   Stream<LoginState> _mapLoginEmailChangeToState(String email) async* {

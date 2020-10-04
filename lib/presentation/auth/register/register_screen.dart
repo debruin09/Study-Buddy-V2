@@ -4,7 +4,7 @@ import 'package:study_buddy/application/auth/register/register_bloc.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/domain/auth/auth_repository.dart';
 import 'package:study_buddy/presentation/auth/register/register_form.dart';
-import 'package:study_buddy/presentation/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
 /// This is the register UI
 class RegisterScreen extends StatelessWidget {

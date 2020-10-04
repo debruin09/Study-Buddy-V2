@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_buddy/application/auth/auth_bloc.dart';
 import 'package:study_buddy/application/auth/register/register_bloc.dart';
 import 'package:study_buddy/presentation/core/widgets/auth_button.dart';
-import 'package:study_buddy/presentation/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
 /// This is the register form UI
 class RegisterForm extends StatefulWidget {

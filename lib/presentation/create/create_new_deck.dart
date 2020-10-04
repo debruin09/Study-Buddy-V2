@@ -12,7 +12,7 @@ import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
 import 'package:study_buddy/presentation/create/widgets/new_deck_card_body.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
-import 'package:study_buddy/presentation/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateNewDeckPage extends StatefulWidget {

@@ -6,9 +6,12 @@ import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
 import 'package:study_buddy/domain/core/tag_entity.dart';
 import 'package:study_buddy/injection.dart';
+import 'package:hooks_riverpod/all.dart';
+import 'package:study_buddy/presentation/core/theme/theme_styles.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/study/widgets/time_interval.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateNewCardPage extends StatefulWidget {
@@ -37,9 +40,9 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
 
   void updateCard() {
     cardBloc.add(
-      UpdateCard(
-        widget.card,
-        MyCard(
+      CardEvent.update(
+        updatedCard: widget.card,
+        newData: MyCard(
           back: _backController.text.isEmpty
               ? widget.card.back
               : _backController.text,
@@ -57,8 +60,8 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
 
   void addNewCard() {
     cardBloc.add(
-      AddCard(
-        MyCard(
+      CardEvent.add(
+        card: MyCard(
           id: globalId.cardId,
           front: _frontController.text,
           difficulty: "easy",
@@ -95,51 +98,89 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
       backgroundColor: bgColor,
       appBar: AppBar(
           elevation: 0.0,
+          leading: Container(
+            padding: EdgeInsets.only(
+              right: 10.0,
+            ),
+            margin: EdgeInsets.only(
+              top: 15.0,
+            ),
+            decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                )),
+            child: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+              ),
+              onPressed: () => ExtendedNavigator.root.pop(),
+            ),
+          ),
           title: BlocBuilder<CardStatusCubit, String>(
             cubit: cardStatusCubit,
             buildWhen: (p, c) => p != c,
             builder: (context, state) {
-              return Text(state == "new" ? 'Create New Card' : 'Edit Card');
+              return Padding(
+                padding: const EdgeInsets.only(left: 8.0, top: 10.0),
+                child: Text(state == "new" ? 'Create New Card' : 'Edit Card'),
+              );
             },
           ),
           backgroundColor: cardColor,
           actions: [
-            FlatButton.icon(
-              onPressed: () {
-                if (_frontController.text.isEmpty ||
-                    _backController.text.isEmpty) {
-                  _gKey.currentState.showSnackBar(
-                    SnackBar(
-                      content: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Fields can't be empty when you save",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          Icon(
-                            Icons.info,
-                            color: Colors.black,
-                          ),
-                        ],
-                      ),
-                      backgroundColor: infoColor,
-                    ),
-                  );
-                } else {
-                  cardStatusCubit.state == "new" ? addNewCard() : updateCard();
-                  _frontController.clear();
-                  _backController.clear();
-                  context.bloc<DeckStatusCubit>().editDeck();
-                  ExtendedNavigator.root.pop();
-                }
-              },
-              icon: Icon(
-                Icons.save,
+            Container(
+              padding: EdgeInsets.only(
+                left: 10.0,
               ),
-              label: Text(
-                "save",
-                style: TextStyle(fontSize: 15.0),
+              margin: EdgeInsets.only(
+                top: 15.0,
+              ),
+              decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(30.0),
+                    topLeft: Radius.circular(30.0),
+                  )),
+              child: IconButton(
+                onPressed: () {
+                  if (_frontController.text.isEmpty ||
+                      _backController.text.isEmpty) {
+                    _gKey.currentState.showSnackBar(
+                      SnackBar(
+                        content: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Fields can't be empty.",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            Icon(
+                              Icons.info,
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
+                        backgroundColor: infoColor,
+                      ),
+                    );
+                  } else {
+                    cardStatusCubit.state == "new"
+                        ? addNewCard()
+                        : updateCard();
+                    context.read(showAnswerProvider).state = false;
+                    _frontController.clear();
+                    _backController.clear();
+                    context.bloc<DeckStatusCubit>().editDeck();
+                    ExtendedNavigator.root.pop();
+                  }
+                },
+                icon: Icon(
+                  Icons.save,
+                  color: Colors.white,
+                ),
               ),
             ),
           ]),
@@ -154,12 +195,15 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
             child: Column(
               children: <Widget>[
                 Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.only(left: 8.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  margin: EdgeInsets.only(top: 10.0),
                   child: TextFormField(
                     controller: _frontController,
                     maxLines: 6,
-                    decoration: InputDecoration(
+                    decoration: inputStyle.copyWith(
                       labelText: "Front",
                     ),
                     keyboardType: TextInputType.multiline,
@@ -171,12 +215,15 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
                   height: 10,
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 8.0),
-                  color: Colors.white,
+                  margin: EdgeInsets.only(top: 10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
                   child: TextFormField(
                     controller: _backController,
                     maxLines: 9,
-                    decoration: InputDecoration(
+                    decoration: inputStyle.copyWith(
                       labelText: "Back",
                     ),
                     keyboardType: TextInputType.multiline,

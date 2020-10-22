@@ -1,10 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:injectable/injectable.dart';
 
 part 'status_state.dart';
 
-@injectable
 class DeckStatusCubit extends Cubit<StatusState> {
   DeckStatusCubit() : super(NewDeckState());
 

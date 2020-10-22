@@ -6,8 +6,7 @@ import 'package:hooks_riverpod/all.dart';
 import 'package:study_buddy/application/auth/auth_bloc.dart';
 import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/injection.dart';
-import 'package:study_buddy/presentation/study/widgets/folding_cell_card_wrapper.dart';
-import 'package:study_buddy/presentation/routes/router.gr.dart';
+import 'package:study_buddy/presentation/routes/router.gr.dart' as r;
 
 import 'presentation/core/theme/theme_styles.dart';
 
@@ -29,14 +28,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(create: (context) => DeckStatusCubit()),
         BlocProvider(create: (context) => CardStatusCubit()),
-        // BlocProvider(create: (context) => SimilarityBloc()),
       ],
       child: ProviderScope(
-        observers: [Logger()],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: appThemeStyle,
-          builder: ExtendedNavigator<Router>(router: Router()),
+          builder: ExtendedNavigator<r.Router>(router: r.Router()),
         ),
       ),
     );

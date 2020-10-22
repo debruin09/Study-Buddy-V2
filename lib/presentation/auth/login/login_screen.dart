@@ -16,79 +16,37 @@ class LoginScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       body: BlocProvider<LoginBloc>(
         create: (context) => LoginBloc(authRepository: _authRepository),
-        child: SingleChildScrollView(
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    width: double.infinity,
-                    padding: EdgeInsets.only(
-                      top: 180,
-                      left: 30.0,
-                    ),
-                    height: MediaQuery.of(context).size.height * 0.5,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/auth.jpg"),
-                          fit: BoxFit.cover),
-                    ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  width: double.infinity,
+                  margin: EdgeInsets.only(
+                    left: 30.0,
+                    bottom: 20.0,
+                    top: 50.0,
                   ),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    width: double.infinity,
-                    padding: EdgeInsets.only(
-                      top: 180,
-                      left: 30.0,
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 45.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                    height: MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.black26,
-                            Colors.black38,
-                          ]),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    width: double.infinity,
-                    padding: EdgeInsets.only(
-                      top: 180,
-                      left: 30.0,
-                    ),
-                    height: MediaQuery.of(context).size.height,
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 45.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                alignment: Alignment.bottomCenter,
-                width: double.infinity,
-                height: 450.0,
-                decoration: BoxDecoration(
-                  color: cardColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
                   ),
                 ),
-                child: LoginForm(
-                  authRepository: _authRepository,
+                Card(
+                  elevation: 5.0,
+                  margin: EdgeInsets.symmetric(horizontal: 15.0),
+                  child: LoginForm(
+                    authRepository: _authRepository,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

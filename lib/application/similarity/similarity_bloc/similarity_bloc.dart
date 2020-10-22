@@ -5,7 +5,6 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 import 'package:study_buddy/domain/core/failures.dart';
 import 'package:study_buddy/domain/similarity/similarity.dart';
 import 'package:study_buddy/domain/similarity/api_client_repository.dart';
@@ -14,7 +13,6 @@ part 'similarity_event.dart';
 part 'similarity_state.dart';
 part 'similarity_bloc.freezed.dart';
 
-@injectable
 class SimilarityBloc extends Bloc<SimilarityEvent, SimilarityState> {
   SimilarityBloc(this.repository) : super(SimilarityState.initial());
 

@@ -9,6 +9,7 @@ import 'package:study_buddy/domain/core/tag_entity.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/injection.dart';
+import 'package:study_buddy/presentation/core/theme/theme_styles.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
 import 'package:study_buddy/presentation/create/widgets/new_deck_card_body.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
@@ -87,128 +88,174 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
       key: _gKey,
       backgroundColor: bgColor,
       appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: Container(
+            padding: EdgeInsets.only(
+              right: 10.0,
+            ),
+            margin: EdgeInsets.only(
+              top: 15.0,
+            ),
+            decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                )),
+            child: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+              ),
+              onPressed: () => ExtendedNavigator.root.pop(),
+            ),
+          ),
           elevation: 0.0,
-          title: BlocBuilder<DeckStatusCubit, StatusState>(
-            cubit: context.bloc<DeckStatusCubit>(),
-            buildWhen: (p, c) => p != c,
-            builder: (context, state) {
-              if (state is NewDeckState) {
-                return Text('Create New Deck');
-              } else if (state is EditDeckState) {
-                return Text('Edit Deck');
-              }
-              return Container();
-            },
+          title: Padding(
+            padding: const EdgeInsets.only(left: 8.0, top: 10.0),
+            child: BlocBuilder<DeckStatusCubit, StatusState>(
+              cubit: context.bloc<DeckStatusCubit>(),
+              buildWhen: (p, c) => p != c,
+              builder: (context, state) {
+                if (state is NewDeckState) {
+                  return Text(
+                    'Create New Deck',
+                    style: TextStyle(color: Colors.black),
+                  );
+                } else if (state is EditDeckState) {
+                  return Text(
+                    'Edit Deck',
+                    style: TextStyle(color: Colors.black),
+                  );
+                }
+                return Container();
+              },
+            ),
           ),
           backgroundColor: cardColor,
           actions: [
-            FlatButton.icon(
-              onPressed: () {
-                cardStatusCubit.changeCardStatus("new");
-                if (context.bloc<DeckStatusCubit>().state is NewDeckState &&
-                    _deckNameController.text.isNotEmpty) {
-                  createNewDeck();
-                  ExtendedNavigator.root.push(
-                    Routes.createNewCardPage,
-                    arguments: CreateNewCardPageArguments(),
-                  );
-                } else if (context.bloc<DeckStatusCubit>().state
-                    is EditDeckState) {
-                  updateDeck();
-                  _deckNameController.clear();
-                  _gKey.currentState.showSnackBar(
-                    SnackBar(
-                      content: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text('Deck updated',
-                              style: TextStyle(color: Colors.black)),
-                          Icon(Icons.info, color: Colors.black),
-                        ],
-                      ),
-                      backgroundColor: successColor,
-                    ),
-                  );
-                } else if (_deckNameController.text.isEmpty &&
-                    context.bloc<DeckStatusCubit>().state is NewDeckState) {
-                  _gKey.currentState.showSnackBar(
-                    SnackBar(
-                      content: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Fields can't be empty when you save",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          Icon(
-                            Icons.info,
-                            color: Colors.black,
-                          ),
-                        ],
-                      ),
-                      backgroundColor: infoColor,
-                    ),
-                  );
-                }
-              },
-              icon: Icon(
-                Icons.save,
+            Container(
+              padding: EdgeInsets.only(
+                left: 10.0,
               ),
-              label: Text(
-                "save",
-                style: TextStyle(fontSize: 15.0),
+              margin: EdgeInsets.only(
+                top: 15.0,
+              ),
+              decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(30.0),
+                    topLeft: Radius.circular(30.0),
+                  )),
+              child: IconButton(
+                onPressed: () {
+                  cardStatusCubit.changeCardStatus("new");
+                  if (context.bloc<DeckStatusCubit>().state is NewDeckState &&
+                      _deckNameController.text.isNotEmpty) {
+                    createNewDeck();
+                    ExtendedNavigator.root.push(
+                      Routes.createNewCardPage,
+                      arguments: CreateNewCardPageArguments(),
+                    );
+                  } else if (context.bloc<DeckStatusCubit>().state
+                      is EditDeckState) {
+                    updateDeck();
+                    _deckNameController.clear();
+                    _gKey.currentState.showSnackBar(
+                      SnackBar(
+                        content: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text('Deck updated',
+                                style: TextStyle(color: Colors.black)),
+                            Icon(Icons.info, color: Colors.black),
+                          ],
+                        ),
+                        backgroundColor: successColor,
+                      ),
+                    );
+                  } else if (_deckNameController.text.isEmpty &&
+                      context.bloc<DeckStatusCubit>().state is NewDeckState) {
+                    _gKey.currentState.showSnackBar(
+                      SnackBar(
+                        content: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Fields can't be empty when you save",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            Icon(
+                              Icons.info,
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
+                        backgroundColor: infoColor,
+                      ),
+                    );
+                  }
+                },
+                icon: Icon(
+                  Icons.save,
+                  color: Colors.white,
+                ),
               ),
             ),
           ]),
-      body: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          SliverToBoxAdapter(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: 20.0),
-                  color: Colors.white,
-                  child: TextFormField(
-                    controller: _deckNameController,
-                    decoration: InputDecoration(
-                      labelText: "Deck name",
-                      focusColor: Colors.white,
-                      fillColor: Colors.white,
-                      hintText: "Enter deck name",
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.all(8.0),
+              sliver: SliverToBoxAdapter(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 10.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: TextFormField(
+                        controller: _deckNameController,
+                        decoration: inputStyle.copyWith(
+                          hintText: "Enter deck name",
+                        ),
                       ),
                     ),
-                  ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    TagWidget(
+                      onChanged: () {
+                        tags.add(val);
+                      },
+                      additionalCallback: (String value) {
+                        val = value;
+                        return TagEntity(
+                          tag: value,
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                TagWidget(
-                  onChanged: () {
-                    tags.add(val);
-                  },
-                  additionalCallback: (String value) {
-                    val = value;
-                    return TagEntity(
-                      tag: value,
-                    );
-                  },
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-              ],
+              ),
             ),
-          ),
-          NewDeckCardBody(
-            globalId: globalId,
-            cardBloc: _cardBloc,
-            cardStatusCubit: cardStatusCubit,
-          )
-        ],
+            NewDeckCardBody(
+              globalId: globalId,
+              cardBloc: _cardBloc,
+              cardStatusCubit: cardStatusCubit,
+            )
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: BlocBuilder<DeckStatusCubit, StatusState>(
@@ -244,9 +291,10 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
 
   void updateDeck() {
     _deckBloc.add(
-      UpdateDeck(
-        widget.deck,
-        Deck(
+      DeckEvent.update(
+        updatedDeck: widget.deck,
+        newData: Deck(
+          dateCreated: DateTime.now().toIso8601String().toString(),
           id: widget.deck.id,
           deckName: _deckNameController.text.isNotEmpty
               ? _deckNameController.text
@@ -259,11 +307,12 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
 
   void createNewDeck() {
     _deckBloc.add(
-      AddDeck(
-        Deck(
+      DeckEvent.add(
+        deck: Deck(
           id: globalId.deckId,
           deckName: _deckNameController.text,
           tags: tags,
+          dateCreated: DateTime.now().toIso8601String().toString(),
         ),
       ),
     );

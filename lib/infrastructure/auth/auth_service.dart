@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:study_buddy/domain/auth/auth_failure.dart';
 import 'package:study_buddy/domain/auth/user.dart';
@@ -22,9 +23,9 @@ class AuthService implements AuthRepository {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'ERROR_WRONG_PASSWORD' ||
           e.code == 'ERROR_USER_NOT_FOUND') {
-        return const AuthFailure.invalidEmailAndPasswordCombination();
+        throw Exception("Wrong details...");
       } else {
-        return const AuthFailure.serverError();
+        throw Exception("Sorry something went wrong...");
       }
     }
   }
@@ -68,9 +69,9 @@ class AuthService implements AuthRepository {
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
-        return const AuthFailure.emailAlreadyInUse();
+        throw Exception("Email already in use...");
       } else {
-        return const AuthFailure.serverError();
+        throw Exception("Sorry something went wrong...");
       }
     }
   }

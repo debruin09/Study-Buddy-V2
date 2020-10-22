@@ -20,41 +20,26 @@ class NewDeckCardBody extends StatelessWidget {
       buildWhen: (previous, current) => previous != current,
       cubit: cardBloc,
       builder: (context, state) {
-        if (state is CardInitial) {
-          return SliverToBoxAdapter(child: Container());
-        } else if (state is CardLoadInProgress) {
-          return SliverToBoxAdapter(child: Loading());
-        } else if (state is CardErrorState) {
-          return SliverToBoxAdapter(
-              child: Center(child: Text("${state.message}")));
-        } else if (state is CardLoadSuccess) {
-          return SliverPadding(
-            padding: EdgeInsets.only(left: 10.0, right: 10.0),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => CustomMyCard(
-                  globalId: globalId,
-                  card: state.cards[index],
-                  cardBloc: cardBloc,
-                  cardStatusCubit: cardStatusCubit,
+        return state.map(
+            initial: (_) => SliverToBoxAdapter(child: Container()),
+            loading: (_) => SliverToBoxAdapter(child: Loading()),
+            success: (state) {
+              return SliverPadding(
+                padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) => CustomMyCard(
+                      globalId: globalId,
+                      card: state.cards[index],
+                      cardBloc: cardBloc,
+                      cardStatusCubit: cardStatusCubit,
+                    ),
+                    childCount: state.cards.length,
+                  ),
                 ),
-                childCount: state.cards.length,
-              ),
-            ),
-          );
-        }
-        return SliverToBoxAdapter(
-            child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 25.0,
-              ),
-              Text("Empty deck", style: TextStyle(color: Colors.white)),
-            ],
-          ),
-        ));
+              );
+            },
+            error: (state) => Center(child: Text("${state.message}")));
       },
     );
   }

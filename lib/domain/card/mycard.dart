@@ -25,10 +25,10 @@ class MyCard extends Equatable {
   @override
   List<Object> get props => [front, back, me, difficulty, dateCreated, tags];
 
-  // @override
-  // String toString() {
-  //   return 'MyCard(front: $front, back: $back, me: $me, id: $id, difficulty: $difficulty, tags: $tags)';
-  // }
+  @override
+  String toString() {
+    return 'MyCard(front: $front, back: $back, me: $me, id: $id, difficulty: $difficulty, tags: $tags)';
+  }
 
   Map<String, dynamic> toMap() {
     return {

@@ -3,6 +3,7 @@ import 'package:study_buddy/application/auth/auth_bloc.dart';
 import 'package:study_buddy/application/auth/login/login_bloc.dart';
 import 'package:study_buddy/application/auth/register/register_bloc.dart';
 import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
+import 'package:study_buddy/application/core/speech/speech_bloc.dart';
 import 'package:study_buddy/application/deck/deck_bloc/deck_bloc.dart';
 import 'package:study_buddy/application/similarity/similarity_bloc/similarity_bloc.dart';
 import 'package:study_buddy/application/core/status/status_cubit.dart';
@@ -29,6 +30,7 @@ void setupLocator() {
   locator
       .registerLazySingleton<SimilarityBloc>(() => SimilarityBloc(locator()));
   locator.registerLazySingleton<DecksScope>(() => DecksScope());
+  locator.registerLazySingleton<CardScope>(() => CardScope());
   locator.registerLazySingleton<GlobalId>(() => GlobalId());
   locator.registerLazySingleton<AuthRepository>(() => AuthService());
   locator.registerLazySingleton<DatabaseRepository>(() => FirestoreService());
@@ -40,4 +42,5 @@ void setupLocator() {
   locator.registerFactory<RegisterBloc>(
       () => RegisterBloc(authRepository: locator()));
   locator.registerFactory<AuthBloc>(() => AuthBloc(authRepository: locator()));
+  locator.registerFactory<SpeechBloc>(() => SpeechBloc());
 }

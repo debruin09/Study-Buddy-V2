@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:study_buddy/domain/core/shared_pref.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
@@ -57,7 +59,7 @@ class DeckSearch extends SearchDelegate<String> {
         : deckScope.decks
             .where((deck) => deck.deckName.contains(query))
             .toList();
-    // _sharedPref.save("suggestions", suggestionList);
+
     return ListView.separated(
         separatorBuilder: (context, index) => Divider(),
         itemCount: suggestionList.length,

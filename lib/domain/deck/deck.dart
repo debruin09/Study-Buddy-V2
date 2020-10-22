@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 import 'package:study_buddy/domain/deck/deck_entity.dart';
@@ -7,11 +9,13 @@ class Deck extends Equatable {
   String deckName;
   String id;
   List<String> tags = [];
+  String dateCreated;
 
   Deck({
     this.deckName,
     this.id,
     this.tags,
+    this.dateCreated,
   });
 
   @override
@@ -19,6 +23,7 @@ class Deck extends Equatable {
         deckName,
         id,
         tags,
+        dateCreated,
       ];
 
   Map<String, dynamic> toMap() {
@@ -26,8 +31,17 @@ class Deck extends Equatable {
       'deckName': deckName,
       'id': id,
       'tags': tags,
+      'dateCreated': dateCreated,
     };
   }
+
+  static String encodeDeck(List<Deck> decks) =>
+      jsonEncode(decks.map((deck) => deck.toMap()).toList());
+
+  static List<Deck> decodeDeck(String decks) =>
+      (jsonDecode(decks) as List<dynamic>)
+          .map((deck) => Deck.fromJson(deck))
+          .toList();
 
   static Deck fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
@@ -35,6 +49,7 @@ class Deck extends Equatable {
     return Deck(
       deckName: map['deckName'],
       tags: List<String>.from(map['tags']),
+      dateCreated: map["dateCreated"],
     );
   }
 
@@ -45,6 +60,7 @@ class Deck extends Equatable {
       deckName: json['deckName'],
       id: json["id"],
       tags: List<String>.from(json['tags']),
+      dateCreated: json["dateCreated"],
     );
   }
 
@@ -53,6 +69,7 @@ class Deck extends Equatable {
       deckName: entity.deckName ?? "",
       id: entity.id ?? "",
       tags: entity.tags ?? "",
+      dateCreated: entity.dateCreated,
     );
   }
 
@@ -61,6 +78,7 @@ class Deck extends Equatable {
       deckName: deckName,
       id: id,
       tags: tags,
+      dateCreated: dateCreated,
     );
   }
 

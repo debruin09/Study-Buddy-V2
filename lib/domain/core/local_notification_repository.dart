@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:injectable/injectable.dart';
 
 abstract class LocalNotificationRepository {
   Future<void> notification({@required String front});

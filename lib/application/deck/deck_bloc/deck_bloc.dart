@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:injectable/injectable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/domain/core/database_repository.dart';
@@ -11,8 +10,8 @@ import 'package:study_buddy/infrastructure/core/helper_service.dart';
 
 part 'deck_event.dart';
 part 'deck_state.dart';
+part 'deck_bloc.freezed.dart';
 
-@injectable
 class DeckBloc extends Bloc<DeckEvent, DeckState> {
   DeckBloc(this.databaseRepository) : super(DeckInitial());
   final deckScope = locator.get<DecksScope>();
@@ -22,24 +21,19 @@ class DeckBloc extends Bloc<DeckEvent, DeckState> {
   StreamSubscription _decksSubscription;
   @override
   Stream<DeckState> mapEventToState(DeckEvent event) async* {
-    if (event is LoadDecks) {
-      yield* _mapLoadDecksToState();
-    } else if (event is DeckUpdated) {
-      yield* _mapDecksUpdateToState(event);
-    } else if (event is AddDeck) {
-      yield* _mapAddDeckToState(event);
-    } else if (event is UpdateDeck) {
-      yield* _mapUpdateDeckToState(event);
-    } else if (event is DeleteDeck) {
-      yield* _mapDeleteDeckToState(event);
-    }
+    yield* event.map(
+        load: (_) => _mapLoadDecksToState(),
+        delete: (e) => _mapDeleteDeckToState(e),
+        update: (e) => _mapUpdateDeckToState(e),
+        add: (e) => _mapAddDeckToState(e),
+        updated: (e) => _mapDecksUpdateToState(e));
   }
 
   Stream<DeckState> _mapDecksUpdateToState(DeckUpdated event) async* {
     try {
-      yield DeckLoadSuccess(decks: event.decks);
+      yield DeckState.success(decks: event.decks);
     } catch (e) {
-      yield DeckErrorState(message: e.toString());
+      yield DeckState.error(message: e.toString());
     }
   }
 
@@ -49,7 +43,7 @@ class DeckBloc extends Bloc<DeckEvent, DeckState> {
     _decksSubscription = databaseRepository.decks().listen(
       (decks) {
         deckScope.setDecks(decks);
-        add(DeckUpdated(decks));
+        add(DeckEvent.updated(decks: decks));
       },
     );
   }

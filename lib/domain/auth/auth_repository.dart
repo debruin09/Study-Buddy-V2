@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+import 'package:study_buddy/domain/auth/auth_failure.dart';
 import 'package:study_buddy/domain/auth/user.dart';
 
 abstract class AuthRepository {

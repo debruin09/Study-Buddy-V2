@@ -29,7 +29,11 @@ class TagWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.0),
+      ),
       child: FlutterTagging<TagEntity>(
         initialItems: selectedTags,
         textFieldConfiguration: TextFieldConfiguration(

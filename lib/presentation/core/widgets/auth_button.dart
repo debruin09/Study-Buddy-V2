@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
 class AuthButton extends StatelessWidget {
   final Function onPressed;
@@ -15,7 +16,7 @@ class AuthButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
           side: BorderSide(
-            color: Colors.black,
+            color: primaryColor,
             width: 2.0,
           )),
       minWidth: double.infinity,

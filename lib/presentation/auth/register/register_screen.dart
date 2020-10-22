@@ -49,24 +49,6 @@ class RegisterScreen extends StatelessWidget {
                       left: 30.0,
                     ),
                     height: MediaQuery.of(context).size.height,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.black26,
-                            Colors.black38,
-                          ]),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    width: double.infinity,
-                    padding: EdgeInsets.only(
-                      top: 180,
-                      left: 30.0,
-                    ),
-                    height: MediaQuery.of(context).size.height,
                     child: Text(
                       "Register",
                       style: TextStyle(

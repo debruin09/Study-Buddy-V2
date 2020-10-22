@@ -1,41 +1,35 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:injectable/injectable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
 import 'package:study_buddy/domain/core/database_repository.dart';
 
 part 'card_event.dart';
 part 'card_state.dart';
+part 'card_bloc.freezed.dart';
 
-@injectable
 class CardBloc extends Bloc<CardEvent, CardState> {
-  CardBloc(this.databaseRepository) : super(CardInitial());
+  CardBloc(this.databaseRepository) : super(CardState.initial());
 // Dependancy
   final DatabaseRepository databaseRepository;
   StreamSubscription _cardsSubscription;
   @override
   Stream<CardState> mapEventToState(CardEvent event) async* {
-    if (event is LoadCards) {
-      yield* _mapLoadCardsToState();
-    } else if (event is CardUpdated) {
-      yield* _mapCardsUpdateToState(event);
-    } else if (event is AddCard) {
-      yield* _mapAddCardToState(event);
-    } else if (event is UpdateCard) {
-      yield* _mapUpdateCardToState(event);
-    } else if (event is DeleteCard) {
-      yield* _mapDeleteCardToState(event);
-    }
+    yield* event.map(
+        load: (_) => _mapLoadCardsToState(),
+        delete: (e) => _mapDeleteCardToState(e),
+        update: (e) => _mapUpdateCardToState(e),
+        add: (e) => _mapAddCardToState(e),
+        updated: (e) => _mapCardsUpdateToState(e));
   }
 
   Stream<CardState> _mapCardsUpdateToState(CardUpdated event) async* {
     try {
-      yield CardLoadSuccess(cards: event.cards);
+      yield CardState.success(cards: event.cards);
     } catch (e) {
-      yield CardErrorState(message: e.toString());
+      yield CardState.error(message: e.toString());
     }
   }
 
@@ -44,7 +38,7 @@ class CardBloc extends Bloc<CardEvent, CardState> {
     _cardsSubscription?.cancel();
     _cardsSubscription = databaseRepository.cards().listen(
       (cards) {
-        add(CardUpdated(cards));
+        add(CardEvent.updated(cards: cards));
       },
     );
   }

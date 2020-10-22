@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:injectable/injectable.dart';
 import 'package:study_buddy/domain/auth/user.dart';
 import 'package:study_buddy/domain/card/card_entity.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
@@ -9,7 +8,6 @@ import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/domain/core/database_repository.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 
-@Injectable(as: DatabaseRepository)
 class FirestoreService implements DatabaseRepository {
   static final globalId = locator.get<GlobalId>();
   static final db = FirebaseFirestore.instance;
@@ -32,7 +30,6 @@ class FirestoreService implements DatabaseRepository {
 
   @override
   Future<void> addNewDeck(Deck deck) async {
-    print("This is the current deck id: ${globalId.deckId}");
     return userCollection
         .doc(globalId.userId)
         .collection("decks")

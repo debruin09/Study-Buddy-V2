@@ -46,7 +46,7 @@ class SimilarityWrapper extends StatelessWidget {
                           (s) => Padding(
                             padding: const EdgeInsets.only(right: 10.0),
                             child: Text(
-                              "${s.similarityScore * 100}%",
+                              "${s.similarityScore}%",
                               style: GoogleFonts.laila(
                                   color: Colors.black45,
                                   fontSize: 15.0,

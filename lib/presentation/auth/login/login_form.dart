@@ -42,7 +42,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginBloc, LoginState>(
+    return BlocConsumer<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state.isFailure) {
           Scaffold.of(context)
@@ -86,81 +86,99 @@ class _LoginFormState extends State<LoginForm> {
           );
         }
       },
-      child: BlocBuilder<LoginBloc, LoginState>(
-        builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Form(
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.email),
-                      labelText: "Email",
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                    autovalidate: true,
-                    autocorrect: false,
-                    validator: (_) {
-                      return !state.isEmailValid ? 'Invalid Email' : null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.lock),
-                      labelText: "Password",
-                    ),
-                    obscureText: true,
-                    autovalidate: true,
-                    autocorrect: false,
-                    validator: (_) {
-                      return !state.isPasswordValid ? 'Invalid Password' : null;
-                    },
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  AuthButton(
-                    color: Colors.white,
-                    onPressed: () {
-                      if (isButtonEnabled(state)) {
-                        _onFormSubmitted();
-                      }
-                    },
-                    text: Text(
-                      'LogIn',
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Form(
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.email),
+                    labelText: "Email",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                      borderSide: BorderSide(
+                        color: primaryColor,
+                        style: BorderStyle.solid,
+                        width: 3.0,
+                      ),
                     ),
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  RichText(
-                    text: TextSpan(
-                      text: "Don't have an account? ",
-                      style: TextStyle(color: Colors.black, fontSize: 14.0),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: 'Register',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                fontSize: 16.0),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                ExtendedNavigator.root
-                                    .push(Routes.registerScreen);
-                              }),
-                      ],
+                  keyboardType: TextInputType.emailAddress,
+                  autovalidateMode: AutovalidateMode.always,
+                  autocorrect: false,
+                  validator: (_) {
+                    return !state.isEmailValid ? 'Invalid Email' : null;
+                  },
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.lock),
+                    labelText: "Password",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                      borderSide: BorderSide(
+                        color: primaryColor,
+                        style: BorderStyle.solid,
+                        width: 3.0,
+                      ),
                     ),
                   ),
-                ],
-              ),
+                  obscureText: true,
+                  autovalidateMode: AutovalidateMode.always,
+                  autocorrect: false,
+                  validator: (_) {
+                    return !state.isPasswordValid ? 'Invalid Password' : null;
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                AuthButton(
+                  color: primaryColor,
+                  onPressed: () {
+                    if (isButtonEnabled(state)) {
+                      _onFormSubmitted();
+                    }
+                  },
+                  text: Text(
+                    'LogIn',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                RichText(
+                  text: TextSpan(
+                    text: "Don't have an account? ",
+                    style: TextStyle(color: Colors.black, fontSize: 14.0),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: 'Register',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 16.0),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              ExtendedNavigator.root
+                                  .push(Routes.registerScreen);
+                            }),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

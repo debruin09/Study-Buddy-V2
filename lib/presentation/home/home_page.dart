@@ -13,7 +13,7 @@ import 'package:study_buddy/presentation/core/drawer/custom_drawer.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
 import 'package:study_buddy/presentation/home/search/deck_search.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
-import 'package:study_buddy/presentation/study/widgets/custom_card.dart';
+import 'package:study_buddy/presentation/home/widgets/deck_card.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -50,73 +50,114 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       key: _gKey,
       backgroundColor: bgColor,
-      drawer: CustomDrawer(user: globalId.getUser),
+      drawer: CustomDrawer(user: widget.user),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            leading: Container(
+              padding: EdgeInsets.only(
+                right: 10.0,
+              ),
+              margin: EdgeInsets.only(
+                top: 15.0,
+              ),
+              decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),
+                  )),
+              child: IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                ),
+                onPressed: () => _gKey.currentState.openDrawer(),
+              ),
+            ),
+            automaticallyImplyLeading: false,
             expandedHeight: 80.0,
             elevation: 0.0,
             pinned: true,
             backgroundColor: bgColor,
             centerTitle: true,
-            title: Text(
-              "Home",
+            title: Padding(
+              padding: const EdgeInsets.only(top: 18.0),
+              child: Text(
+                "Home",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 3.0),
+              ),
             ),
             actions: [
-              IconButton(
-                onPressed: () {
-                  showSearch(context: context, delegate: DeckSearch());
-                },
-                icon: Icon(Icons.search),
+              Container(
+                padding: EdgeInsets.only(
+                  left: 10.0,
+                ),
+                margin: EdgeInsets.only(
+                  top: 15.0,
+                ),
+                decoration: BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(30.0),
+                      topLeft: Radius.circular(30.0),
+                    )),
+                child: IconButton(
+                  onPressed: () {
+                    showSearch(context: context, delegate: DeckSearch());
+                  },
+                  icon: Icon(
+                    Icons.search,
+                    size: 30.0,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ],
           ),
-          BlocConsumer<DeckBloc, DeckState>(
+          BlocBuilder<DeckBloc, DeckState>(
             cubit: deckBloc,
-            listener: (context, state) {
-              if (state is DeckErrorState) {
-                return Center(child: Text("${state.message}"));
-              }
-              return Container();
-            },
             builder: (context, state) {
-              if (state is DeckInitial) {
-                return SliverToBoxAdapter(child: Container());
-              } else if (state is DeckLoadInProgress) {
-                return SliverToBoxAdapter(child: Loading());
-              } else if (state is DeckLoadSuccess) {
-                deckScope.setDecks(state.decks);
-                return SliverPadding(
-                  padding: EdgeInsets.only(top: 10.0),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) => GestureDetector(
-                        key: Key(state.decks[index].id),
-                        onLongPress: () {
-                          deleteDialogue(
-                              _gKey.currentState, context, state.decks[index]);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: 10.0,
+              return state.map(
+                  initial: (_) => SliverPadding(
+                      padding:
+                          EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+                      sliver: SliverToBoxAdapter(child: Loading())),
+                  loading: (_) => SliverPadding(
+                      padding:
+                          EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+                      sliver: SliverToBoxAdapter(child: Loading())),
+                  success: (state) {
+                    deckScope.setDecks(state.decks);
+                    return SliverPadding(
+                      padding:
+                          EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+                      sliver: SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) => GestureDetector(
+                            key: Key(state.decks[index].id),
+                            onLongPress: () {
+                              deleteDialogue(_gKey.currentState, context,
+                                  state.decks[index]);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                bottom: 20.0,
+                              ),
+                              child: DeckCard(deck: state.decks[index]),
+                            ),
                           ),
-                          child: CustomCard(deck: state.decks[index]),
+                          childCount: state.decks.length,
                         ),
                       ),
-                      childCount: state.decks.length,
-                    ),
-                  ),
-                );
-              }
-              return SliverToBoxAdapter(
-                child: Center(
-                  child: Text(
-                    "No decks founded",
-                  ),
-                ),
-              );
+                    );
+                  },
+                  error: (state) => Center(child: Text("${state.message}")));
             },
-          )
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -144,7 +185,7 @@ class _HomePageState extends State<HomePage> {
             actions: [
               FlatButton(
                 onPressed: () {
-                  deckBloc.add(DeleteDeck(deck));
+                  deckBloc.add(DeckEvent.delete(deck: deck));
                   ExtendedNavigator.root.pop();
                   state.showSnackBar(
                       SnackBar(content: Text("${deck.deckName} dismissed")));

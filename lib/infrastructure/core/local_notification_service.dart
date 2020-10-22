@@ -1,11 +1,7 @@
-// import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:injectable/injectable.dart';
 import 'package:study_buddy/domain/core/local_notification_repository.dart';
-// import 'package:study_buddy/ui/routes/router.gr.dart';
 
-@Injectable(as: LocalNotificationRepository)
 class LocalNotificationService implements LocalNotificationRepository {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();

@@ -8,19 +8,17 @@ class DeckEntity extends Equatable {
   final String deckName;
   final String id;
   List<String> tags = [];
+  String dateCreated;
 
   DeckEntity({
     this.deckName,
     this.id,
     this.tags,
+    this.dateCreated,
   });
 
   @override
-  List<Object> get props => [
-        deckName,
-        id,
-        tags,
-      ];
+  List<Object> get props => [deckName, id, tags, dateCreated];
 
   static DeckEntity fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
@@ -29,6 +27,7 @@ class DeckEntity extends Equatable {
       deckName: map['deckName'],
       id: map['id'],
       tags: List<String>.from(map['tags']),
+      dateCreated: map['dateCreated'],
     );
   }
 
@@ -37,6 +36,7 @@ class DeckEntity extends Equatable {
       'id': id,
       'deckName': deckName,
       'tags': tags,
+      'dateCreated': dateCreated,
     };
   }
 
@@ -45,6 +45,7 @@ class DeckEntity extends Equatable {
       deckName: snap.data()['deckName'] ?? "",
       id: snap.data()["id"] ?? "",
       tags: List<String>.from(snap.data()['tags'] ?? []),
+      dateCreated: snap.data()['dateCreated'],
     );
   }
 }

@@ -1,5 +1,6 @@
 // import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:study_buddy/domain/similarity/api_client_repository.dart';
 import 'package:study_buddy/domain/similarity/similarity.dart';
@@ -9,9 +10,11 @@ import 'package:study_buddy/domain/core/failures.dart';
 
 class FakeHttpService {
   Future<double> getData() async {
+    final _rand = new Random();
+    final r = 4 + _rand.nextInt(5).toDouble();
     await Future.delayed(Duration(seconds: 1));
     // throw SocketException("Err");
-    return 0.86;
+    return r * 10;
   }
 }
 

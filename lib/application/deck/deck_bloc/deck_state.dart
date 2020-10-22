@@ -1,34 +1,10 @@
 part of 'deck_bloc.dart';
 
-abstract class DeckState extends Equatable {
-  const DeckState();
-}
-
-class DeckInitial extends DeckState {
-  @override
-  List<Object> get props => [];
-}
-
-class DeckLoadInProgress extends DeckState {
-  @override
-  List<Object> get props => [];
-}
-
-class DeckLoadSuccess extends DeckState {
-  final List<Deck> decks;
-
-  DeckLoadSuccess({@required this.decks}) : assert(decks != null);
-  @override
-  List<Object> get props => [decks];
-
-  @override
-  String toString() => 'DeckLoadSuccess(decks: $decks)';
-}
-
-class DeckErrorState extends DeckState {
-  final String message;
-
-  DeckErrorState({@required this.message}) : assert(message != null);
-  @override
-  List<Object> get props => [message];
+@freezed
+abstract class DeckState with _$DeckState {
+  const factory DeckState.initial() = DeckInitial;
+  const factory DeckState.loading() = DeckLoadInProgress;
+  const factory DeckState.success({@required List<Deck> decks}) =
+      DeckLoadSuccess;
+  const factory DeckState.error({@required String message}) = DeckErrorState;
 }

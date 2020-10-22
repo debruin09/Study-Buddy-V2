@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
 import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
@@ -7,8 +8,9 @@ import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:study_buddy/domain/core/utils/custom_extensions.dart';
+import 'package:study_buddy/presentation/study/widgets/folding_cell_card_wrapper.dart';
 
-class CustomMyCard extends StatelessWidget {
+class CustomMyCard extends ConsumerWidget {
   CustomMyCard(
       {Key key,
       @required this.globalId,
@@ -23,7 +25,8 @@ class CustomMyCard extends StatelessWidget {
   final CardStatusCubit cardStatusCubit;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
+    final q = watch(queueProvider);
     return Padding(
       padding: const EdgeInsets.only(
         bottom: 13.0,
@@ -40,6 +43,7 @@ class CustomMyCard extends StatelessWidget {
           );
         },
         child: Material(
+          elevation: 4.0,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0), side: BorderSide.none),
           color: cardColor,
@@ -47,10 +51,15 @@ class CustomMyCard extends StatelessWidget {
             key: Key(card.id),
             trailing: IconButton(
               onPressed: () {
-                cardBloc.add(DeleteCard(card));
+                cardBloc.add(DeleteCard(card: card));
+                q.remove(card);
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
-                    content: Text("${card.front} deleted"),
+                    backgroundColor: Colors.redAccent,
+                    content: Text(
+                      "${card.front} deleted",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 );
               },
@@ -81,7 +90,7 @@ class CustomMyCard extends StatelessWidget {
                             label: Text('$tag'),
                             labelStyle: TextStyle(
                               fontSize: 11.0,
-                              color: Colors.black,
+                              color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:study_buddy/application/auth/auth_bloc.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/auth/login/login_screen.dart';
-import 'package:study_buddy/presentation/home/home_page.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/home/home_page.dart';
 
 class LandingPage extends StatelessWidget {
   final getUserId = locator.get<GlobalId>();
@@ -16,9 +17,13 @@ class LandingPage extends StatelessWidget {
       body: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           return state.map(
-              initial: (_) => _SplashScreen(),
-              authenticated: (success) => HomePage(user: success.user),
-              unauthenticated: (_) => LoginScreen());
+            initial: (_) => _SplashScreen(),
+            authenticated: (success) {
+              print("Successful: User: ${success.user}");
+              return HomePage(user: success.user);
+            },
+            unauthenticated: (_) => LoginScreen(),
+          );
         },
       ),
     );
@@ -26,73 +31,59 @@ class LandingPage extends StatelessWidget {
 }
 
 class _SplashScreen extends StatelessWidget {
+  final loader = SpinKitThreeBounce(
+    color: primaryColor,
+  );
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/splash.jpg"),
-                fit: BoxFit.cover),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 60.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "Study",
+                style: TextStyle(
+                    color: primaryColor,
+                    letterSpacing: 15.0,
+                    fontSize: 65.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              Text(
+                "Buddy",
+                style: TextStyle(
+                    color: primaryColor,
+                    letterSpacing: 15.0,
+                    fontSize: 54.0,
+                    fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                "refine your definitions",
+                style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 34.0,
+                    color: Colors.black.withOpacity(0.8),
+                    fontWeight: FontWeight.w400),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Center(
+                child: loader,
+              ),
+            ],
           ),
         ),
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  bgColor.withOpacity(0.85),
-                  bgColor.withOpacity(0.85),
-                ]),
-          ),
-        ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 60.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Study",
-                  style: TextStyle(
-                      letterSpacing: 15.0,
-                      fontSize: 65.0,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 15.0,
-                ),
-                Text(
-                  "Buddy",
-                  style: TextStyle(
-                      letterSpacing: 15.0,
-                      fontSize: 54.0,
-                      fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Text(
-                  "refine your definitions",
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontSize: 34.0,
-                      color: Colors.black.withOpacity(0.8),
-                      fontWeight: FontWeight.w400),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

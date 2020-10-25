@@ -18,10 +18,7 @@ class LandingPage extends StatelessWidget {
         builder: (context, state) {
           return state.map(
             initial: (_) => _SplashScreen(),
-            authenticated: (success) {
-              print("Successful: User: ${success.user}");
-              return HomePage(user: success.user);
-            },
+            authenticated: (success) => HomePage(user: success.user),
             unauthenticated: (_) => LoginScreen(),
           );
         },
@@ -37,7 +34,7 @@ class _SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: primaryColor,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 60.0),
@@ -47,7 +44,7 @@ class _SplashScreen extends StatelessWidget {
               Text(
                 "Study",
                 style: TextStyle(
-                    color: primaryColor,
+                    color: Colors.white,
                     letterSpacing: 15.0,
                     fontSize: 65.0,
                     fontWeight: FontWeight.bold),
@@ -58,7 +55,7 @@ class _SplashScreen extends StatelessWidget {
               Text(
                 "Buddy",
                 style: TextStyle(
-                    color: primaryColor,
+                    color: Colors.white,
                     letterSpacing: 15.0,
                     fontSize: 54.0,
                     fontWeight: FontWeight.w500),

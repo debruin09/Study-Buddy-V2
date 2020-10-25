@@ -15,7 +15,7 @@ class LocalNotificationService implements LocalNotificationRepository {
     iosInitializationSettings = IOSInitializationSettings(
         onDidReceiveLocalNotification: onDidReceiveLocalNotification);
     initializationSettings = InitializationSettings(
-        androidInitializationSettings, iosInitializationSettings);
+        android: androidInitializationSettings, iOS: iosInitializationSettings);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
   }
@@ -25,14 +25,14 @@ class LocalNotificationService implements LocalNotificationRepository {
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
             'Channel ID', 'Channel title', 'channel body',
-            priority: Priority.High,
-            importance: Importance.Max,
+            priority: Priority.high,
+            importance: Importance.max,
             ticker: 'test');
 
     IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
 
-    NotificationDetails notificationDetails =
-        NotificationDetails(androidNotificationDetails, iosNotificationDetails);
+    NotificationDetails notificationDetails = NotificationDetails(
+        android: androidNotificationDetails, iOS: iosNotificationDetails);
     await flutterLocalNotificationsPlugin.show(
         0, 'Study card.', '$front', notificationDetails);
   }
@@ -44,16 +44,19 @@ class LocalNotificationService implements LocalNotificationRepository {
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
             'second channel ID', 'second Channel title', 'second channel body',
-            priority: Priority.High,
-            importance: Importance.Max,
+            priority: Priority.high,
+            importance: Importance.max,
             ticker: 'test');
 
     IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
 
-    NotificationDetails notificationDetails =
-        NotificationDetails(androidNotificationDetails, iosNotificationDetails);
-    await flutterLocalNotificationsPlugin.schedule(
-        1, 'Study card.', '$front', timeDelayed, notificationDetails);
+    NotificationDetails notificationDetails = NotificationDetails(
+        android: androidNotificationDetails, iOS: iosNotificationDetails);
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        1, 'Study card.', '$front', timeDelayed, notificationDetails,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.wallClockTime,
+        androidAllowWhileIdle: true);
   }
 
   Future<void> onSelectNotification(String payLoad) async {

@@ -1,45 +1,43 @@
 import 'package:get_it/get_it.dart';
-import 'package:study_buddy/blocs/auth_bloc/auth_bloc.dart';
-import 'package:study_buddy/blocs/cardwatcher/cardwatcher_bloc.dart';
-import 'package:study_buddy/blocs/deckCubit/status_cubit.dart';
-import 'package:study_buddy/blocs/deck_bloc/deck_bloc.dart';
-import 'package:study_buddy/blocs/card_bloc/card_bloc.dart';
-import 'package:study_buddy/blocs/similarity_bloc/similarity_bloc.dart';
-import 'package:study_buddy/fakes/fake_services.dart';
-import 'package:study_buddy/repositories/repositories.dart';
-import 'package:study_buddy/services/helper_service.dart';
-import 'package:study_buddy/services/services.dart';
+import 'package:study_buddy/application/auth/auth_bloc.dart';
+import 'package:study_buddy/application/auth/login/login_bloc.dart';
+import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
+import 'package:study_buddy/application/core/speech/speech_bloc.dart';
+import 'package:study_buddy/application/deck/deck_bloc/deck_bloc.dart';
+import 'package:study_buddy/application/similarity/similarity_bloc/similarity_bloc.dart';
+import 'package:study_buddy/application/core/status/status_cubit.dart';
+import 'package:study_buddy/domain/auth/auth_repository.dart';
+import 'package:study_buddy/domain/core/database_repository.dart';
+import 'package:study_buddy/domain/core/local_notification_repository.dart';
+import 'package:study_buddy/domain/core/tag_repository.dart';
+import 'package:study_buddy/domain/similarity/api_client_repository.dart';
+import 'package:study_buddy/infrastructure/auth/auth_service.dart';
+import 'package:study_buddy/infrastructure/core/database_service.dart';
+import 'package:study_buddy/infrastructure/core/helper_service.dart';
+import 'package:study_buddy/infrastructure/core/local_notification_service.dart';
+import 'package:study_buddy/infrastructure/core/tag_service.dart';
+import 'package:study_buddy/infrastructure/similarity/api_client_service.dart';
 
-final locator = GetIt.instance;
-const USE_FAKE_IMPLEMENTATION = false;
+final GetIt locator = GetIt.instance;
+
 void setupLocator() {
-  ///[Repositories]
-  locator.registerLazySingleton<DatabaseRepository>(() => FirestoreService());
-
-  locator.registerLazySingleton<ApiClientRepository>(
-      () => FakeApiClientService(HttpClient()));
-  locator.registerLazySingleton<TagRepository>(() => TagService());
-  locator.registerLazySingleton<AuthRepository>(() => AuthService());
-
-  /// [Services]
-  // locator.registerLazySingleton<TagRepository>(() => TagService());
-
-  /// Local Notification
-  locator.registerLazySingleton<LocalNotificationRepository>(
-      () => LocalNotificationService());
-
-  /// [Helper Services] for global scope
-  locator.registerLazySingleton<GlobalId>(() => GlobalId());
-  locator.registerLazySingleton<CardNotification>(() => CardNotification());
+  locator.registerFactory<ApiClientRepository>(() => ApiClientService());
+  locator.registerFactory<CardBloc>(() => CardBloc(locator()));
+  locator.registerFactory<DeckBloc>(() => DeckBloc(locator()));
   locator.registerLazySingleton<DeckStatusCubit>(() => DeckStatusCubit());
   locator.registerLazySingleton<CardStatusCubit>(() => CardStatusCubit());
-
-  /// [Blocs]
-
-  locator.registerFactory<DeckBloc>(() => DeckBloc(locator()));
-  locator.registerFactory<SimilarityBloc>(() => SimilarityBloc(locator()));
-  locator.registerFactory<CardBloc>(() => CardBloc(locator()));
+  locator
+      .registerLazySingleton<SimilarityBloc>(() => SimilarityBloc(locator()));
+  locator.registerLazySingleton<DecksScope>(() => DecksScope());
+  locator.registerLazySingleton<CardScope>(() => CardScope());
+  locator.registerLazySingleton<GlobalId>(() => GlobalId());
+  locator.registerLazySingleton<AuthRepository>(() => AuthService());
+  locator.registerLazySingleton<DatabaseRepository>(() => FirestoreService());
+  locator.registerLazySingleton<TagRepository>(() => TagService());
+  locator.registerFactory<LocalNotificationRepository>(
+      () => LocalNotificationService());
+  locator
+      .registerFactory<LoginBloc>(() => LoginBloc(authRepository: locator()));
   locator.registerFactory<AuthBloc>(() => AuthBloc(authRepository: locator()));
-  locator.registerFactory<CardWatcherBloc>(
-      () => CardWatcherBloc(databaseRepository: locator()));
+  locator.registerFactory<SpeechBloc>(() => SpeechBloc());
 }

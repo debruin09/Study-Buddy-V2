@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:study_buddy/models/similarity.dart';
-import 'package:study_buddy/failures/failures.dart';
-import 'package:study_buddy/repositories/api_client_repository.dart';
+import 'package:study_buddy/domain/similarity/similarity.dart';
+import 'package:study_buddy/domain/core/failures.dart';
+import 'package:study_buddy/domain/similarity/api_client_repository.dart';
 
 class HttpClient {
   Future postRequest(String original, myDefinition) async {

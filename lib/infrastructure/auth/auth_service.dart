@@ -54,7 +54,7 @@ class AuthService implements AuthRepository {
   }
 
   @override
-  Future<void> signUp(String username, String email, String password) async {
+  Future<void> signUp(String email, String password) async {
     try {
       final result = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
@@ -65,7 +65,7 @@ class AuthService implements AuthRepository {
         email: email,
         password: password,
         uid: result.user.uid,
-        username: username,
+        username: result.user.displayName ?? "Test user",
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {

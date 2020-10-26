@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:study_buddy/domain/core/shared_pref.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/injection.dart';
+import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 // import 'package:study_buddy/utils/get_instance.dart';
@@ -25,11 +26,12 @@ class DeckSearch extends SearchDelegate<String> {
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    ThemeData(
-        appBarTheme: AppBarTheme(
-            elevation: 0.0,
-            actionsIconTheme: IconThemeData(color: Colors.black)));
-    return super.appBarTheme(context);
+    assert(context != null);
+    final ThemeData theme = ThemeData.dark().copyWith(
+      primaryColor: primaryColor,
+    );
+    assert(theme != null);
+    return theme;
   }
 
   @override
@@ -54,11 +56,8 @@ class DeckSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    final suggestionList = query.isEmpty
-        ? recentDecks
-        : deckScope.decks
-            .where((deck) => deck.deckName.contains(query))
-            .toList();
+    final suggestionList =
+        deckScope.decks.where((deck) => deck.deckName.contains(query)).toList();
 
     return ListView.separated(
         separatorBuilder: (context, index) => Divider(),
@@ -97,11 +96,8 @@ class DeckSearch extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty
-        ? recentDecks
-        : deckScope.decks
-            .where((deck) => deck.deckName.contains(query))
-            .toList();
+    final suggestionList =
+        deckScope.decks.where((deck) => deck.deckName.contains(query)).toList();
     return ListView.separated(
         separatorBuilder: (context, index) => Divider(),
         itemCount: suggestionList.length,

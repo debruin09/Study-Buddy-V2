@@ -27,52 +27,14 @@ class CreateNewCardPage extends StatefulWidget {
 }
 
 class _CreateNewCardPageState extends State<CreateNewCardPage> {
-  // TODO: DISPLAY TAGS WHEN THEY LOAD FROM THE DATABASE, ADD MORE TAGS TO PREVIOUS TAGS
   final TextEditingController _frontController = TextEditingController();
   final TextEditingController _backController = TextEditingController();
   final GlobalKey<ScaffoldState> _gKey = GlobalKey<ScaffoldState>();
   final cardBloc = locator.get<CardBloc>();
   final globalId = locator.get<GlobalId>();
-  final deckStatusCubit = locator.get<DeckStatusCubit>();
   final cardStatusCubit = locator.get<CardStatusCubit>();
   List<String> tags = [];
   String val = "";
-
-  void updateCard() {
-    cardBloc.add(
-      CardEvent.update(
-        updatedCard: widget.card,
-        newData: MyCard(
-          back: _backController.text.isEmpty
-              ? widget.card.back
-              : _backController.text,
-          front: _frontController.text.isEmpty
-              ? widget.card.front
-              : _frontController.text,
-          dateCreated: DateTime.now().toIso8601String().toString(),
-          difficulty: "easy",
-          id: widget.card.id,
-          tags: tags.length == 0 ? widget.card.tags : tags,
-        ),
-      ),
-    );
-  }
-
-  void addNewCard() {
-    cardBloc.add(
-      CardEvent.add(
-        card: MyCard(
-          id: globalId.cardId,
-          front: _frontController.text,
-          difficulty: "easy",
-          back: _backController.text,
-          dateCreated: DateTime.now().toIso8601String().toString(),
-          tags: tags,
-          isLocal: true,
-        ),
-      ),
-    );
-  }
 
   @override
   void initState() {
@@ -129,7 +91,7 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
               );
             },
           ),
-          backgroundColor: cardColor,
+          backgroundColor: bgColor,
           actions: [
             Container(
               padding: EdgeInsets.only(
@@ -178,7 +140,7 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
                   }
                 },
                 icon: Icon(
-                  Icons.save,
+                  Icons.check,
                   color: Colors.white,
                 ),
               ),
@@ -207,7 +169,6 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
                       labelText: "Front",
                     ),
                     keyboardType: TextInputType.multiline,
-                    autovalidate: true,
                     autocorrect: false,
                   ),
                 ),
@@ -227,7 +188,6 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
                       labelText: "Back",
                     ),
                     keyboardType: TextInputType.multiline,
-                    autovalidate: true,
                     autocorrect: false,
                   ),
                 ),
@@ -251,6 +211,42 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  void updateCard() {
+    cardBloc.add(
+      CardEvent.update(
+        updatedCard: widget.card,
+        newData: MyCard(
+          back: _backController.text.isEmpty
+              ? widget.card.back
+              : _backController.text,
+          front: _frontController.text.isEmpty
+              ? widget.card.front
+              : _frontController.text,
+          dateCreated: DateTime.now().toIso8601String().toString(),
+          difficulty: "easy",
+          id: widget.card.id,
+          tags: tags.length == 0 ? widget.card.tags : tags,
+        ),
+      ),
+    );
+  }
+
+  void addNewCard() {
+    cardBloc.add(
+      CardEvent.add(
+        card: MyCard(
+          id: globalId.cardId,
+          front: _frontController.text,
+          difficulty: "easy",
+          back: _backController.text,
+          dateCreated: DateTime.now().toIso8601String().toString(),
+          tags: tags,
+          isLocal: true,
         ),
       ),
     );

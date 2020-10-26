@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:study_buddy/application/auth/auth_bloc.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/injection.dart';
@@ -29,7 +30,8 @@ class LandingPage extends StatelessWidget {
 
 class _SplashScreen extends StatelessWidget {
   final loader = SpinKitThreeBounce(
-    color: primaryColor,
+    color: Colors.white,
+    size: 30.0,
   );
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class _SplashScreen extends StatelessWidget {
             children: <Widget>[
               Text(
                 "Study",
-                style: TextStyle(
+                style: GoogleFonts.courgette(
                     color: Colors.white,
                     letterSpacing: 15.0,
                     fontSize: 65.0,
@@ -54,7 +56,7 @@ class _SplashScreen extends StatelessWidget {
               ),
               Text(
                 "Buddy",
-                style: TextStyle(
+                style: GoogleFonts.courgette(
                     color: Colors.white,
                     letterSpacing: 15.0,
                     fontSize: 54.0,
@@ -65,10 +67,9 @@ class _SplashScreen extends StatelessWidget {
               ),
               Text(
                 "refine your definitions",
-                style: TextStyle(
-                    fontStyle: FontStyle.italic,
-                    fontSize: 34.0,
-                    color: Colors.black.withOpacity(0.8),
+                style: GoogleFonts.questrial(
+                    fontSize: 22.0,
+                    color: Colors.white.withOpacity(0.8),
                     fontWeight: FontWeight.w400),
               ),
               SizedBox(

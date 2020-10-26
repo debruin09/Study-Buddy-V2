@@ -4,20 +4,20 @@ import 'package:hooks_riverpod/all.dart';
 import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
+import 'package:study_buddy/presentation/study/deck_study_page.dart';
 import 'package:study_buddy/presentation/study/widgets/time_interval.dart';
-import 'package:study_buddy/presentation/speech/speech_page.dart';
 import 'package:highlight_text/highlight_text.dart';
 import 'package:study_buddy/application/core/speech/speech_bloc.dart';
 import 'dart:collection';
 
 final queueProvider = Provider((ref) => Queue<MyCard>());
 
-class FoldingCellCardWrapper extends ConsumerWidget {
+class BodyWrapper extends ConsumerWidget {
   final CardBloc cardBloc;
   final SpeechBloc speechBloc;
   final Map<String, HighlightedWord> highlights;
 
-  FoldingCellCardWrapper(
+  BodyWrapper(
       {Key key, @required this.cardBloc, this.speechBloc, this.highlights})
       : super(key: key);
   @override
@@ -35,7 +35,6 @@ class FoldingCellCardWrapper extends ConsumerWidget {
             state.cards.forEach((element) {
               if (!q.contains(element)) {
                 q.add(element);
-                print("This is the all the elements: ${q.length}");
               }
             });
             return Container(

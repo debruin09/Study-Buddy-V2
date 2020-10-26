@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_buddy/application/auth/register/register_bloc.dart';
-import 'package:study_buddy/injection.dart';
+import 'package:study_buddy/application/auth/login/login_bloc.dart';
 import 'package:study_buddy/domain/auth/auth_repository.dart';
+import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/auth/register/register_form.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
-/// This is the register UI
+/// Register Screen UI
 class RegisterScreen extends StatelessWidget {
   final AuthRepository _authRepository = locator.get<AuthRepository>();
 
@@ -14,65 +14,37 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Colors.white),
-      ),
-      body: BlocProvider<RegisterBloc>(
-        create: (context) => RegisterBloc(authRepository: _authRepository),
-        child: SingleChildScrollView(
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    width: double.infinity,
-                    padding: EdgeInsets.only(
-                      top: 180,
-                      left: 30.0,
-                    ),
-                    height: MediaQuery.of(context).size.height * 0.5,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/auth.jpg"),
-                          fit: BoxFit.cover),
-                    ),
+      body: BlocProvider<LoginBloc>(
+        create: (context) => LoginBloc(authRepository: _authRepository),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  width: double.infinity,
+                  margin: EdgeInsets.only(
+                    left: 30.0,
+                    bottom: 20.0,
+                    top: 50.0,
                   ),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    width: double.infinity,
-                    padding: EdgeInsets.only(
-                      top: 180,
-                      left: 30.0,
+                  child: Text(
+                    "Register",
+                    style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 45.0,
+                      fontWeight: FontWeight.bold,
                     ),
-                    height: MediaQuery.of(context).size.height,
-                    child: Text(
-                      "Register",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 45.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                width: double.infinity,
-                height: 450.0,
-                decoration: BoxDecoration(
-                  color: cardColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
                   ),
                 ),
-                child: RegisterForm(),
-              ),
-            ],
+                Card(
+                  elevation: 5.0,
+                  margin: EdgeInsets.symmetric(horizontal: 15.0),
+                  child: RegisterForm(),
+                ),
+              ],
+            ),
           ),
         ),
       ),

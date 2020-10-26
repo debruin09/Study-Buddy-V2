@@ -20,16 +20,15 @@ class TimeIntervalWidget extends ConsumerWidget {
     final q = watch(queueProvider);
 
     return Material(
-      color: bgColor,
+      color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
       child: !isShowAnswer
           ? Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 13.0),
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, bottom: 13.0, top: 10.0),
               child: MaterialButton(
-                elevation: 5.0,
                 color: primaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
@@ -44,8 +43,7 @@ class TimeIntervalWidget extends ConsumerWidget {
               ),
             )
           : Card(
-              elevation: 5.0,
-              margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 13.0),
+              margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),

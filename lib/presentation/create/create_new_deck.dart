@@ -132,7 +132,7 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
               },
             ),
           ),
-          backgroundColor: cardColor,
+          backgroundColor: bgColor,
           actions: [
             Container(
               padding: EdgeInsets.only(
@@ -197,7 +197,7 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
                   }
                 },
                 icon: Icon(
-                  Icons.save,
+                  Icons.check,
                   color: Colors.white,
                 ),
               ),

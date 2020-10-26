@@ -18,6 +18,7 @@ class CustomDrawer extends StatelessWidget {
       width: screenSize.width * 0.6,
       height: screenSize.height,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: double.infinity,
@@ -43,58 +44,96 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           Divider(),
-          ListTile(
-            leading: Icon(
-              Icons.local_library,
-              color: primaryColor,
+          Card(
+            elevation: 0.0,
+            child: ListTile(
+              onTap: () => print("Vocab"),
+              leading: Icon(
+                Icons.local_library,
+                color: primaryColor,
+              ),
+              title: Text("Vocabulary"),
             ),
-            title: Text("Vocabulary"),
           ),
-          ListTile(
-            leading: Icon(
-              Icons.wb_sunny,
-              color: primaryColor,
+          Card(
+            elevation: 0.0,
+            child: ListTile(
+              leading: Icon(
+                Icons.wb_sunny,
+                color: primaryColor,
+              ),
+              title: Text("Night mode"),
+              trailing: Switch(
+                  value: false,
+                  onChanged: (isNightMode) {
+                    isNightMode = !isNightMode;
+                  }),
             ),
-            title: Text("Night mode"),
-            trailing: Switch(
-                value: false,
-                onChanged: (isNightMode) {
-                  isNightMode = !isNightMode;
-                }),
           ),
           Divider(
             height: 2.0,
           ),
-          ListTile(
-            leading: Icon(
-              Icons.settings_applications,
-              color: primaryColor,
+          Card(
+            elevation: 0.0,
+            child: ListTile(
+              onTap: () => print("settings"),
+              leading: Icon(
+                Icons.settings_applications,
+                color: primaryColor,
+              ),
+              title: Text("Settings"),
             ),
-            title: Text("Settings"),
           ),
-          ListTile(
-            leading: Icon(
-              Icons.person,
-              color: primaryColor,
+          Card(
+            elevation: 0.0,
+            child: ListTile(
+              leading: Icon(
+                Icons.person,
+                color: primaryColor,
+              ),
+              title: Text("logout"),
+              onTap: () {
+                context.bloc<AuthBloc>()..add(AuthLoggedOut());
+              },
             ),
-            title: Text("logout"),
-            onTap: () {
-              context.bloc<AuthBloc>()..add(AuthLoggedOut());
-            },
           ),
-          ListTile(
-            leading: Icon(
-              Icons.help_outline,
-              color: primaryColor,
+          Card(
+            elevation: 0.0,
+            child: ListTile(
+              onTap: () => print("help"),
+              leading: Icon(
+                Icons.help_outline,
+                color: primaryColor,
+              ),
+              title: Text("Help"),
             ),
-            title: Text("Help"),
           ),
-          ListTile(
-            leading: Icon(
-              Icons.feedback,
-              color: primaryColor,
+          Card(
+            elevation: 0.0,
+            child: ListTile(
+              onTap: () => print("feedback"),
+              leading: Icon(
+                Icons.feedback,
+                color: primaryColor,
+              ),
+              title: Text("Send feedback"),
             ),
-            title: Text("Send feedback"),
+          ),
+          Divider(
+            height: 2.0,
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 20.0),
+            child: Text(
+              "from DBTech",
+              style: TextStyle(
+                fontSize: 17.0,
+                color: Colors.black26,
+              ),
+            ),
           ),
         ],
       ),

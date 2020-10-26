@@ -35,6 +35,15 @@ class _$LoginEventTearOff {
       password: password,
     );
   }
+
+// ignore: unused_element
+  RegisterWithCredentialsPressed registerWithCredentials(
+      {@required String email, @required String password}) {
+    return RegisterWithCredentialsPressed(
+      email: email,
+      password: password,
+    );
+  }
 }
 
 /// @nodoc
@@ -48,12 +57,14 @@ mixin _$LoginEvent {
     @required Result emailChanged(String email),
     @required Result passwordChanged(String password),
     @required Result loginWithCredentials(String email, String password),
+    @required Result registerWithCredentials(String email, String password),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result emailChanged(String email),
     Result passwordChanged(String password),
     Result loginWithCredentials(String email, String password),
+    Result registerWithCredentials(String email, String password),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -61,12 +72,15 @@ mixin _$LoginEvent {
     @required Result emailChanged(LoginEmailChange value),
     @required Result passwordChanged(LoginPasswordChanged value),
     @required Result loginWithCredentials(LoginWithCredentialsPressed value),
+    @required
+        Result registerWithCredentials(RegisterWithCredentialsPressed value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result emailChanged(LoginEmailChange value),
     Result passwordChanged(LoginPasswordChanged value),
     Result loginWithCredentials(LoginWithCredentialsPressed value),
+    Result registerWithCredentials(RegisterWithCredentialsPressed value),
     @required Result orElse(),
   });
 }
@@ -150,10 +164,12 @@ class _$LoginEmailChange implements LoginEmailChange {
     @required Result emailChanged(String email),
     @required Result passwordChanged(String password),
     @required Result loginWithCredentials(String email, String password),
+    @required Result registerWithCredentials(String email, String password),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
     assert(loginWithCredentials != null);
+    assert(registerWithCredentials != null);
     return emailChanged(email);
   }
 
@@ -163,6 +179,7 @@ class _$LoginEmailChange implements LoginEmailChange {
     Result emailChanged(String email),
     Result passwordChanged(String password),
     Result loginWithCredentials(String email, String password),
+    Result registerWithCredentials(String email, String password),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -178,10 +195,13 @@ class _$LoginEmailChange implements LoginEmailChange {
     @required Result emailChanged(LoginEmailChange value),
     @required Result passwordChanged(LoginPasswordChanged value),
     @required Result loginWithCredentials(LoginWithCredentialsPressed value),
+    @required
+        Result registerWithCredentials(RegisterWithCredentialsPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
     assert(loginWithCredentials != null);
+    assert(registerWithCredentials != null);
     return emailChanged(this);
   }
 
@@ -191,6 +211,7 @@ class _$LoginEmailChange implements LoginEmailChange {
     Result emailChanged(LoginEmailChange value),
     Result passwordChanged(LoginPasswordChanged value),
     Result loginWithCredentials(LoginWithCredentialsPressed value),
+    Result registerWithCredentials(RegisterWithCredentialsPressed value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -274,10 +295,12 @@ class _$LoginPasswordChanged implements LoginPasswordChanged {
     @required Result emailChanged(String email),
     @required Result passwordChanged(String password),
     @required Result loginWithCredentials(String email, String password),
+    @required Result registerWithCredentials(String email, String password),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
     assert(loginWithCredentials != null);
+    assert(registerWithCredentials != null);
     return passwordChanged(password);
   }
 
@@ -287,6 +310,7 @@ class _$LoginPasswordChanged implements LoginPasswordChanged {
     Result emailChanged(String email),
     Result passwordChanged(String password),
     Result loginWithCredentials(String email, String password),
+    Result registerWithCredentials(String email, String password),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -302,10 +326,13 @@ class _$LoginPasswordChanged implements LoginPasswordChanged {
     @required Result emailChanged(LoginEmailChange value),
     @required Result passwordChanged(LoginPasswordChanged value),
     @required Result loginWithCredentials(LoginWithCredentialsPressed value),
+    @required
+        Result registerWithCredentials(RegisterWithCredentialsPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
     assert(loginWithCredentials != null);
+    assert(registerWithCredentials != null);
     return passwordChanged(this);
   }
 
@@ -315,6 +342,7 @@ class _$LoginPasswordChanged implements LoginPasswordChanged {
     Result emailChanged(LoginEmailChange value),
     Result passwordChanged(LoginPasswordChanged value),
     Result loginWithCredentials(LoginWithCredentialsPressed value),
+    Result registerWithCredentials(RegisterWithCredentialsPressed value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -411,10 +439,12 @@ class _$LoginWithCredentialsPressed implements LoginWithCredentialsPressed {
     @required Result emailChanged(String email),
     @required Result passwordChanged(String password),
     @required Result loginWithCredentials(String email, String password),
+    @required Result registerWithCredentials(String email, String password),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
     assert(loginWithCredentials != null);
+    assert(registerWithCredentials != null);
     return loginWithCredentials(email, password);
   }
 
@@ -424,6 +454,7 @@ class _$LoginWithCredentialsPressed implements LoginWithCredentialsPressed {
     Result emailChanged(String email),
     Result passwordChanged(String password),
     Result loginWithCredentials(String email, String password),
+    Result registerWithCredentials(String email, String password),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -439,10 +470,13 @@ class _$LoginWithCredentialsPressed implements LoginWithCredentialsPressed {
     @required Result emailChanged(LoginEmailChange value),
     @required Result passwordChanged(LoginPasswordChanged value),
     @required Result loginWithCredentials(LoginWithCredentialsPressed value),
+    @required
+        Result registerWithCredentials(RegisterWithCredentialsPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
     assert(loginWithCredentials != null);
+    assert(registerWithCredentials != null);
     return loginWithCredentials(this);
   }
 
@@ -452,6 +486,7 @@ class _$LoginWithCredentialsPressed implements LoginWithCredentialsPressed {
     Result emailChanged(LoginEmailChange value),
     Result passwordChanged(LoginPasswordChanged value),
     Result loginWithCredentials(LoginWithCredentialsPressed value),
+    Result registerWithCredentials(RegisterWithCredentialsPressed value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -470,5 +505,154 @@ abstract class LoginWithCredentialsPressed implements LoginEvent {
   String get email;
   String get password;
   $LoginWithCredentialsPressedCopyWith<LoginWithCredentialsPressed>
+      get copyWith;
+}
+
+/// @nodoc
+abstract class $RegisterWithCredentialsPressedCopyWith<$Res> {
+  factory $RegisterWithCredentialsPressedCopyWith(
+          RegisterWithCredentialsPressed value,
+          $Res Function(RegisterWithCredentialsPressed) then) =
+      _$RegisterWithCredentialsPressedCopyWithImpl<$Res>;
+  $Res call({String email, String password});
+}
+
+/// @nodoc
+class _$RegisterWithCredentialsPressedCopyWithImpl<$Res>
+    extends _$LoginEventCopyWithImpl<$Res>
+    implements $RegisterWithCredentialsPressedCopyWith<$Res> {
+  _$RegisterWithCredentialsPressedCopyWithImpl(
+      RegisterWithCredentialsPressed _value,
+      $Res Function(RegisterWithCredentialsPressed) _then)
+      : super(_value, (v) => _then(v as RegisterWithCredentialsPressed));
+
+  @override
+  RegisterWithCredentialsPressed get _value =>
+      super._value as RegisterWithCredentialsPressed;
+
+  @override
+  $Res call({
+    Object email = freezed,
+    Object password = freezed,
+  }) {
+    return _then(RegisterWithCredentialsPressed(
+      email: email == freezed ? _value.email : email as String,
+      password: password == freezed ? _value.password : password as String,
+    ));
+  }
+}
+
+/// @nodoc
+class _$RegisterWithCredentialsPressed
+    implements RegisterWithCredentialsPressed {
+  const _$RegisterWithCredentialsPressed(
+      {@required this.email, @required this.password})
+      : assert(email != null),
+        assert(password != null);
+
+  @override
+  final String email;
+  @override
+  final String password;
+
+  @override
+  String toString() {
+    return 'LoginEvent.registerWithCredentials(email: $email, password: $password)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is RegisterWithCredentialsPressed &&
+            (identical(other.email, email) ||
+                const DeepCollectionEquality().equals(other.email, email)) &&
+            (identical(other.password, password) ||
+                const DeepCollectionEquality()
+                    .equals(other.password, password)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(password);
+
+  @override
+  $RegisterWithCredentialsPressedCopyWith<RegisterWithCredentialsPressed>
+      get copyWith => _$RegisterWithCredentialsPressedCopyWithImpl<
+          RegisterWithCredentialsPressed>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result emailChanged(String email),
+    @required Result passwordChanged(String password),
+    @required Result loginWithCredentials(String email, String password),
+    @required Result registerWithCredentials(String email, String password),
+  }) {
+    assert(emailChanged != null);
+    assert(passwordChanged != null);
+    assert(loginWithCredentials != null);
+    assert(registerWithCredentials != null);
+    return registerWithCredentials(email, password);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result emailChanged(String email),
+    Result passwordChanged(String password),
+    Result loginWithCredentials(String email, String password),
+    Result registerWithCredentials(String email, String password),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (registerWithCredentials != null) {
+      return registerWithCredentials(email, password);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result emailChanged(LoginEmailChange value),
+    @required Result passwordChanged(LoginPasswordChanged value),
+    @required Result loginWithCredentials(LoginWithCredentialsPressed value),
+    @required
+        Result registerWithCredentials(RegisterWithCredentialsPressed value),
+  }) {
+    assert(emailChanged != null);
+    assert(passwordChanged != null);
+    assert(loginWithCredentials != null);
+    assert(registerWithCredentials != null);
+    return registerWithCredentials(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result emailChanged(LoginEmailChange value),
+    Result passwordChanged(LoginPasswordChanged value),
+    Result loginWithCredentials(LoginWithCredentialsPressed value),
+    Result registerWithCredentials(RegisterWithCredentialsPressed value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (registerWithCredentials != null) {
+      return registerWithCredentials(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class RegisterWithCredentialsPressed implements LoginEvent {
+  const factory RegisterWithCredentialsPressed(
+      {@required String email,
+      @required String password}) = _$RegisterWithCredentialsPressed;
+
+  String get email;
+  String get password;
+  $RegisterWithCredentialsPressedCopyWith<RegisterWithCredentialsPressed>
       get copyWith;
 }

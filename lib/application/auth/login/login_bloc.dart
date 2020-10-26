@@ -22,6 +22,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       passwordChanged: (e) => _mapLoginPasswordChangeToState(e.password),
       loginWithCredentials: (e) => _mapLoginWithCredentialsPressedToState(
           email: e.email, password: e.password),
+      registerWithCredentials: (RegisterWithCredentialsPressed value) =>
+          _mapRegisterWithCredentialState(
+        email: value.email,
+        password: value.password,
+      ),
     );
   }
 
@@ -38,6 +43,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     yield LoginState.loading();
     try {
       await _authRepository.signInWithCredentials(email, password);
+      yield LoginState.success();
+    } catch (_) {
+      yield LoginState.failure();
+    }
+  }
+
+  Stream<LoginState> _mapRegisterWithCredentialState(
+      {String email, String password}) async* {
+    yield LoginState.loading();
+    try {
+      await _authRepository.signUp(email, password);
       yield LoginState.success();
     } catch (_) {
       yield LoginState.failure();

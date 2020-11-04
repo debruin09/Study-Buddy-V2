@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_tagging/flutter_tagging.dart';
 
 import 'package:study_buddy/injection.dart';
@@ -6,11 +7,15 @@ import 'package:study_buddy/domain/core/tag_entity.dart';
 import 'package:study_buddy/domain/core/tag_repository.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
-class Loading extends StatelessWidget {
+class Loader extends StatelessWidget {
+  final Color color;
+
+  const Loader({Key key, this.color = Colors.white}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: CircularProgressIndicator(),
+    return SpinKitThreeBounce(
+      color: color,
+      size: 30.0,
     );
   }
 }
@@ -55,7 +60,7 @@ class TagWidget extends StatelessWidget {
           return SuggestionConfiguration(
             title: Text(t.tag),
             additionWidget: Chip(
-              backgroundColor: Colors.black,
+              backgroundColor: primaryColor,
               avatar: Icon(
                 Icons.add_circle,
                 color: tagsColor,
@@ -73,8 +78,8 @@ class TagWidget extends StatelessWidget {
           return ChipConfiguration(
             label: Text(t.tag),
             backgroundColor: tagsColor,
-            labelStyle: TextStyle(color: Colors.black),
-            deleteIconColor: Colors.black,
+            labelStyle: TextStyle(color: Colors.white),
+            deleteIconColor: Colors.white,
           );
         },
         onChanged: onChanged,

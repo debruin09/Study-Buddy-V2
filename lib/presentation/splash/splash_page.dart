@@ -7,10 +7,11 @@ import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/auth/login/login_screen.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
 import 'package:study_buddy/presentation/home/home_page.dart';
 
 class LandingPage extends StatelessWidget {
-  final getUserId = locator.get<GlobalId>();
+  final userScope = locator.get<GlobalId>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +20,10 @@ class LandingPage extends StatelessWidget {
         builder: (context, state) {
           return state.map(
             initial: (_) => _SplashScreen(),
-            authenticated: (success) => HomePage(user: success.user),
+            authenticated: (success) {
+              userScope.setUser(success.user);
+              return HomePage(user: success.user);
+            },
             unauthenticated: (_) => LoginScreen(),
           );
         },
@@ -29,10 +33,6 @@ class LandingPage extends StatelessWidget {
 }
 
 class _SplashScreen extends StatelessWidget {
-  final loader = SpinKitThreeBounce(
-    color: Colors.white,
-    size: 30.0,
-  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +76,7 @@ class _SplashScreen extends StatelessWidget {
                 height: 20.0,
               ),
               Center(
-                child: loader,
+                child: Loader(),
               ),
             ],
           ),

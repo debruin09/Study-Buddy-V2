@@ -11,6 +11,7 @@ import 'package:study_buddy/presentation/core/theme/theme_styles.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/study/deck_study_page.dart';
 import 'package:study_buddy/presentation/study/widgets/time_interval.dart';
 import 'package:uuid/uuid.dart';
 
@@ -41,6 +42,13 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
     if (cardStatusCubit.state == "new") {
       final newCardID = Uuid().v4();
       globalId.setCardId(newCardID);
+    }
+
+    if (cardStatusCubit.state == "edit") {
+      _frontController.text = widget.card.front;
+      _backController.text = widget.card.back;
+
+      widget.card.tags.addAll(tags);
     }
     super.initState();
     cardBloc.dispose();
@@ -228,6 +236,7 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
               ? widget.card.front
               : _frontController.text,
           dateCreated: DateTime.now().toIso8601String().toString(),
+          me: widget.card.me,
           difficulty: "easy",
           id: widget.card.id,
           tags: tags.length == 0 ? widget.card.tags : tags,

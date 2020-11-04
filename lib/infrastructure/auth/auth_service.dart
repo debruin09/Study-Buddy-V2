@@ -1,6 +1,4 @@
-import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
-import 'package:study_buddy/domain/auth/auth_failure.dart';
 import 'package:study_buddy/domain/auth/user.dart';
 import 'package:study_buddy/infrastructure/core/database_service.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
@@ -48,6 +46,7 @@ class AuthService implements AuthRepository {
   Future<User> getUser() async {
     final result = _firebaseAuth.currentUser;
     myUid.setUserId(result.uid);
+
     final User user =
         await FirestoreService(uid: result.uid).getUser(result.uid);
     return user;

@@ -18,10 +18,21 @@ class SpeechBloc extends Bloc<SpeechEvent, SpeechState> {
   Stream<SpeechState> mapEventToState(
     SpeechEvent event,
   ) async* {
-    yield* event.map(onChange: (_OnChange value) async* {
-      yield state.copyWith(
+    yield* event.map(
+      onChange: (_OnChange value) async* {
+        yield state.copyWith(
           speechEntity: SpeechEntity(
-              isListening: true, text: value.text ?? "recording..."));
-    });
+            isListening: true,
+            text: value.text,
+          ),
+        );
+      },
+      error: (_SpeechEventError value) async* {
+        print("SPEECH BLOC ERROR: { ${value.errorMessage} }");
+      },
+    );
+    //  error: (_SpeechEventError value) async* {
+    //   print("SPEECH BLOC ERROR: { ${value.errorMessage} }");
+    //   yield SpeechState.error(errorMessage: "No internet connection found");
   }
 }

@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:study_buddy/domain/core/local_notification_repository.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
-import 'package:study_buddy/presentation/study/widgets/folding_cell_card_wrapper.dart';
-
-final showAnswerProvider = StateProvider((ref) => false);
+import 'package:study_buddy/presentation/study/deck_study_page.dart';
+import 'package:study_buddy/presentation/study/widgets/study.dart';
 
 class TimeIntervalWidget extends ConsumerWidget {
   final LocalNotificationRepository notificationRepository;
@@ -17,8 +16,7 @@ class TimeIntervalWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final isShowAnswer = watch(showAnswerProvider).state;
-    final q = watch(queueProvider);
-
+    final queue = watch(queueReader);
     return Material(
       color: Colors.white,
       shape: RoundedRectangleBorder(
@@ -27,7 +25,10 @@ class TimeIntervalWidget extends ConsumerWidget {
       child: !isShowAnswer
           ? Padding(
               padding: const EdgeInsets.only(
-                  left: 15.0, right: 15.0, bottom: 13.0, top: 10.0),
+                left: 15.0,
+                right: 15.0,
+                bottom: 10.0,
+              ),
               child: MaterialButton(
                 color: primaryColor,
                 shape: RoundedRectangleBorder(
@@ -43,7 +44,10 @@ class TimeIntervalWidget extends ConsumerWidget {
               ),
             )
           : Card(
-              margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+              margin: EdgeInsets.symmetric(
+                horizontal: 10.0,
+                vertical: 10.0,
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
@@ -61,10 +65,10 @@ class TimeIntervalWidget extends ConsumerWidget {
                       ),
                       pressed: () {
                         context.read(showAnswerProvider).state = false;
-                        final firstItem = q.removeFirst();
+                        final firstItem = queue.removeFirst();
                         notificationRepository.notification(
                             front: firstItem.front);
-                        q.addLast(firstItem);
+                        queue.addLast(firstItem);
                       },
                     ),
                   ),
@@ -76,10 +80,10 @@ class TimeIntervalWidget extends ConsumerWidget {
                       icon: Icons.star_half,
                       pressed: () {
                         context.read(showAnswerProvider).state = false;
-                        final firstItem = q.removeFirst();
+                        final firstItem = queue.removeFirst();
                         notificationRepository.notification(
                             front: firstItem.front);
-                        q.addLast(firstItem);
+                        queue.addLast(firstItem);
                       },
                     ),
                   ),
@@ -95,10 +99,10 @@ class TimeIntervalWidget extends ConsumerWidget {
                       ),
                       pressed: () {
                         context.read(showAnswerProvider).state = false;
-                        final firstItem = q.removeFirst();
+                        final firstItem = queue.removeFirst();
                         notificationRepository.notification(
                             front: firstItem.front);
-                        q.addLast(firstItem);
+                        queue.addLast(firstItem);
                       },
                     ),
                   ),

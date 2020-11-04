@@ -78,4 +78,26 @@ class MyCard extends Equatable {
         tags: entity.tags,
         dateCreated: entity.dateCreated);
   }
+
+  MyCard copyWith({
+    String front,
+    String back,
+    String me,
+    String id,
+    String difficulty,
+    String dateCreated,
+    List<String> tags,
+    bool isLocal,
+  }) {
+    return MyCard(
+      front: front ?? this.front,
+      back: back ?? this.back,
+      me: me ?? this.me,
+      id: id ?? this.id,
+      difficulty: difficulty ?? this.difficulty,
+      dateCreated: dateCreated ?? this.dateCreated,
+      tags: tags ?? this.tags,
+      isLocal: isLocal ?? this.isLocal,
+    );
+  }
 }

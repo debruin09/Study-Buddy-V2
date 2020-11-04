@@ -8,7 +8,7 @@ import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:study_buddy/domain/core/utils/custom_extensions.dart';
-import 'package:study_buddy/presentation/study/widgets/folding_cell_card_wrapper.dart';
+import 'package:study_buddy/presentation/study/widgets/body_wrapper.dart';
 
 class CustomMyCard extends ConsumerWidget {
   CustomMyCard(
@@ -113,6 +113,14 @@ class CustomMyCard extends ConsumerWidget {
               Text(
                 "Back: " + card.back,
               ),
+              SizedBox(
+                height: 8.0,
+              ),
+              card.me != null
+                  ? Text(
+                      "${globalId.getUser.username}: " + card.me,
+                    )
+                  : Container(),
             ],
             childrenPadding:
                 EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),

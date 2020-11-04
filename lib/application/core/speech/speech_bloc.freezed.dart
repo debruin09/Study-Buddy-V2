@@ -19,6 +19,13 @@ class _$SpeechEventTearOff {
       text: text,
     );
   }
+
+// ignore: unused_element
+  _SpeechEventError error({@required String errorMessage}) {
+    return _SpeechEventError(
+      errorMessage: errorMessage,
+    );
+  }
 }
 
 /// @nodoc
@@ -27,28 +34,28 @@ const $SpeechEvent = _$SpeechEventTearOff();
 
 /// @nodoc
 mixin _$SpeechEvent {
-  String get text;
-
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result onChange(String text),
+    @required Result error(String errorMessage),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result onChange(String text),
+    Result error(String errorMessage),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result onChange(_OnChange value),
+    @required Result error(_SpeechEventError value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result onChange(_OnChange value),
+    Result error(_SpeechEventError value),
     @required Result orElse(),
   });
-
-  $SpeechEventCopyWith<SpeechEvent> get copyWith;
 }
 
 /// @nodoc
@@ -56,7 +63,6 @@ abstract class $SpeechEventCopyWith<$Res> {
   factory $SpeechEventCopyWith(
           SpeechEvent value, $Res Function(SpeechEvent) then) =
       _$SpeechEventCopyWithImpl<$Res>;
-  $Res call({String text});
 }
 
 /// @nodoc
@@ -66,22 +72,12 @@ class _$SpeechEventCopyWithImpl<$Res> implements $SpeechEventCopyWith<$Res> {
   final SpeechEvent _value;
   // ignore: unused_field
   final $Res Function(SpeechEvent) _then;
-
-  @override
-  $Res call({
-    Object text = freezed,
-  }) {
-    return _then(_value.copyWith(
-      text: text == freezed ? _value.text : text as String,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class _$OnChangeCopyWith<$Res> implements $SpeechEventCopyWith<$Res> {
+abstract class _$OnChangeCopyWith<$Res> {
   factory _$OnChangeCopyWith(_OnChange value, $Res Function(_OnChange) then) =
       __$OnChangeCopyWithImpl<$Res>;
-  @override
   $Res call({String text});
 }
 
@@ -136,8 +132,10 @@ class _$_OnChange implements _OnChange {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result onChange(String text),
+    @required Result error(String errorMessage),
   }) {
     assert(onChange != null);
+    assert(error != null);
     return onChange(text);
   }
 
@@ -145,6 +143,7 @@ class _$_OnChange implements _OnChange {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result onChange(String text),
+    Result error(String errorMessage),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -158,8 +157,10 @@ class _$_OnChange implements _OnChange {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result onChange(_OnChange value),
+    @required Result error(_SpeechEventError value),
   }) {
     assert(onChange != null);
+    assert(error != null);
     return onChange(this);
   }
 
@@ -167,6 +168,7 @@ class _$_OnChange implements _OnChange {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result onChange(_OnChange value),
+    Result error(_SpeechEventError value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -180,10 +182,128 @@ class _$_OnChange implements _OnChange {
 abstract class _OnChange implements SpeechEvent {
   const factory _OnChange({@required String text}) = _$_OnChange;
 
-  @override
   String get text;
-  @override
   _$OnChangeCopyWith<_OnChange> get copyWith;
+}
+
+/// @nodoc
+abstract class _$SpeechEventErrorCopyWith<$Res> {
+  factory _$SpeechEventErrorCopyWith(
+          _SpeechEventError value, $Res Function(_SpeechEventError) then) =
+      __$SpeechEventErrorCopyWithImpl<$Res>;
+  $Res call({String errorMessage});
+}
+
+/// @nodoc
+class __$SpeechEventErrorCopyWithImpl<$Res>
+    extends _$SpeechEventCopyWithImpl<$Res>
+    implements _$SpeechEventErrorCopyWith<$Res> {
+  __$SpeechEventErrorCopyWithImpl(
+      _SpeechEventError _value, $Res Function(_SpeechEventError) _then)
+      : super(_value, (v) => _then(v as _SpeechEventError));
+
+  @override
+  _SpeechEventError get _value => super._value as _SpeechEventError;
+
+  @override
+  $Res call({
+    Object errorMessage = freezed,
+  }) {
+    return _then(_SpeechEventError(
+      errorMessage: errorMessage == freezed
+          ? _value.errorMessage
+          : errorMessage as String,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_SpeechEventError implements _SpeechEventError {
+  const _$_SpeechEventError({@required this.errorMessage})
+      : assert(errorMessage != null);
+
+  @override
+  final String errorMessage;
+
+  @override
+  String toString() {
+    return 'SpeechEvent.error(errorMessage: $errorMessage)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _SpeechEventError &&
+            (identical(other.errorMessage, errorMessage) ||
+                const DeepCollectionEquality()
+                    .equals(other.errorMessage, errorMessage)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(errorMessage);
+
+  @override
+  _$SpeechEventErrorCopyWith<_SpeechEventError> get copyWith =>
+      __$SpeechEventErrorCopyWithImpl<_SpeechEventError>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result onChange(String text),
+    @required Result error(String errorMessage),
+  }) {
+    assert(onChange != null);
+    assert(error != null);
+    return error(errorMessage);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result onChange(String text),
+    Result error(String errorMessage),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (error != null) {
+      return error(errorMessage);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result onChange(_OnChange value),
+    @required Result error(_SpeechEventError value),
+  }) {
+    assert(onChange != null);
+    assert(error != null);
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result onChange(_OnChange value),
+    Result error(_SpeechEventError value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SpeechEventError implements SpeechEvent {
+  const factory _SpeechEventError({@required String errorMessage}) =
+      _$_SpeechEventError;
+
+  String get errorMessage;
+  _$SpeechEventErrorCopyWith<_SpeechEventError> get copyWith;
 }
 
 /// @nodoc

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
@@ -15,6 +16,7 @@ class CardBloc extends Bloc<CardEvent, CardState> {
 // Dependancy
   final DatabaseRepository databaseRepository;
   StreamSubscription _cardsSubscription;
+
   @override
   Stream<CardState> mapEventToState(CardEvent event) async* {
     yield* event.map(

@@ -41,7 +41,7 @@ class _$CardEventTearOff {
   }
 
 // ignore: unused_element
-  CardUpdated updated({@required List<MyCard> cards}) {
+  CardUpdated updated({@required Queue<MyCard> cards}) {
     return CardUpdated(
       cards: cards,
     );
@@ -60,7 +60,7 @@ mixin _$CardEvent {
     @required Result delete(MyCard card),
     @required Result update(MyCard updatedCard, MyCard newData),
     @required Result add(MyCard card),
-    @required Result updated(List<MyCard> cards),
+    @required Result updated(Queue<MyCard> cards),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -68,7 +68,7 @@ mixin _$CardEvent {
     Result delete(MyCard card),
     Result update(MyCard updatedCard, MyCard newData),
     Result add(MyCard card),
-    Result updated(List<MyCard> cards),
+    Result updated(Queue<MyCard> cards),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -151,7 +151,7 @@ class _$LoadCards with DiagnosticableTreeMixin implements LoadCards {
     @required Result delete(MyCard card),
     @required Result update(MyCard updatedCard, MyCard newData),
     @required Result add(MyCard card),
-    @required Result updated(List<MyCard> cards),
+    @required Result updated(Queue<MyCard> cards),
   }) {
     assert(load != null);
     assert(delete != null);
@@ -168,7 +168,7 @@ class _$LoadCards with DiagnosticableTreeMixin implements LoadCards {
     Result delete(MyCard card),
     Result update(MyCard updatedCard, MyCard newData),
     Result add(MyCard card),
-    Result updated(List<MyCard> cards),
+    Result updated(Queue<MyCard> cards),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -287,7 +287,7 @@ class _$DeleteCard with DiagnosticableTreeMixin implements DeleteCard {
     @required Result delete(MyCard card),
     @required Result update(MyCard updatedCard, MyCard newData),
     @required Result add(MyCard card),
-    @required Result updated(List<MyCard> cards),
+    @required Result updated(Queue<MyCard> cards),
   }) {
     assert(load != null);
     assert(delete != null);
@@ -304,7 +304,7 @@ class _$DeleteCard with DiagnosticableTreeMixin implements DeleteCard {
     Result delete(MyCard card),
     Result update(MyCard updatedCard, MyCard newData),
     Result add(MyCard card),
-    Result updated(List<MyCard> cards),
+    Result updated(Queue<MyCard> cards),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -439,7 +439,7 @@ class _$UpdateCard with DiagnosticableTreeMixin implements UpdateCard {
     @required Result delete(MyCard card),
     @required Result update(MyCard updatedCard, MyCard newData),
     @required Result add(MyCard card),
-    @required Result updated(List<MyCard> cards),
+    @required Result updated(Queue<MyCard> cards),
   }) {
     assert(load != null);
     assert(delete != null);
@@ -456,7 +456,7 @@ class _$UpdateCard with DiagnosticableTreeMixin implements UpdateCard {
     Result delete(MyCard card),
     Result update(MyCard updatedCard, MyCard newData),
     Result add(MyCard card),
-    Result updated(List<MyCard> cards),
+    Result updated(Queue<MyCard> cards),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -579,7 +579,7 @@ class _$AddCard with DiagnosticableTreeMixin implements AddCard {
     @required Result delete(MyCard card),
     @required Result update(MyCard updatedCard, MyCard newData),
     @required Result add(MyCard card),
-    @required Result updated(List<MyCard> cards),
+    @required Result updated(Queue<MyCard> cards),
   }) {
     assert(load != null);
     assert(delete != null);
@@ -596,7 +596,7 @@ class _$AddCard with DiagnosticableTreeMixin implements AddCard {
     Result delete(MyCard card),
     Result update(MyCard updatedCard, MyCard newData),
     Result add(MyCard card),
-    Result updated(List<MyCard> cards),
+    Result updated(Queue<MyCard> cards),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -653,7 +653,7 @@ abstract class $CardUpdatedCopyWith<$Res> {
   factory $CardUpdatedCopyWith(
           CardUpdated value, $Res Function(CardUpdated) then) =
       _$CardUpdatedCopyWithImpl<$Res>;
-  $Res call({List<MyCard> cards});
+  $Res call({Queue<MyCard> cards});
 }
 
 /// @nodoc
@@ -671,7 +671,7 @@ class _$CardUpdatedCopyWithImpl<$Res> extends _$CardEventCopyWithImpl<$Res>
     Object cards = freezed,
   }) {
     return _then(CardUpdated(
-      cards: cards == freezed ? _value.cards : cards as List<MyCard>,
+      cards: cards == freezed ? _value.cards : cards as Queue<MyCard>,
     ));
   }
 }
@@ -681,7 +681,7 @@ class _$CardUpdated with DiagnosticableTreeMixin implements CardUpdated {
   const _$CardUpdated({@required this.cards}) : assert(cards != null);
 
   @override
-  final List<MyCard> cards;
+  final Queue<MyCard> cards;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -719,7 +719,7 @@ class _$CardUpdated with DiagnosticableTreeMixin implements CardUpdated {
     @required Result delete(MyCard card),
     @required Result update(MyCard updatedCard, MyCard newData),
     @required Result add(MyCard card),
-    @required Result updated(List<MyCard> cards),
+    @required Result updated(Queue<MyCard> cards),
   }) {
     assert(load != null);
     assert(delete != null);
@@ -736,7 +736,7 @@ class _$CardUpdated with DiagnosticableTreeMixin implements CardUpdated {
     Result delete(MyCard card),
     Result update(MyCard updatedCard, MyCard newData),
     Result add(MyCard card),
-    Result updated(List<MyCard> cards),
+    Result updated(Queue<MyCard> cards),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -782,9 +782,9 @@ class _$CardUpdated with DiagnosticableTreeMixin implements CardUpdated {
 }
 
 abstract class CardUpdated implements CardEvent {
-  const factory CardUpdated({@required List<MyCard> cards}) = _$CardUpdated;
+  const factory CardUpdated({@required Queue<MyCard> cards}) = _$CardUpdated;
 
-  List<MyCard> get cards;
+  Queue<MyCard> get cards;
   $CardUpdatedCopyWith<CardUpdated> get copyWith;
 }
 
@@ -803,7 +803,7 @@ class _$CardStateTearOff {
   }
 
 // ignore: unused_element
-  CardLoadSuccess success({@required List<MyCard> cards}) {
+  CardLoadSuccess success({@required Queue<MyCard> cards}) {
     return CardLoadSuccess(
       cards: cards,
     );
@@ -827,14 +827,14 @@ mixin _$CardState {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result success(List<MyCard> cards),
+    @required Result success(Queue<MyCard> cards),
     @required Result error(String message),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result success(List<MyCard> cards),
+    Result success(Queue<MyCard> cards),
     Result error(String message),
     @required Result orElse(),
   });
@@ -916,7 +916,7 @@ class _$CardInitial with DiagnosticableTreeMixin implements CardInitial {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result success(List<MyCard> cards),
+    @required Result success(Queue<MyCard> cards),
     @required Result error(String message),
   }) {
     assert(initial != null);
@@ -931,7 +931,7 @@ class _$CardInitial with DiagnosticableTreeMixin implements CardInitial {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result success(List<MyCard> cards),
+    Result success(Queue<MyCard> cards),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -1027,7 +1027,7 @@ class _$CardLoadInProgress
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result success(List<MyCard> cards),
+    @required Result success(Queue<MyCard> cards),
     @required Result error(String message),
   }) {
     assert(initial != null);
@@ -1042,7 +1042,7 @@ class _$CardLoadInProgress
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result success(List<MyCard> cards),
+    Result success(Queue<MyCard> cards),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -1094,7 +1094,7 @@ abstract class $CardLoadSuccessCopyWith<$Res> {
   factory $CardLoadSuccessCopyWith(
           CardLoadSuccess value, $Res Function(CardLoadSuccess) then) =
       _$CardLoadSuccessCopyWithImpl<$Res>;
-  $Res call({List<MyCard> cards});
+  $Res call({Queue<MyCard> cards});
 }
 
 /// @nodoc
@@ -1112,7 +1112,7 @@ class _$CardLoadSuccessCopyWithImpl<$Res> extends _$CardStateCopyWithImpl<$Res>
     Object cards = freezed,
   }) {
     return _then(CardLoadSuccess(
-      cards: cards == freezed ? _value.cards : cards as List<MyCard>,
+      cards: cards == freezed ? _value.cards : cards as Queue<MyCard>,
     ));
   }
 }
@@ -1124,7 +1124,7 @@ class _$CardLoadSuccess
   const _$CardLoadSuccess({@required this.cards}) : assert(cards != null);
 
   @override
-  final List<MyCard> cards;
+  final Queue<MyCard> cards;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -1160,7 +1160,7 @@ class _$CardLoadSuccess
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result success(List<MyCard> cards),
+    @required Result success(Queue<MyCard> cards),
     @required Result error(String message),
   }) {
     assert(initial != null);
@@ -1175,7 +1175,7 @@ class _$CardLoadSuccess
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result success(List<MyCard> cards),
+    Result success(Queue<MyCard> cards),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -1219,10 +1219,10 @@ class _$CardLoadSuccess
 }
 
 abstract class CardLoadSuccess implements CardState {
-  const factory CardLoadSuccess({@required List<MyCard> cards}) =
+  const factory CardLoadSuccess({@required Queue<MyCard> cards}) =
       _$CardLoadSuccess;
 
-  List<MyCard> get cards;
+  Queue<MyCard> get cards;
   $CardLoadSuccessCopyWith<CardLoadSuccess> get copyWith;
 }
 
@@ -1295,7 +1295,7 @@ class _$CardErrorState with DiagnosticableTreeMixin implements CardErrorState {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result success(List<MyCard> cards),
+    @required Result success(Queue<MyCard> cards),
     @required Result error(String message),
   }) {
     assert(initial != null);
@@ -1310,7 +1310,7 @@ class _$CardErrorState with DiagnosticableTreeMixin implements CardErrorState {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result success(List<MyCard> cards),
+    Result success(Queue<MyCard> cards),
     Result error(String message),
     @required Result orElse(),
   }) {

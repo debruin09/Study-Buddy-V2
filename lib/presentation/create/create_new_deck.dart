@@ -47,6 +47,7 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
     }
     if (context.bloc<DeckStatusCubit>().state is EditDeckState) {
       _deckNameController.text = widget.deck.deckName;
+      widget.deck.tags.addAll(tags);
     }
     _hideFabAnimController = AnimationController(
       vsync: this,

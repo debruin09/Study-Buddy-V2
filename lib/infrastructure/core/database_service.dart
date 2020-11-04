@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:study_buddy/domain/auth/user.dart';
 import 'package:study_buddy/domain/card/card_entity.dart';
@@ -7,13 +9,12 @@ import 'package:study_buddy/domain/deck/deck_entity.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/domain/core/database_repository.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
+import 'package:study_buddy/infrastructure/core/firebase_helpers.dart';
 
 class FirestoreService implements DatabaseRepository {
   static final globalId = locator.get<GlobalId>();
   static final db = FirebaseFirestore.instance;
   static final userCollection = db.collection("users");
-
-  var cardBatch = db.batch();
 
   String uid;
   FirestoreService({this.uid});
@@ -31,8 +32,7 @@ class FirestoreService implements DatabaseRepository {
   @override
   Future<void> addNewDeck(Deck deck) async {
     return userCollection
-        .doc(globalId.userId)
-        .collection("decks")
+        .deckCollection()
         .doc(globalId.deckId)
         .set(deck.toEntity().toDocument());
   }
@@ -40,19 +40,14 @@ class FirestoreService implements DatabaseRepository {
   /// Deletes the [Deck] specified
   @override
   Future<void> deleteDeck(Deck deck) {
-    return userCollection
-        .doc(globalId.userId)
-        .collection("decks")
-        .doc(deck.id)
-        .delete();
+    return userCollection.deckCollection().doc(deck.id).delete();
   }
 
   /// Updates the [Deck] specified
   @override
   Future<void> updateDeck(Deck update, Deck newData) {
     return userCollection
-        .doc(globalId.userId)
-        .collection("decks")
+        .deckCollection()
         .doc(update.id)
         .update(newData.toEntity().toDocument());
   }
@@ -61,11 +56,7 @@ class FirestoreService implements DatabaseRepository {
   @override
   Stream<List<Deck>> decks() {
     try {
-      return userCollection
-          .doc(globalId.userId)
-          .collection("decks")
-          .snapshots()
-          .map((snapshot) {
+      return userCollection.deckCollection().snapshots().map((snapshot) {
         return snapshot.docs
             .map((doc) => Deck.fromEntity(
                   DeckEntity.fromSnapshot(doc),
@@ -94,67 +85,45 @@ class FirestoreService implements DatabaseRepository {
   @override
   Future<void> addNewCard(MyCard card) async {
     return userCollection
-        .doc(globalId.userId)
-        .collection("decks")
-        .doc(globalId.deckId)
-        .collection("cards")
+        .cardCollection()
         .doc(card.id)
         .set(card.toEntity().toDocument());
   }
 
-  /// Add Batch of [MyCard]
-  @override
-  Future<void> addBatchCards(MyCard card) async {
-    return cardBatch.set(
-        userCollection
-            .doc(globalId.userId)
-            .collection("decks")
-            .doc(globalId.deckId)
-            .collection("cards")
-            .doc(globalId.cardId),
-        card.toEntity().toDocument());
-  }
-
   @override
   Future<void> deleteCard(MyCard card) {
-    return userCollection
-        .doc(globalId.userId)
-        .collection("decks")
-        .doc(globalId.deckId)
-        .collection("cards")
-        .doc(card.id)
-        .delete();
+    return userCollection.cardCollection().doc(card.id).delete();
   }
 
   @override
   Future<void> updateCard(MyCard updateThisCard, MyCard updatedCard) {
     return userCollection
-        .doc(globalId.userId)
-        .collection("decks")
-        .doc(globalId.deckId)
-        .collection("cards")
+        .cardCollection()
         .doc(updateThisCard.id)
-        .update(updatedCard.toEntity().toDocument());
+        .set(updatedCard.toEntity().toDocument(), SetOptions(merge: true));
+  }
+
+  @override
+  Future<void> updateMyDefintion(MyCard updateThisCard, String myDefiniton) {
+    return userCollection.cardCollection().doc(updateThisCard.id).set({
+      "me": myDefiniton,
+    }, SetOptions(merge: true));
   }
 
   /// Listen to a stream of cards
   @override
-  Stream<List<MyCard>> cards() {
+  Stream<Queue<MyCard>> cards() {
     try {
       return userCollection
-          .doc(globalId.userId)
-          .collection("decks")
-          .doc(globalId.deckId)
-          .collection("cards")
+          .cardCollection()
           .orderBy("dateCreated", descending: true)
           .snapshots()
-          .map((snapshot) {
-        return snapshot.docs
-            .map((doc) => MyCard.fromEntity(
-                  CardEntity.fromSnapshot(doc),
-                ))
-            .toList();
-      });
+          .map((snapshot) => snapshot.docs
+              .map((doc) => MyCard.fromEntity(
+                    CardEntity.fromSnapshot(doc),
+                  ))
+              .toList()
+              .toQueue());
     } catch (e) {
       print(e.toString());
       return null;

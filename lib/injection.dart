@@ -26,8 +26,7 @@ void setupLocator() {
   locator.registerFactory<DeckBloc>(() => DeckBloc(locator()));
   locator.registerLazySingleton<DeckStatusCubit>(() => DeckStatusCubit());
   locator.registerLazySingleton<CardStatusCubit>(() => CardStatusCubit());
-  locator
-      .registerLazySingleton<SimilarityBloc>(() => SimilarityBloc(locator()));
+  locator.registerFactory<SimilarityBloc>(() => SimilarityBloc(locator()));
   locator.registerLazySingleton<DecksScope>(() => DecksScope());
   locator.registerLazySingleton<CardScope>(() => CardScope());
   locator.registerLazySingleton<GlobalId>(() => GlobalId());

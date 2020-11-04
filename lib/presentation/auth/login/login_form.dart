@@ -56,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
                     Icon(Icons.error),
                   ],
                 ),
-                backgroundColor: secondaryColor,
+                backgroundColor: primaryColor,
               ),
             );
         }
@@ -75,7 +75,7 @@ class _LoginFormState extends State<LoginForm> {
                     )
                   ],
                 ),
-                backgroundColor: secondaryColor,
+                backgroundColor: primaryColor,
               ),
             );
         }

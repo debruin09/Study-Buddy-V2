@@ -52,7 +52,7 @@ class _LoginFormState extends State<RegisterForm> {
                     Icon(Icons.error),
                   ],
                 ),
-                backgroundColor: secondaryColor,
+                backgroundColor: primaryColor,
               ),
             );
         }
@@ -71,7 +71,7 @@ class _LoginFormState extends State<RegisterForm> {
                     )
                   ],
                 ),
-                backgroundColor: secondaryColor,
+                backgroundColor: primaryColor,
               ),
             );
         }

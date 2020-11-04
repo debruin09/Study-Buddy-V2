@@ -125,11 +125,17 @@ class _HomePageState extends State<HomePage> {
                   initial: (_) => SliverPadding(
                       padding:
                           EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-                      sliver: SliverToBoxAdapter(child: Loading())),
+                      sliver: SliverToBoxAdapter(
+                          child: Loader(
+                        color: primaryColor,
+                      ))),
                   loading: (_) => SliverPadding(
                       padding:
                           EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-                      sliver: SliverToBoxAdapter(child: Loading())),
+                      sliver: SliverToBoxAdapter(
+                          child: Loader(
+                        color: primaryColor,
+                      ))),
                   success: (state) {
                     deckScope.setDecks(state.decks);
                     return SliverPadding(

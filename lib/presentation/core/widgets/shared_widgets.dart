@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_tagging/flutter_tagging.dart';
+import 'package:study_buddy/infrastructure/core/tag_service.dart';
 
-import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/domain/core/tag_entity.dart';
-import 'package:study_buddy/domain/core/tag_repository.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
 class Loader extends StatelessWidget {
@@ -20,8 +19,9 @@ class Loader extends StatelessWidget {
   }
 }
 
+// Put a limit on the amount of characters a tag can take
 class TagWidget extends StatelessWidget {
-  final tagService = locator.get<TagRepository>();
+  final TagService tagService;
   final List<TagEntity> selectedTags = [];
   final Function onChanged;
   final Function additionalCallback;
@@ -29,6 +29,7 @@ class TagWidget extends StatelessWidget {
   TagWidget({
     Key key,
     this.onChanged,
+    this.tagService,
     this.additionalCallback,
   }) : super(key: key);
   @override
@@ -42,15 +43,14 @@ class TagWidget extends StatelessWidget {
       child: FlutterTagging<TagEntity>(
         initialItems: selectedTags,
         textFieldConfiguration: TextFieldConfiguration(
+            // onChanged: (t) => print("Something changed this is T: $t"),
             decoration: InputDecoration(
           hintText: "tags",
           fillColor: Colors.white,
           border: OutlineInputBorder(
-            // borderRadius: BorderRadius.circular(15.0),
             borderSide: BorderSide.none,
           ),
         )),
-
         findSuggestions: tagService.getTags,
         additionCallback: additionalCallback,
         onAdded: (t) {
@@ -63,7 +63,7 @@ class TagWidget extends StatelessWidget {
               backgroundColor: primaryColor,
               avatar: Icon(
                 Icons.add_circle,
-                color: tagsColor,
+                color: Colors.white,
               ),
               label: Text('Add New Tag'),
               labelStyle: TextStyle(
@@ -83,7 +83,6 @@ class TagWidget extends StatelessWidget {
           );
         },
         onChanged: onChanged,
-        // onChanged: () {},
       ),
     );
   }

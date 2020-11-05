@@ -1,13 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:study_buddy/domain/core/shared_pref.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
-// import 'package:study_buddy/utils/get_instance.dart';
 
 class DeckSearch extends SearchDelegate<String> {
   final deckScope = locator.get<DecksScope>();

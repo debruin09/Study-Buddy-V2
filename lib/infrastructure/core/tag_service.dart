@@ -1,20 +1,18 @@
 import 'package:study_buddy/domain/core/tag_entity.dart';
-import 'package:study_buddy/domain/core/tag_repository.dart';
 
-class TagService implements TagRepository {
-  @override
+class TagService {
+  List<String> _tags = [];
+  List<String> get tags => _tags;
+
   Future<List<TagEntity>> getTags(String query) async {
-    await Future.delayed(Duration(milliseconds: 200), null);
-    return <TagEntity>[
-      TagEntity(
-        tag: 'test',
-      ),
-      TagEntity(
-        tag: 'maths',
-      ),
-      TagEntity(
-        tag: 'database',
-      ),
-    ].where((t) => t.tag.toLowerCase().contains(query.toLowerCase())).toList();
+    final tagEntity = _tags
+        .map((tag) => TagEntity(
+              tag: tag,
+            ))
+        .toList();
+
+    return tagEntity
+        .where((t) => t.tag.toLowerCase().contains(query.toLowerCase()))
+        .toList();
   }
 }

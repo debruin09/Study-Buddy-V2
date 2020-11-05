@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                 right: 10.0,
               ),
               margin: EdgeInsets.only(
-                top: 15.0,
+                top: 5.0,
               ),
               decoration: BoxDecoration(
                   color: primaryColor,
@@ -76,20 +76,16 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             automaticallyImplyLeading: false,
-            expandedHeight: 80.0,
-            elevation: 0.0,
+            expandedHeight: 65.0,
             pinned: true,
-            backgroundColor: bgColor,
+            backgroundColor: Colors.white,
             centerTitle: true,
-            title: Padding(
-              padding: const EdgeInsets.only(top: 18.0),
-              child: Text(
-                "Home",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 3.0),
-              ),
+            title: Text(
+              "Home",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 3.0),
             ),
             actions: [
               Container(
@@ -97,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                   left: 10.0,
                 ),
                 margin: EdgeInsets.only(
-                  top: 15.0,
+                  top: 5.0,
                 ),
                 decoration: BoxDecoration(
                     color: primaryColor,
@@ -130,12 +126,14 @@ class _HomePageState extends State<HomePage> {
                         color: primaryColor,
                       ))),
                   loading: (_) => SliverPadding(
-                      padding:
-                          EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-                      sliver: SliverToBoxAdapter(
+                        padding:
+                            EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+                        sliver: SliverToBoxAdapter(
                           child: Loader(
-                        color: primaryColor,
-                      ))),
+                            color: primaryColor,
+                          ),
+                        ),
+                      ),
                   success: (state) {
                     deckScope.setDecks(state.decks);
                     return SliverPadding(

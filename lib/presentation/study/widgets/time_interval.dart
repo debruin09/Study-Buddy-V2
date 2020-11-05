@@ -66,7 +66,9 @@ class TimeIntervalWidget extends ConsumerWidget {
                       pressed: () {
                         context.read(showAnswerProvider).state = false;
                         final firstItem = queue.removeFirst();
-                        notificationRepository.notification(
+                        notificationRepository.notificationDelay(
+                            timeDelayType: TimeDelayType.seconds,
+                            timeValue: 10,
                             front: firstItem.front);
                         queue.addLast(firstItem);
                       },

@@ -9,7 +9,6 @@ import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/domain/auth/auth_repository.dart';
 import 'package:study_buddy/domain/core/database_repository.dart';
 import 'package:study_buddy/domain/core/local_notification_repository.dart';
-import 'package:study_buddy/domain/core/tag_repository.dart';
 import 'package:study_buddy/domain/similarity/api_client_repository.dart';
 import 'package:study_buddy/infrastructure/auth/auth_service.dart';
 import 'package:study_buddy/infrastructure/core/database_service.dart';
@@ -28,11 +27,10 @@ void setupLocator() {
   locator.registerLazySingleton<CardStatusCubit>(() => CardStatusCubit());
   locator.registerFactory<SimilarityBloc>(() => SimilarityBloc(locator()));
   locator.registerLazySingleton<DecksScope>(() => DecksScope());
-  locator.registerLazySingleton<CardScope>(() => CardScope());
   locator.registerLazySingleton<GlobalId>(() => GlobalId());
   locator.registerLazySingleton<AuthRepository>(() => AuthService());
   locator.registerLazySingleton<DatabaseRepository>(() => FirestoreService());
-  locator.registerLazySingleton<TagRepository>(() => TagService());
+  locator.registerFactory<TagService>(() => TagService());
   locator.registerFactory<LocalNotificationRepository>(
       () => LocalNotificationService());
   locator

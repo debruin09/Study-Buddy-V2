@@ -14,9 +14,15 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(15.0),
+          topRight: Radius.circular(15.0),
+        ),
+      ),
       width: screenSize.width * 0.6,
-      height: screenSize.height,
+      height: screenSize.height * 0.8,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

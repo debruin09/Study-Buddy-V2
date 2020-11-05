@@ -7,10 +7,12 @@ import 'package:study_buddy/application/auth/auth_bloc.dart';
 import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart' as auto;
+import 'package:timezone/data/latest.dart' as lz;
 import 'presentation/core/theme/theme_styles.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  lz.initializeTimeZones();
   setupLocator();
   await Firebase.initializeApp();
   runApp(MyApp());

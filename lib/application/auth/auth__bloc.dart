@@ -6,7 +6,7 @@ import 'package:study_buddy/domain/auth/user.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
-part 'auth_bloc.freezed.dart';
+part 'auth__bloc.freezed.dart';
 
 /// This is the Auth bloc that maps incoming user events to states
 class AuthBloc extends Bloc<AuthEvent, AuthState> {

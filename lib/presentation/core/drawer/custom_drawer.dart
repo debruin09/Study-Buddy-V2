@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_buddy/application/auth/auth_bloc.dart';
+import 'package:study_buddy/application/auth/auth__bloc.dart';
 import 'package:study_buddy/domain/auth/user.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
@@ -14,6 +14,7 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return Container(
+      padding: EdgeInsets.only(bottom: 20.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -23,8 +24,7 @@ class CustomDrawer extends StatelessWidget {
       ),
       width: screenSize.width * 0.6,
       height: screenSize.height * 0.8,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: [
           Container(
             width: double.infinity,

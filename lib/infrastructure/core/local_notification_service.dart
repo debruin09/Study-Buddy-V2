@@ -2,9 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:study_buddy/domain/core/local_notification_repository.dart';
+import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-
-import 'package:timezone/browser.dart' as br;
 
 class LocalNotificationService implements LocalNotificationRepository {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -48,24 +47,14 @@ class LocalNotificationService implements LocalNotificationRepository {
       {@required String front,
       @required TimeDelayType timeDelayType,
       @required int timeValue}) async {
-    // The device's timezone.
-    String timeZoneName = "South Africa/Johannesburg";
-
-    // Find the 'current location'
-    final location = br.getLocation(timeZoneName);
-
-    var timeDelayed;
     tz.TZDateTime zone;
 
     if (timeDelayType == TimeDelayType.minutes) {
-      timeDelayed = DateTime.now().add(Duration(minutes: timeValue));
-      zone = tz.TZDateTime.from(timeDelayed, location);
+      zone = tz.TZDateTime.now(tz.local).add(Duration(seconds: timeValue));
     } else if (timeDelayType == TimeDelayType.days) {
-      timeDelayed = DateTime.now().add(Duration(seconds: timeValue));
-      zone = tz.TZDateTime.from(timeDelayed, location);
+      zone = tz.TZDateTime.now(tz.local).add(Duration(seconds: timeValue));
     } else {
-      timeDelayed = DateTime.now().add(Duration(seconds: timeValue));
-      zone = tz.TZDateTime.from(timeDelayed, location);
+      zone = tz.TZDateTime.now(tz.local).add(Duration(seconds: timeValue));
     }
 
     AndroidNotificationDetails androidNotificationDetails =

@@ -48,8 +48,9 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
       globalId.setDeckId(newDeckID);
     }
     if (context.bloc<DeckStatusCubit>().state is EditDeckState) {
+      print('yrssssss');
       _deckNameController.text = widget.deck.deckName;
-      _tagService.tags.addAll(widget.deck.tags);
+      _tagService.tags.addAll(widget.deck?.tags);
     }
     _hideFabAnimController = AnimationController(
       vsync: this,
@@ -186,19 +187,21 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
                         crossAxisAlignment: WrapCrossAlignment.center,
                         alignment: WrapAlignment.start,
                         spacing: 5.0,
-                        children: widget.deck.tags
-                            .map(
-                              (tag) => Chip(
-                                label: Text(tag),
-                                deleteIcon: Icon(Icons.cancel),
-                                onDeleted: () {
-                                  _tagService.tags
-                                      .removeWhere((String t) => t == tag);
-                                  updateDeck();
-                                },
-                              ),
-                            )
-                            .toList(),
+                        children: widget.deck != null
+                            ? widget.deck.tags
+                                .map(
+                                  (tag) => Chip(
+                                    label: Text(tag),
+                                    deleteIcon: Icon(Icons.cancel),
+                                    onDeleted: () {
+                                      _tagService.tags
+                                          .removeWhere((String t) => t == tag);
+                                      updateDeck();
+                                    },
+                                  ),
+                                )
+                                .toList()
+                            : [Container()],
                       ),
                     ),
                     SizedBox(

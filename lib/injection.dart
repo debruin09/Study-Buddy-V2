@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:study_buddy/application/auth/auth_bloc.dart';
+import 'package:study_buddy/application/auth/auth__bloc.dart';
 import 'package:study_buddy/application/auth/login/login_bloc.dart';
 import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
 import 'package:study_buddy/application/core/speech/speech_bloc.dart';
@@ -9,6 +9,7 @@ import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/domain/auth/auth_repository.dart';
 import 'package:study_buddy/domain/core/database_repository.dart';
 import 'package:study_buddy/domain/core/local_notification_repository.dart';
+import 'package:study_buddy/domain/core/scheduler/queue_scheduler.dart';
 import 'package:study_buddy/domain/similarity/api_client_repository.dart';
 import 'package:study_buddy/infrastructure/auth/auth_service.dart';
 import 'package:study_buddy/infrastructure/core/database_service.dart';
@@ -30,6 +31,7 @@ void setupLocator() {
   locator.registerLazySingleton<GlobalId>(() => GlobalId());
   locator.registerLazySingleton<AuthRepository>(() => AuthService());
   locator.registerLazySingleton<DatabaseRepository>(() => FirestoreService());
+  locator.registerFactory<QueueScheduler>(() => QueueScheduler(locator()));
   locator.registerFactory<TagService>(() => TagService());
   locator.registerFactory<LocalNotificationRepository>(
       () => LocalNotificationService());

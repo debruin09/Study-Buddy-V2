@@ -2,12 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:study_buddy/domain/core/local_notification_repository.dart';
+import 'package:study_buddy/domain/core/scheduler/queue_scheduler.dart';
+import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:study_buddy/presentation/study/deck_study_page.dart';
-import 'package:study_buddy/presentation/study/widgets/study.dart';
 
 class TimeIntervalWidget extends ConsumerWidget {
   final LocalNotificationRepository notificationRepository;
+  final queueScheduler = locator.get<QueueScheduler>();
 
   TimeIntervalWidget({
     Key key,
@@ -16,7 +18,7 @@ class TimeIntervalWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     final isShowAnswer = watch(showAnswerProvider).state;
-    final queue = watch(queueReader);
+
     return Material(
       color: Colors.white,
       shape: RoundedRectangleBorder(
@@ -65,12 +67,7 @@ class TimeIntervalWidget extends ConsumerWidget {
                       ),
                       pressed: () {
                         context.read(showAnswerProvider).state = false;
-                        final firstItem = queue.removeFirst();
-                        notificationRepository.notificationDelay(
-                            timeDelayType: TimeDelayType.seconds,
-                            timeValue: 10,
-                            front: firstItem.front);
-                        queue.addLast(firstItem);
+                        queueScheduler.scheduleCard(DifficultyState.hard);
                       },
                     ),
                   ),
@@ -82,10 +79,7 @@ class TimeIntervalWidget extends ConsumerWidget {
                       icon: Icons.star_half,
                       pressed: () {
                         context.read(showAnswerProvider).state = false;
-                        final firstItem = queue.removeFirst();
-                        notificationRepository.notification(
-                            front: firstItem.front);
-                        queue.addLast(firstItem);
+                        queueScheduler.scheduleCard(DifficultyState.moderate);
                       },
                     ),
                   ),
@@ -101,10 +95,7 @@ class TimeIntervalWidget extends ConsumerWidget {
                       ),
                       pressed: () {
                         context.read(showAnswerProvider).state = false;
-                        final firstItem = queue.removeFirst();
-                        notificationRepository.notification(
-                            front: firstItem.front);
-                        queue.addLast(firstItem);
+                        queueScheduler.scheduleCard(DifficultyState.easy);
                       },
                     ),
                   ),

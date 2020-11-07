@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_buddy/application/auth/auth_bloc.dart';
+import 'package:study_buddy/application/auth/auth__bloc.dart';
 import 'package:study_buddy/application/auth/login/login_bloc.dart';
 import 'package:study_buddy/presentation/core/widgets/auth_button.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';

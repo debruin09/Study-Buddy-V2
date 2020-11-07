@@ -810,6 +810,11 @@ class _$CardStateTearOff {
   }
 
 // ignore: unused_element
+  EmptyCardState empty() {
+    return const EmptyCardState();
+  }
+
+// ignore: unused_element
   CardErrorState error({@required String message}) {
     return CardErrorState(
       message: message,
@@ -828,6 +833,7 @@ mixin _$CardState {
     @required Result initial(),
     @required Result loading(),
     @required Result success(Queue<MyCard> cards),
+    @required Result empty(),
     @required Result error(String message),
   });
   @optionalTypeArgs
@@ -835,6 +841,7 @@ mixin _$CardState {
     Result initial(),
     Result loading(),
     Result success(Queue<MyCard> cards),
+    Result empty(),
     Result error(String message),
     @required Result orElse(),
   });
@@ -843,6 +850,7 @@ mixin _$CardState {
     @required Result initial(CardInitial value),
     @required Result loading(CardLoadInProgress value),
     @required Result success(CardLoadSuccess value),
+    @required Result empty(EmptyCardState value),
     @required Result error(CardErrorState value),
   });
   @optionalTypeArgs
@@ -850,6 +858,7 @@ mixin _$CardState {
     Result initial(CardInitial value),
     Result loading(CardLoadInProgress value),
     Result success(CardLoadSuccess value),
+    Result empty(EmptyCardState value),
     Result error(CardErrorState value),
     @required Result orElse(),
   });
@@ -917,11 +926,13 @@ class _$CardInitial with DiagnosticableTreeMixin implements CardInitial {
     @required Result initial(),
     @required Result loading(),
     @required Result success(Queue<MyCard> cards),
+    @required Result empty(),
     @required Result error(String message),
   }) {
     assert(initial != null);
     assert(loading != null);
     assert(success != null);
+    assert(empty != null);
     assert(error != null);
     return initial();
   }
@@ -932,6 +943,7 @@ class _$CardInitial with DiagnosticableTreeMixin implements CardInitial {
     Result initial(),
     Result loading(),
     Result success(Queue<MyCard> cards),
+    Result empty(),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -948,11 +960,13 @@ class _$CardInitial with DiagnosticableTreeMixin implements CardInitial {
     @required Result initial(CardInitial value),
     @required Result loading(CardLoadInProgress value),
     @required Result success(CardLoadSuccess value),
+    @required Result empty(EmptyCardState value),
     @required Result error(CardErrorState value),
   }) {
     assert(initial != null);
     assert(loading != null);
     assert(success != null);
+    assert(empty != null);
     assert(error != null);
     return initial(this);
   }
@@ -963,6 +977,7 @@ class _$CardInitial with DiagnosticableTreeMixin implements CardInitial {
     Result initial(CardInitial value),
     Result loading(CardLoadInProgress value),
     Result success(CardLoadSuccess value),
+    Result empty(EmptyCardState value),
     Result error(CardErrorState value),
     @required Result orElse(),
   }) {
@@ -1028,11 +1043,13 @@ class _$CardLoadInProgress
     @required Result initial(),
     @required Result loading(),
     @required Result success(Queue<MyCard> cards),
+    @required Result empty(),
     @required Result error(String message),
   }) {
     assert(initial != null);
     assert(loading != null);
     assert(success != null);
+    assert(empty != null);
     assert(error != null);
     return loading();
   }
@@ -1043,6 +1060,7 @@ class _$CardLoadInProgress
     Result initial(),
     Result loading(),
     Result success(Queue<MyCard> cards),
+    Result empty(),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -1059,11 +1077,13 @@ class _$CardLoadInProgress
     @required Result initial(CardInitial value),
     @required Result loading(CardLoadInProgress value),
     @required Result success(CardLoadSuccess value),
+    @required Result empty(EmptyCardState value),
     @required Result error(CardErrorState value),
   }) {
     assert(initial != null);
     assert(loading != null);
     assert(success != null);
+    assert(empty != null);
     assert(error != null);
     return loading(this);
   }
@@ -1074,6 +1094,7 @@ class _$CardLoadInProgress
     Result initial(CardInitial value),
     Result loading(CardLoadInProgress value),
     Result success(CardLoadSuccess value),
+    Result empty(EmptyCardState value),
     Result error(CardErrorState value),
     @required Result orElse(),
   }) {
@@ -1161,11 +1182,13 @@ class _$CardLoadSuccess
     @required Result initial(),
     @required Result loading(),
     @required Result success(Queue<MyCard> cards),
+    @required Result empty(),
     @required Result error(String message),
   }) {
     assert(initial != null);
     assert(loading != null);
     assert(success != null);
+    assert(empty != null);
     assert(error != null);
     return success(cards);
   }
@@ -1176,6 +1199,7 @@ class _$CardLoadSuccess
     Result initial(),
     Result loading(),
     Result success(Queue<MyCard> cards),
+    Result empty(),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -1192,11 +1216,13 @@ class _$CardLoadSuccess
     @required Result initial(CardInitial value),
     @required Result loading(CardLoadInProgress value),
     @required Result success(CardLoadSuccess value),
+    @required Result empty(EmptyCardState value),
     @required Result error(CardErrorState value),
   }) {
     assert(initial != null);
     assert(loading != null);
     assert(success != null);
+    assert(empty != null);
     assert(error != null);
     return success(this);
   }
@@ -1207,6 +1233,7 @@ class _$CardLoadSuccess
     Result initial(CardInitial value),
     Result loading(CardLoadInProgress value),
     Result success(CardLoadSuccess value),
+    Result empty(EmptyCardState value),
     Result error(CardErrorState value),
     @required Result orElse(),
   }) {
@@ -1224,6 +1251,120 @@ abstract class CardLoadSuccess implements CardState {
 
   Queue<MyCard> get cards;
   $CardLoadSuccessCopyWith<CardLoadSuccess> get copyWith;
+}
+
+/// @nodoc
+abstract class $EmptyCardStateCopyWith<$Res> {
+  factory $EmptyCardStateCopyWith(
+          EmptyCardState value, $Res Function(EmptyCardState) then) =
+      _$EmptyCardStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$EmptyCardStateCopyWithImpl<$Res> extends _$CardStateCopyWithImpl<$Res>
+    implements $EmptyCardStateCopyWith<$Res> {
+  _$EmptyCardStateCopyWithImpl(
+      EmptyCardState _value, $Res Function(EmptyCardState) _then)
+      : super(_value, (v) => _then(v as EmptyCardState));
+
+  @override
+  EmptyCardState get _value => super._value as EmptyCardState;
+}
+
+/// @nodoc
+class _$EmptyCardState with DiagnosticableTreeMixin implements EmptyCardState {
+  const _$EmptyCardState();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'CardState.empty()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'CardState.empty'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is EmptyCardState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initial(),
+    @required Result loading(),
+    @required Result success(Queue<MyCard> cards),
+    @required Result empty(),
+    @required Result error(String message),
+  }) {
+    assert(initial != null);
+    assert(loading != null);
+    assert(success != null);
+    assert(empty != null);
+    assert(error != null);
+    return empty();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initial(),
+    Result loading(),
+    Result success(Queue<MyCard> cards),
+    Result empty(),
+    Result error(String message),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (empty != null) {
+      return empty();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initial(CardInitial value),
+    @required Result loading(CardLoadInProgress value),
+    @required Result success(CardLoadSuccess value),
+    @required Result empty(EmptyCardState value),
+    @required Result error(CardErrorState value),
+  }) {
+    assert(initial != null);
+    assert(loading != null);
+    assert(success != null);
+    assert(empty != null);
+    assert(error != null);
+    return empty(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initial(CardInitial value),
+    Result loading(CardLoadInProgress value),
+    Result success(CardLoadSuccess value),
+    Result empty(EmptyCardState value),
+    Result error(CardErrorState value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (empty != null) {
+      return empty(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EmptyCardState implements CardState {
+  const factory EmptyCardState() = _$EmptyCardState;
 }
 
 /// @nodoc
@@ -1296,11 +1437,13 @@ class _$CardErrorState with DiagnosticableTreeMixin implements CardErrorState {
     @required Result initial(),
     @required Result loading(),
     @required Result success(Queue<MyCard> cards),
+    @required Result empty(),
     @required Result error(String message),
   }) {
     assert(initial != null);
     assert(loading != null);
     assert(success != null);
+    assert(empty != null);
     assert(error != null);
     return error(message);
   }
@@ -1311,6 +1454,7 @@ class _$CardErrorState with DiagnosticableTreeMixin implements CardErrorState {
     Result initial(),
     Result loading(),
     Result success(Queue<MyCard> cards),
+    Result empty(),
     Result error(String message),
     @required Result orElse(),
   }) {
@@ -1327,11 +1471,13 @@ class _$CardErrorState with DiagnosticableTreeMixin implements CardErrorState {
     @required Result initial(CardInitial value),
     @required Result loading(CardLoadInProgress value),
     @required Result success(CardLoadSuccess value),
+    @required Result empty(EmptyCardState value),
     @required Result error(CardErrorState value),
   }) {
     assert(initial != null);
     assert(loading != null);
     assert(success != null);
+    assert(empty != null);
     assert(error != null);
     return error(this);
   }
@@ -1342,6 +1488,7 @@ class _$CardErrorState with DiagnosticableTreeMixin implements CardErrorState {
     Result initial(CardInitial value),
     Result loading(CardLoadInProgress value),
     Result success(CardLoadSuccess value),
+    Result empty(EmptyCardState value),
     Result error(CardErrorState value),
     @required Result orElse(),
   }) {

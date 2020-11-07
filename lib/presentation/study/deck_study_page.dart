@@ -12,6 +12,7 @@ import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/application/deck/deck_bloc/deck_bloc.dart';
 import 'package:study_buddy/application/similarity/similarity_bloc/similarity_bloc.dart';
 import 'package:study_buddy/domain/core/local_notification_repository.dart';
+import 'package:study_buddy/domain/core/scheduler/queue_scheduler.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
@@ -73,7 +74,7 @@ class _DeckStudyPageState extends State<DeckStudyPage> {
         actions: [
           PopupMenuButton<Choices>(onSelected: (choice) {
             if (choice == Choices.record) {
-              context.read(showRecordingProvider).state = true;
+              BuildContextX(context).read(showRecordingProvider).state = true;
             } else if (choice == Choices.edit) {
               _cardStatusCubit.changeCardStatus("edit");
               ExtendedNavigator.root.push(Routes.createNewDeckPage,
@@ -136,9 +137,9 @@ class _DeckStudyPageState extends State<DeckStudyPage> {
   }
 
   Future<void> _promptSaving(BuildContext context) async {
-    final cardToBeUpdated = context.read(queueReader).first;
+    final cardToBeUpdated = locator.get<QueueScheduler>().q1.first;
     final updatedCard = cardToBeUpdated.copyWith(
-        me: context.read(saveDefinitionProvider).state);
+        me: BuildContextX(context).read(saveDefinitionProvider).state);
 
     await showDialog(
         context: context,
@@ -154,7 +155,8 @@ class _DeckStudyPageState extends State<DeckStudyPage> {
                         newData: updatedCard,
                       ),
                     );
-                    context.read(isListeningProvider).state = false;
+                    BuildContextX(context).read(isListeningProvider).state =
+                        false;
                     ExtendedNavigator.root.pop();
                   },
                   child: Text(
@@ -164,7 +166,8 @@ class _DeckStudyPageState extends State<DeckStudyPage> {
               FlatButton(
                   onPressed: () {
                     ExtendedNavigator.root.pop();
-                    context.read(isListeningProvider).state = false;
+                    BuildContextX(context).read(isListeningProvider).state =
+                        false;
                   },
                   child: Text(
                     "no",
@@ -176,7 +179,7 @@ class _DeckStudyPageState extends State<DeckStudyPage> {
   }
 
   void _listen() async {
-    if (!context.read(isListeningProvider).state) {
+    if (!BuildContextX(context).read(isListeningProvider).state) {
       final available = await _speech.initialize(
         debugLogging: true,
         onStatus: (val) => print("OnStatus: $val"),
@@ -184,13 +187,13 @@ class _DeckStudyPageState extends State<DeckStudyPage> {
           print('onError: $val');
           _speechBloc
               .add(SpeechEvent.error(errorMessage: "No internet connection."));
-          context.read(isListeningProvider).state = false;
+          BuildContextX(context).read(isListeningProvider).state = false;
           _speech.stop();
         },
       );
 
       if (available) {
-        context.read(isListeningProvider).state = true;
+        BuildContextX(context).read(isListeningProvider).state = true;
         _speech.listen(
           listenFor: Duration(seconds: 15),
           onResult: (res) {
@@ -201,15 +204,16 @@ class _DeckStudyPageState extends State<DeckStudyPage> {
               print("This is the confidence level: ${confidence * 100}%");
               // After the recording is done show the similarity button
 
-              context.read(saveDefinitionProvider).state = res.recognizedWords;
+              BuildContextX(context).read(saveDefinitionProvider).state =
+                  res.recognizedWords;
               _promptSaving(context);
-              context.read(showSimilarityProvider).state = true;
+              BuildContextX(context).read(showSimilarityProvider).state = true;
             }
           },
         );
       }
     } else {
-      context.read(isListeningProvider).state = false;
+      BuildContextX(context).read(isListeningProvider).state = false;
       _speech.stop();
     }
   }
@@ -278,7 +282,8 @@ class BottomWrapper extends ConsumerWidget {
             ? Container()
             : GestureDetector(
                 onTap: () {
-                  context.read(showRecordingProvider).state = false;
+                  BuildContextX(context).read(showRecordingProvider).state =
+                      false;
                 },
                 child: Container(
                   color: Colors.white,

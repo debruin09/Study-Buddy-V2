@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/all.dart';
 import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
 import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
+import 'package:study_buddy/domain/core/scheduler/queue_scheduler.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
+import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:study_buddy/domain/core/utils/custom_extensions.dart';
@@ -23,10 +25,10 @@ class CustomMyCard extends ConsumerWidget {
   final MyCard card;
   final CardBloc cardBloc;
   final CardStatusCubit cardStatusCubit;
+  final queueScheduler = locator.get<QueueScheduler>();
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final q = watch(queueProvider);
     return Padding(
       padding: const EdgeInsets.only(
         bottom: 13.0,
@@ -52,7 +54,7 @@ class CustomMyCard extends ConsumerWidget {
             trailing: IconButton(
               onPressed: () {
                 cardBloc.add(DeleteCard(card: card));
-                q.remove(card);
+                queueScheduler.q1.remove(card);
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: Colors.redAccent,

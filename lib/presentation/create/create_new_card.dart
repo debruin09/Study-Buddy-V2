@@ -5,6 +5,7 @@ import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
 import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
 import 'package:study_buddy/domain/core/tag_entity.dart';
+import 'package:study_buddy/infrastructure/core/tag_service.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:study_buddy/presentation/core/theme/theme_styles.dart';
@@ -12,7 +13,6 @@ import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:study_buddy/presentation/study/deck_study_page.dart';
-import 'package:study_buddy/presentation/study/widgets/time_interval.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateNewCardPage extends StatefulWidget {
@@ -33,6 +33,7 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
   final GlobalKey<ScaffoldState> _gKey = GlobalKey<ScaffoldState>();
   final cardBloc = locator.get<CardBloc>();
   final globalId = locator.get<GlobalId>();
+  final _tagService = locator.get<TagService>();
   final cardStatusCubit = locator.get<CardStatusCubit>();
   List<String> tags = [];
   String val = "";
@@ -140,10 +141,11 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
                     cardStatusCubit.state == "new"
                         ? addNewCard()
                         : updateCard();
-                    context.read(showAnswerProvider).state = false;
+                    BuildContextX(context).read(showAnswerProvider).state =
+                        false;
                     _frontController.clear();
                     _backController.clear();
-                    context.bloc<DeckStatusCubit>().editDeck();
+                    ReadContext(context).read<DeckStatusCubit>().editDeck();
                     ExtendedNavigator.root.pop();
                   }
                 },
@@ -203,6 +205,7 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
                   height: 10,
                 ),
                 TagWidget(
+                  tagService: _tagService,
                   onChanged: () {
                     tags.add(val);
                   },

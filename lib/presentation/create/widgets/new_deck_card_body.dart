@@ -14,8 +14,7 @@ class NewDeckCardBody extends ConsumerWidget {
   final GlobalId globalId;
   final CardStatusCubit cardStatusCubit;
 
-  const NewDeckCardBody(
-      {Key key, this.cardBloc, this.globalId, this.cardStatusCubit})
+  NewDeckCardBody({Key key, this.cardBloc, this.globalId, this.cardStatusCubit})
       : super(key: key);
   @override
   Widget build(BuildContext context, ScopedReader watch) {
@@ -24,6 +23,7 @@ class NewDeckCardBody extends ConsumerWidget {
       cubit: cardBloc,
       builder: (context, state) {
         return state.map(
+            empty: (_) => Text('Deck is empty'),
             initial: (_) => SliverToBoxAdapter(child: Container()),
             loading: (_) => SliverToBoxAdapter(
                   child: Loader(

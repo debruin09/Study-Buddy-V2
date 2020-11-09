@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:study_buddy/application/auth/auth_bloc.dart';
-import 'package:study_buddy/application/auth/login/login_bloc.dart';
+import 'package:study_buddy/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
 import 'package:study_buddy/application/core/speech/speech_bloc.dart';
 import 'package:study_buddy/application/deck/deck_bloc/deck_bloc.dart';
@@ -41,8 +41,7 @@ void setupLocator() {
   locator.registerFactory<TagService>(() => TagService());
   locator.registerFactory<LocalNotificationRepository>(
       () => LocalNotificationService());
-  locator
-      .registerFactory<LoginBloc>(() => LoginBloc(authRepository: locator()));
+  locator.registerFactory<SignInFormBloc>(() => SignInFormBloc(locator()));
   locator.registerFactory<AuthBloc>(() => AuthBloc(authRepository: locator()));
   locator.registerFactory<SpeechBloc>(() => SpeechBloc());
 }

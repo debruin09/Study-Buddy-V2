@@ -29,7 +29,7 @@ class Routes {
   static const String createNewDeckPage = '/create-new-deck-page';
   static const String deckStudyPage = '/deck-study-page';
   static const String loginScreen = '/login-screen';
-  static const String imgaeViewerPage = '/imgae-viewer-page';
+  static const String imageViewerPage = '/image-viewer-page';
   static const String registerScreen = '/register-screen';
   static const all = <String>{
     homePage,
@@ -38,7 +38,7 @@ class Routes {
     createNewDeckPage,
     deckStudyPage,
     loginScreen,
-    imgaeViewerPage,
+    imageViewerPage,
     registerScreen,
   };
 }
@@ -53,7 +53,7 @@ class Router extends RouterBase {
     RouteDef(Routes.createNewDeckPage, page: CreateNewDeckPage),
     RouteDef(Routes.deckStudyPage, page: DeckStudyPage),
     RouteDef(Routes.loginScreen, page: LoginScreen),
-    RouteDef(Routes.imgaeViewerPage, page: ImageViewerPage),
+    RouteDef(Routes.imageViewerPage, page: ImageViewerPage),
     RouteDef(Routes.registerScreen, page: RegisterScreen),
   ];
   @override
@@ -189,7 +189,7 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
     @required File imageFile,
   }) =>
       push<dynamic>(
-        Routes.imgaeViewerPage,
+        Routes.imageViewerPage,
         arguments: ImageViewerPageArguments(key: key, imageFile: imageFile),
       );
 

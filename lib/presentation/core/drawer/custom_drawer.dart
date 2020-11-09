@@ -99,7 +99,8 @@ class CustomDrawer extends StatelessWidget {
               ),
               title: Text("logout"),
               onTap: () {
-                ReadContext(context).read<AuthBloc>()..add(AuthLoggedOut());
+                ReadContext(context).read<AuthBloc>()
+                  ..add(const AuthEvent.signedOut());
               },
             ),
           ),

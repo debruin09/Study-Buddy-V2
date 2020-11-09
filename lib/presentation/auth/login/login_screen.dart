@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_buddy/application/auth/login/login_bloc.dart';
-import 'package:study_buddy/domain/auth/auth_repository.dart';
+import 'package:study_buddy/application/auth/sign_in_form/sign_in_form_bloc.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/auth/login/login_form.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
 /// Login Screen UI
 class LoginScreen extends StatelessWidget {
-  final AuthRepository _authRepository = locator.get<AuthRepository>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      body: BlocProvider<LoginBloc>(
-        create: (context) => LoginBloc(authRepository: _authRepository),
+      body: BlocProvider<SignInFormBloc>(
+        create: (context) => locator.get<SignInFormBloc>(),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -41,9 +38,7 @@ class LoginScreen extends StatelessWidget {
                 Card(
                   elevation: 5.0,
                   margin: EdgeInsets.symmetric(horizontal: 15.0),
-                  child: LoginForm(
-                    authRepository: _authRepository,
-                  ),
+                  child: LoginForm(),
                 ),
               ],
             ),

@@ -19,30 +19,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   @override
   Stream<AuthState> mapEventToState(AuthEvent event) async* {
     yield* event.map(
-        authStarted: (_) => _mapAuthStartedToState(),
-        authLoggedIn: (_) => _mapAuthLoggedInToState(),
-        authLoggedOut: (_) => _mapAuthLoggedOutInToState());
-  }
-
-  //AuthLoggedOut
-  Stream<AuthState> _mapAuthLoggedOutInToState() async* {
-    yield AuthState.unauthenticated();
-    _authRepository.signOut();
-  }
-
-  //AuthLoggedIn
-  Stream<AuthState> _mapAuthLoggedInToState() async* {
-    yield AuthState.authenticated(user: await _authRepository.getUser());
-  }
-
-  // AuthStarted
-  Stream<AuthState> _mapAuthStartedToState() async* {
-    final isSignedIn = await _authRepository.isSignedIn();
-    if (isSignedIn) {
-      final firebaseUser = await _authRepository.getUser();
-      yield AuthState.authenticated(user: firebaseUser);
-    } else {
-      yield AuthState.unauthenticated();
-    }
+      authCheckRequested: (e) async* {
+        final userOption = await _authRepository.getSignedInUser();
+        yield userOption.fold(
+          () => const AuthState.unauthenticated(),
+          (User user) => AuthState.authenticated(user: user),
+        );
+      },
+      signedOut: (e) async* {
+        await _authRepository.signOut();
+        yield const AuthState.unauthenticated();
+      },
+    );
   }
 }

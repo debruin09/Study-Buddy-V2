@@ -86,11 +86,13 @@ class Deck extends Equatable {
     String deckName,
     String id,
     List<String> tags,
+    String dateCreated,
   }) {
     return Deck(
       deckName: deckName ?? this.deckName,
       id: id ?? this.id,
       tags: tags ?? this.tags,
+      dateCreated: dateCreated ?? this.dateCreated,
     );
   }
 

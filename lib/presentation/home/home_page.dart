@@ -11,17 +11,14 @@ import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/core/drawer/custom_drawer.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
-import 'package:study_buddy/presentation/home/search/deck_search.dart';
+import 'package:study_buddy/presentation/home/core/build_appbar.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
 import 'package:study_buddy/presentation/home/widgets/deck_card.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
 class HomePage extends StatefulWidget {
   final User user;
-  const HomePage({
-    Key key,
-    this.user,
-  }) : super(key: key);
+  const HomePage({Key key, this.user}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -53,93 +50,20 @@ class _HomePageState extends State<HomePage> {
       drawer: CustomDrawer(user: widget.user),
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            leading: Container(
-              padding: EdgeInsets.only(
-                right: 10.0,
-              ),
-              margin: EdgeInsets.only(
-                top: 5.0,
-              ),
-              decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
-                  )),
-              child: IconButton(
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                ),
-                onPressed: () => _gKey.currentState.openDrawer(),
-              ),
-            ),
-            automaticallyImplyLeading: false,
-            expandedHeight: 65.0,
-            pinned: true,
-            backgroundColor: Colors.white,
-            centerTitle: true,
-            title: Text(
-              "Home",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 3.0),
-            ),
-            actions: [
-              Container(
-                padding: EdgeInsets.only(
-                  left: 10.0,
-                ),
-                margin: EdgeInsets.only(
-                  top: 5.0,
-                ),
-                decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30.0),
-                      topLeft: Radius.circular(30.0),
-                    )),
-                child: IconButton(
-                  onPressed: () {
-                    showSearch(context: context, delegate: DeckSearch());
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    size: 30.0,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          BlocBuilder<DeckBloc, DeckState>(
-            cubit: deckBloc,
-            builder: (context, state) {
-              return state.map(
-                  initial: (_) => SliverPadding(
-                      padding:
-                          EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-                      sliver: SliverToBoxAdapter(
-                          child: Loader(
-                        color: primaryColor,
-                      ))),
-                  loading: (_) => SliverPadding(
-                        padding:
-                            EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-                        sliver: SliverToBoxAdapter(
-                          child: Loader(
-                            color: primaryColor,
-                          ),
-                        ),
-                      ),
-                  success: (state) {
-                    deckScope.setDecks(state.decks);
-                    return SliverPadding(
-                      padding:
-                          EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
-                      sliver: SliverList(
+          buildAppBar(_gKey, context),
+          SliverPadding(
+            padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+            sliver: BlocBuilder<DeckBloc, DeckState>(
+              cubit: deckBloc,
+              builder: (context, state) {
+                return state.map(
+                    initial: (_) =>
+                        SliverToBoxAdapter(child: Loader(color: primaryColor)),
+                    loading: (_) =>
+                        SliverToBoxAdapter(child: Loader(color: primaryColor)),
+                    success: (state) {
+                      deckScope.setDecks(state.decks);
+                      return SliverList(
                         delegate: SliverChildBuilderDelegate(
                           (context, index) => GestureDetector(
                             key: Key(state.decks[index].id),
@@ -147,20 +71,15 @@ class _HomePageState extends State<HomePage> {
                               deleteDialogue(_gKey.currentState, context,
                                   state.decks[index]);
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                bottom: 20.0,
-                              ),
-                              child: DeckCard(deck: state.decks[index]),
-                            ),
+                            child: DeckCard(deck: state.decks[index]),
                           ),
                           childCount: state.decks.length,
                         ),
-                      ),
-                    );
-                  },
-                  error: (state) => Center(child: Text("${state.message}")));
-            },
+                      );
+                    },
+                    error: (state) => Center(child: Text("${state.message}")));
+              },
+            ),
           ),
         ],
       ),
@@ -170,7 +89,7 @@ class _HomePageState extends State<HomePage> {
             color: bgColor,
           ),
           onPressed: () {
-            context.bloc<DeckStatusCubit>().newDeck();
+            context.read<DeckStatusCubit>().newDeck();
             ExtendedNavigator.root.push(
               Routes.createNewDeckPage,
               arguments: CreateNewDeckPageArguments(),

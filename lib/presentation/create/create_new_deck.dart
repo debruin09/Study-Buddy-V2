@@ -5,15 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
 import 'package:study_buddy/application/deck/deck_bloc/deck_bloc.dart';
 import 'package:study_buddy/application/core/status/status_cubit.dart';
-import 'package:study_buddy/domain/core/tag_entity.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/infrastructure/core/tag_service.dart';
 import 'package:study_buddy/injection.dart';
-import 'package:study_buddy/presentation/core/theme/theme_styles.dart';
 import 'package:study_buddy/presentation/core/widgets/custom_appbars.dart';
-import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
+import 'package:study_buddy/presentation/create/core/card_textfield.dart';
 import 'package:study_buddy/presentation/create/widgets/new_deck_card_body.dart';
+import 'package:study_buddy/presentation/create/widgets/tag_wrapper.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:uuid/uuid.dart';
@@ -43,12 +42,11 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
   @override
   void initState() {
     // When page is in created mode then create a new deck id
-    if (context.bloc<DeckStatusCubit>().state is NewDeckState) {
+    if (context.read<DeckStatusCubit>().state is NewDeckState) {
       final newDeckID = Uuid().v4();
       globalId.setDeckId(newDeckID);
     }
-    if (context.bloc<DeckStatusCubit>().state is EditDeckState) {
-      print('yrssssss');
+    if (context.read<DeckStatusCubit>().state is EditDeckState) {
       _deckNameController.text = widget.deck.deckName;
       _tagService.tags.addAll(widget.deck?.tags);
     }
@@ -91,53 +89,13 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
     return Scaffold(
       key: _gKey,
       backgroundColor: bgColor,
-      appBar: CustomAppBar(onPressed: () {
-        cardStatusCubit.changeCardStatus("new");
-        if (context.bloc<DeckStatusCubit>().state is NewDeckState &&
-            _deckNameController.text.isNotEmpty) {
-          createNewDeck();
-          ExtendedNavigator.root.push(
-            Routes.createNewCardPage,
-            arguments: CreateNewCardPageArguments(),
-          );
-        } else if (context.bloc<DeckStatusCubit>().state is EditDeckState) {
-          updateDeck();
-          _deckNameController.clear();
-          _gKey.currentState.showSnackBar(
-            SnackBar(
-              content: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('${widget.deck.deckName} updated',
-                      style: TextStyle(color: Colors.white)),
-                  Icon(Icons.check, color: Colors.white),
-                ],
-              ),
-              backgroundColor: successColor,
-            ),
-          );
-        } else if (_deckNameController.text.isEmpty &&
-            context.bloc<DeckStatusCubit>().state is NewDeckState) {
-          _gKey.currentState.showSnackBar(
-            SnackBar(
-              content: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Fields can't be empty when you save",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  Icon(
-                    Icons.info,
-                    color: Colors.black,
-                  ),
-                ],
-              ),
-              backgroundColor: infoColor,
-            ),
-          );
-        }
-      }),
+      appBar: CustomAppBar(
+        cardStatusCubit: cardStatusCubit,
+        gKey: _gKey,
+        deckNameController: _deckNameController,
+        deck: widget.deck,
+        methods: [createNewDeck, updateDeck],
+      ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: CustomScrollView(
@@ -149,60 +107,15 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 10.0, vertical: 10.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: TextFormField(
-                        controller: _deckNameController,
-                        decoration: inputStyle.copyWith(
-                          hintText: "Enter deck name",
-                        ),
-                      ),
-                    ),
+                    cardTextField(_deckNameController, "Enter deck name", 1),
                     SizedBox(
                       height: 20.0,
                     ),
-                    TagWidget(
+                    TagWrapper(
                       tagService: _tagService,
-                      onChanged: () {
-                        _tagService.tags.add(val);
-                      },
-                      additionalCallback: (String value) {
-                        val = value;
-                        return TagEntity(
-                          tag: value,
-                        );
-                      },
-                    ),
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10.0,
-                      ),
-                      child: Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        alignment: WrapAlignment.start,
-                        spacing: 5.0,
-                        children: widget.deck != null
-                            ? widget.deck.tags
-                                .map(
-                                  (tag) => Chip(
-                                    label: Text(tag),
-                                    deleteIcon: Icon(Icons.cancel),
-                                    onDeleted: () {
-                                      _tagService.tags
-                                          .removeWhere((String t) => t == tag);
-                                      updateDeck();
-                                    },
-                                  ),
-                                )
-                                .toList()
-                            : [Container()],
-                      ),
+                      val: val,
+                      updateDeck: updateDeck,
+                      deck: widget.deck,
                     ),
                     SizedBox(
                       height: 20.0,
@@ -221,7 +134,6 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: BlocBuilder<DeckStatusCubit, StatusState>(
-        cubit: context.bloc<DeckStatusCubit>(),
         builder: (context, state) {
           if (state is NewDeckState) {
             return Container();
@@ -255,12 +167,10 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
     _deckBloc.add(
       DeckEvent.update(
         updatedDeck: widget.deck,
-        newData: Deck(
+        newData: widget.deck.copyWith(
           dateCreated: DateTime.now().toIso8601String().toString(),
           id: widget.deck.id,
-          deckName: _deckNameController.text.isNotEmpty
-              ? _deckNameController.text
-              : widget.deck.deckName,
+          deckName: _deckNameController.text,
           tags: _tagService.tags,
         ),
       ),

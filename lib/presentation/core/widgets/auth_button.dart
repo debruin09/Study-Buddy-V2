@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
 class AuthButton extends StatelessWidget {
   final Function onPressed;

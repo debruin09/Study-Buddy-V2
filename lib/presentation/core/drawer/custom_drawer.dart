@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_buddy/application/auth/auth__bloc.dart';
+import 'package:study_buddy/application/auth/auth_bloc.dart';
 import 'package:study_buddy/domain/auth/user.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
@@ -99,7 +99,7 @@ class CustomDrawer extends StatelessWidget {
               ),
               title: Text("logout"),
               onTap: () {
-                context.bloc<AuthBloc>()..add(AuthLoggedOut());
+                ReadContext(context).read<AuthBloc>()..add(AuthLoggedOut());
               },
             ),
           ),

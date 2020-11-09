@@ -12,18 +12,21 @@ class CardEntity extends Equatable {
   String difficulty;
   String dateCreated;
   List<String> tags;
-  CardEntity(
-      {this.front,
-      this.back,
-      this.id,
-      this.me,
-      this.difficulty,
-      this.tags,
-      this.dateCreated});
+  List<String> imagesUrl;
+  CardEntity({
+    this.front,
+    this.back,
+    this.id,
+    this.me,
+    this.difficulty,
+    this.tags,
+    this.dateCreated,
+    this.imagesUrl,
+  });
 
   @override
   List<Object> get props =>
-      [front, back, id, me, difficulty, dateCreated, tags];
+      [front, back, id, me, difficulty, dateCreated, tags, imagesUrl];
 
   CardEntity copyWith({
     String front,
@@ -32,6 +35,7 @@ class CardEntity extends Equatable {
     String me,
     String difficulty,
     List<String> tags,
+    List<String> imagesUrl,
   }) {
     return CardEntity(
       front: front ?? this.front,
@@ -40,6 +44,7 @@ class CardEntity extends Equatable {
       me: me ?? this.me,
       difficulty: difficulty ?? this.difficulty,
       tags: tags ?? this.tags,
+      imagesUrl: imagesUrl ?? this.imagesUrl,
     );
   }
 
@@ -51,7 +56,8 @@ class CardEntity extends Equatable {
       'me': me,
       'difficulty': difficulty,
       'tags': tags,
-      'dateCreated': dateCreated
+      'dateCreated': dateCreated,
+      'imagesUrl': imagesUrl,
     };
   }
 
@@ -63,19 +69,22 @@ class CardEntity extends Equatable {
       'me': me,
       'difficulty': difficulty,
       'tags': tags,
-      'dateCreated': dateCreated
+      'dateCreated': dateCreated,
+      'imagesUrl': imagesUrl,
     };
   }
 
   static CardEntity fromSnapshot(DocumentSnapshot snap) {
     return CardEntity(
-        front: snap.data()['front'],
-        back: snap.data()['back'],
-        id: snap.id,
-        me: snap.data()['me'],
-        difficulty: snap?.data()['difficulty'],
-        tags: List<String>.from(snap?.data()['tags']),
-        dateCreated: snap.data()['dateCreated']);
+      front: snap.data()['front'],
+      back: snap.data()['back'],
+      id: snap.id,
+      me: snap.data()['me'],
+      difficulty: snap?.data()['difficulty'],
+      tags: List<String>.from(snap?.data()['tags']),
+      dateCreated: snap.data()['dateCreated'],
+      imagesUrl: List<String>.from(snap?.data()['imagesUrl']) ?? [],
+    );
   }
 
   static CardEntity fromMap(Map<String, dynamic> map) {
@@ -86,6 +95,7 @@ class CardEntity extends Equatable {
         me: map['me'] ?? "",
         difficulty: map['difficulty'] ?? "",
         tags: List<String>.from(map['tags']) ?? [],
+        imagesUrl: List<String>.from(map['imagesUrl']) ?? [],
         dateCreated: map['dateCreated']);
   }
 

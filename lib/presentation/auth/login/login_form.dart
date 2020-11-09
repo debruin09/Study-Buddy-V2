@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
-import 'package:study_buddy/application/auth/auth__bloc.dart';
+import 'package:study_buddy/application/auth/auth_bloc.dart';
 import 'package:study_buddy/application/auth/login/login_bloc.dart';
 import 'package:study_buddy/domain/auth/auth_repository.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
@@ -169,7 +169,7 @@ class _LoginFormState extends State<LoginForm> {
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               ExtendedNavigator.root
-                                  .push(Routes.registerScreen);
+                                  .replace(Routes.registerScreen);
                             }),
                     ],
                   ),

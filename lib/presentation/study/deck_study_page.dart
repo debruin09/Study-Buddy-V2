@@ -81,7 +81,7 @@ class _DeckStudyPageState extends State<DeckStudyPage> {
                   arguments: CreateNewDeckPageArguments(
                     deck: widget.deck,
                   ));
-              context.bloc<DeckStatusCubit>().editDeck();
+              ReadContext(context).read<DeckStatusCubit>().editDeck();
             }
           }, itemBuilder: (context) {
             return Choices.values.map((choice) {
@@ -103,12 +103,11 @@ class _DeckStudyPageState extends State<DeckStudyPage> {
             Expanded(
               flex: 8,
               child: Container(
-                child: BodyWrapper(
-                  cardBloc: _cardBloc,
-                  speechBloc: _speechBloc,
-                  highlights: _highlights,
-                ),
-              ),
+                  child: BodyWrapper(
+                cardBloc: _cardBloc,
+                speechBloc: _speechBloc,
+                highlights: _highlights,
+              )),
             ),
             const SizedBox(
               height: 15.0,

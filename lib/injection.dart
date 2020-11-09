@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:study_buddy/application/auth/auth__bloc.dart';
+import 'package:study_buddy/application/auth/auth_bloc.dart';
 import 'package:study_buddy/application/auth/login/login_bloc.dart';
 import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
 import 'package:study_buddy/application/core/speech/speech_bloc.dart';
@@ -14,7 +14,9 @@ import 'package:study_buddy/domain/similarity/api_client_repository.dart';
 import 'package:study_buddy/infrastructure/auth/auth_service.dart';
 import 'package:study_buddy/infrastructure/core/database_service.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
+import 'package:study_buddy/infrastructure/core/image_service.dart';
 import 'package:study_buddy/infrastructure/core/local_notification_service.dart';
+import 'package:study_buddy/infrastructure/core/storage_service.dart';
 import 'package:study_buddy/infrastructure/core/tag_service.dart';
 import 'package:study_buddy/infrastructure/similarity/api_client_service.dart';
 
@@ -29,9 +31,13 @@ void setupLocator() {
   locator.registerFactory<SimilarityBloc>(() => SimilarityBloc(locator()));
   locator.registerLazySingleton<DecksScope>(() => DecksScope());
   locator.registerLazySingleton<GlobalId>(() => GlobalId());
+  locator.registerLazySingleton<ImageFileDetails>(() => ImageFileDetails());
   locator.registerLazySingleton<AuthRepository>(() => AuthService());
   locator.registerLazySingleton<DatabaseRepository>(() => FirestoreService());
-  locator.registerFactory<QueueScheduler>(() => QueueScheduler(locator()));
+  locator.registerLazySingleton<ImageService>(() => ImageService());
+  locator.registerLazySingleton<StorageService>(() => StorageService());
+  locator
+      .registerLazySingleton<QueueScheduler>(() => QueueScheduler(locator()));
   locator.registerFactory<TagService>(() => TagService());
   locator.registerFactory<LocalNotificationRepository>(
       () => LocalNotificationService());

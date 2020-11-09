@@ -8,6 +8,9 @@ class QueueScheduler {
   Queue<MyCard> q2 = Queue<MyCard>();
   final LocalNotificationRepository notificationService;
   bool isFinished = false;
+
+  int lengthAfterPopulation = 0;
+
   int hard = 0;
   int easy = 0;
   int moderate = 0;
@@ -15,10 +18,20 @@ class QueueScheduler {
   QueueScheduler(this.notificationService);
 
   /// Populate's the queue with the cards from the database
-  void populate(Queue<MyCard> cards) => q1.addAll(cards);
+  void populate(Queue<MyCard> cards) {
+    q1.addAll(cards);
 
-  /// Clears the queue
-  void clear() => q1.clear();
+    lengthAfterPopulation = q1.length;
+  }
+
+  /// Clears the queue, and values
+  void clear() {
+    q1.clear();
+    q2.clear();
+    hard = 0;
+    moderate = 0;
+    easy = 0;
+  }
 
   /// Removes the first [MyCard] from the first queue, then creates a backup of that card
   /// Then it notifies the user of the card;
@@ -38,11 +51,11 @@ class QueueScheduler {
     }
   }
 
-  bool isDeckFinished() {
-    if (q1.length == 0) {
-      return !isFinished;
+  bool isEmptyAfterPopulation() {
+    if (lengthAfterPopulation == q2.length) {
+      return true;
     }
-    return isFinished;
+    return false;
   }
 }
 

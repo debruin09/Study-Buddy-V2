@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_buddy/application/auth/auth__bloc.dart';
+import 'package:study_buddy/application/auth/auth_bloc.dart';
 import 'package:study_buddy/application/auth/login/login_bloc.dart';
 import 'package:study_buddy/presentation/core/widgets/auth_button.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
@@ -31,7 +31,7 @@ class _LoginFormState extends State<RegisterForm> {
   @override
   void initState() {
     super.initState();
-    _loginBloc = context.bloc<LoginBloc>();
+    _loginBloc = ReadContext(context).read<LoginBloc>();
     _emailController.addListener(_onEmailChange);
     _passwordController.addListener(_onPasswordChange);
   }
@@ -77,10 +77,10 @@ class _LoginFormState extends State<RegisterForm> {
         }
 
         if (state.isSuccess) {
+          print("Sucess die man");
           BlocProvider.of<AuthBloc>(context).add(
             AuthLoggedIn(),
           );
-          Navigator.pop(context);
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(
@@ -179,7 +179,8 @@ class _LoginFormState extends State<RegisterForm> {
                                 fontSize: 16.0),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                ExtendedNavigator.root.push(Routes.loginScreen);
+                                ExtendedNavigator.root
+                                    .replace(Routes.loginScreen);
                               }),
                       ],
                     ),

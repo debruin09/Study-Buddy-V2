@@ -1,33 +1,34 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:study_buddy/application/auth/auth__bloc.dart';
+import 'package:study_buddy/application/auth/auth_bloc.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/auth/login/login_screen.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
 import 'package:study_buddy/presentation/home/home_page.dart';
+import 'package:study_buddy/presentation/routes/router.gr.dart';
 
 class LandingPage extends StatelessWidget {
   final userScope = locator.get<GlobalId>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, state) {
-          return state.map(
-            initial: (_) => _SplashScreen(),
-            authenticated: (success) {
-              userScope.setUser(success.user);
-              return HomePage(user: success.user);
-            },
-            unauthenticated: (_) => LoginScreen(),
-          );
-        },
-      ),
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        state.map(
+          initial: (_) {},
+          authenticated: (success) {
+            userScope.setUser(success.user);
+            return ExtendedNavigator.root.replace(Routes.homePage,
+                arguments: HomePageArguments(user: success.user));
+          },
+          unauthenticated: (_) =>
+              ExtendedNavigator.root.replace(Routes.loginScreen),
+        );
+      },
+      child: _SplashScreen(),
     );
   }
 }

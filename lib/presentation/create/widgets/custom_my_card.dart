@@ -10,7 +10,6 @@ import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:study_buddy/domain/core/utils/custom_extensions.dart';
-import 'package:study_buddy/presentation/study/widgets/body_wrapper.dart';
 
 class CustomMyCard extends ConsumerWidget {
   CustomMyCard(

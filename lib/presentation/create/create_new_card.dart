@@ -1,18 +1,18 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
 import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
 import 'package:study_buddy/domain/core/tag_entity.dart';
+import 'package:study_buddy/infrastructure/core/image_service.dart';
+import 'package:study_buddy/infrastructure/core/storage_service.dart';
 import 'package:study_buddy/infrastructure/core/tag_service.dart';
 import 'package:study_buddy/injection.dart';
-import 'package:hooks_riverpod/all.dart';
-import 'package:study_buddy/presentation/core/theme/theme_styles.dart';
+import 'package:study_buddy/presentation/core/widgets/image_viewer.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
-import 'package:study_buddy/presentation/study/deck_study_page.dart';
+import 'package:study_buddy/presentation/create/core/card_textfield.dart';
+import 'package:study_buddy/presentation/create/core/create_card_appbar.dart';
 import 'package:uuid/uuid.dart';
 
 class CreateNewCardPage extends StatefulWidget {
@@ -33,9 +33,13 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
   final GlobalKey<ScaffoldState> _gKey = GlobalKey<ScaffoldState>();
   final cardBloc = locator.get<CardBloc>();
   final globalId = locator.get<GlobalId>();
-  final _tagService = locator.get<TagService>();
+  final _imageFileDetails = locator.get<ImageFileDetails>();
   final cardStatusCubit = locator.get<CardStatusCubit>();
+  final _tagService = locator.get<TagService>();
+  final _imageService = locator.get<ImageService>();
+  final _storageService = locator.get<StorageService>();
   List<String> tags = [];
+  List<String> imagesUrl = [];
   String val = "";
 
   @override
@@ -50,6 +54,7 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
       _backController.text = widget.card.back;
 
       widget.card.tags.addAll(tags);
+      widget.card.imagesUrl.addAll(imagesUrl);
     }
     super.initState();
     cardBloc.dispose();
@@ -67,141 +72,25 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
     return Scaffold(
       key: _gKey,
       backgroundColor: bgColor,
-      appBar: AppBar(
-          elevation: 0.0,
-          leading: Container(
-            padding: EdgeInsets.only(
-              right: 10.0,
-            ),
-            margin: EdgeInsets.only(
-              top: 15.0,
-            ),
-            decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0),
-                )),
-            child: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: Colors.white,
-              ),
-              onPressed: () => ExtendedNavigator.root.pop(),
-            ),
-          ),
-          title: BlocBuilder<CardStatusCubit, String>(
-            cubit: cardStatusCubit,
-            buildWhen: (p, c) => p != c,
-            builder: (context, state) {
-              return Padding(
-                padding: const EdgeInsets.only(left: 8.0, top: 10.0),
-                child: Text(state == "new" ? 'Create New Card' : 'Edit Card'),
-              );
-            },
-          ),
-          backgroundColor: bgColor,
-          actions: [
-            Container(
-              padding: EdgeInsets.only(
-                left: 10.0,
-              ),
-              margin: EdgeInsets.only(
-                top: 15.0,
-              ),
-              decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30.0),
-                    topLeft: Radius.circular(30.0),
-                  )),
-              child: IconButton(
-                onPressed: () {
-                  if (_frontController.text.isEmpty ||
-                      _backController.text.isEmpty) {
-                    _gKey.currentState.showSnackBar(
-                      SnackBar(
-                        content: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Fields can't be empty.",
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            Icon(
-                              Icons.info,
-                              color: Colors.black,
-                            ),
-                          ],
-                        ),
-                        backgroundColor: infoColor,
-                      ),
-                    );
-                  } else {
-                    cardStatusCubit.state == "new"
-                        ? addNewCard()
-                        : updateCard();
-                    BuildContextX(context).read(showAnswerProvider).state =
-                        false;
-                    _frontController.clear();
-                    _backController.clear();
-                    ReadContext(context).read<DeckStatusCubit>().editDeck();
-                    ExtendedNavigator.root.pop();
-                  }
-                },
-                icon: Icon(
-                  Icons.check,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ]),
+      appBar: buildAppBar(
+          gKey: _gKey,
+          context: context,
+          controllers: [_frontController, _backController],
+          cardStatusCubit: cardStatusCubit,
+          methods: [addNewCard, updateCard]),
       body: Padding(
-        padding: const EdgeInsets.only(
-            bottom: 30.0, left: 20.0, right: 20.0, top: 10.0),
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
         child: SingleChildScrollView(
-          padding: EdgeInsets.only(
-            bottom: 30.0,
-          ),
           child: Form(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  margin: EdgeInsets.only(top: 10.0),
-                  child: TextFormField(
-                    controller: _frontController,
-                    maxLines: 6,
-                    decoration: inputStyle.copyWith(
-                      labelText: "Front",
-                    ),
-                    keyboardType: TextInputType.multiline,
-                    autocorrect: false,
-                  ),
-                ),
-                SizedBox(
+                cardTextField(_frontController, 'Front', 8),
+                const SizedBox(
                   height: 10,
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 10.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: TextFormField(
-                    controller: _backController,
-                    maxLines: 9,
-                    decoration: inputStyle.copyWith(
-                      labelText: "Back",
-                    ),
-                    keyboardType: TextInputType.multiline,
-                    autocorrect: false,
-                  ),
-                ),
-                SizedBox(
+                cardTextField(_backController, 'Back', 8),
+                const SizedBox(
                   height: 10,
                 ),
                 TagWidget(
@@ -216,9 +105,45 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
                     );
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
+                MaterialButton(
+                    height: 30.0,
+                    minWidth: 50.0,
+                    padding: EdgeInsets.all(10.0),
+                    child: Row(children: [
+                      Icon(Icons.image),
+                      Text("choose an image"),
+                    ]),
+                    onPressed: () async {
+                      _imageFileDetails
+                          .setImageFile(await _imageService.getImage());
+                      final imageUrl = _storageService.uploadImage(
+                          image: _imageFileDetails.imageFile);
+                      _imageFileDetails.setImageUrl(await imageUrl);
+
+                      imagesUrl.add(_imageFileDetails.imageUrl);
+                      updateCard();
+                    }),
+                SizedBox(height: 5.0),
+                widget.card.imagesUrl != null
+                    ? Wrap(
+                        direction: Axis.horizontal,
+                        spacing: 5.0,
+                        runSpacing: 5.0,
+                        children: widget.card.imagesUrl
+                            .map(
+                              (url) => ImageViewer(
+                                onPressed: () {},
+                                imageUrl: url,
+                                height: 80.0,
+                                width: 60.0,
+                              ),
+                            )
+                            .toList(),
+                      )
+                    : Container(),
               ],
             ),
           ),
@@ -231,18 +156,13 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
     cardBloc.add(
       CardEvent.update(
         updatedCard: widget.card,
-        newData: MyCard(
-          back: _backController.text.isEmpty
-              ? widget.card.back
-              : _backController.text,
-          front: _frontController.text.isEmpty
-              ? widget.card.front
-              : _frontController.text,
+        newData: widget.card.copyWith(
+          back: _backController.text,
+          front: _frontController.text,
           dateCreated: DateTime.now().toIso8601String().toString(),
-          me: widget.card.me,
           difficulty: "easy",
-          id: widget.card.id,
           tags: tags.length == 0 ? widget.card.tags : tags,
+          imagesUrl: imagesUrl.length == 0 ? widget.card.imagesUrl : imagesUrl,
         ),
       ),
     );
@@ -258,7 +178,7 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
           back: _backController.text,
           dateCreated: DateTime.now().toIso8601String().toString(),
           tags: tags,
-          isLocal: true,
+          imagesUrl: imagesUrl,
         ),
       ),
     );

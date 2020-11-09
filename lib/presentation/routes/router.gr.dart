@@ -5,6 +5,7 @@
 // **************************************************************************
 
 // ignore_for_file: public_member_api_docs
+import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import '../../domain/card/mycard.dart';
 import '../../domain/deck/deck.dart';
 import '../auth/login/login_screen.dart';
 import '../auth/register/register_screen.dart';
+import '../core/widgets/image_viewer.dart';
 import '../create/create_new_card.dart';
 import '../create/create_new_deck.dart';
 import '../home/home_page.dart';
@@ -27,6 +29,7 @@ class Routes {
   static const String createNewDeckPage = '/create-new-deck-page';
   static const String deckStudyPage = '/deck-study-page';
   static const String loginScreen = '/login-screen';
+  static const String imgaeViewerPage = '/imgae-viewer-page';
   static const String registerScreen = '/register-screen';
   static const all = <String>{
     homePage,
@@ -35,6 +38,7 @@ class Routes {
     createNewDeckPage,
     deckStudyPage,
     loginScreen,
+    imgaeViewerPage,
     registerScreen,
   };
 }
@@ -49,6 +53,7 @@ class Router extends RouterBase {
     RouteDef(Routes.createNewDeckPage, page: CreateNewDeckPage),
     RouteDef(Routes.deckStudyPage, page: DeckStudyPage),
     RouteDef(Routes.loginScreen, page: LoginScreen),
+    RouteDef(Routes.imgaeViewerPage, page: ImageViewerPage),
     RouteDef(Routes.registerScreen, page: RegisterScreen),
   ];
   @override
@@ -115,6 +120,16 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    ImageViewerPage: (data) {
+      final args = data.getArgs<ImageViewerPageArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ImageViewerPage(
+          key: args.key,
+          imageFile: args.imageFile,
+        ),
+        settings: data,
+      );
+    },
     RegisterScreen: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => RegisterScreen(),
@@ -169,6 +184,15 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
 
   Future<dynamic> pushLoginScreen() => push<dynamic>(Routes.loginScreen);
 
+  Future<dynamic> pushImageViewerPage({
+    Key key,
+    @required File imageFile,
+  }) =>
+      push<dynamic>(
+        Routes.imgaeViewerPage,
+        arguments: ImageViewerPageArguments(key: key, imageFile: imageFile),
+      );
+
   Future<dynamic> pushRegisterScreen() => push<dynamic>(Routes.registerScreen);
 }
 
@@ -202,4 +226,11 @@ class DeckStudyPageArguments {
   final Key key;
   final Deck deck;
   DeckStudyPageArguments({this.key, @required this.deck});
+}
+
+/// ImageViewerPage arguments holder class
+class ImageViewerPageArguments {
+  final Key key;
+  final File imageFile;
+  ImageViewerPageArguments({this.key, @required this.imageFile});
 }

@@ -10,7 +10,7 @@ class MyCard extends Equatable {
   String difficulty;
   String dateCreated;
   List<String> tags;
-  bool isLocal = false;
+  List<String> imagesUrl;
 
   MyCard({
     this.front,
@@ -19,15 +19,16 @@ class MyCard extends Equatable {
     this.id,
     this.difficulty,
     this.tags,
-    this.isLocal,
     this.dateCreated,
+    this.imagesUrl,
   });
   @override
-  List<Object> get props => [front, back, me, difficulty, dateCreated, tags];
+  List<Object> get props =>
+      [front, back, me, difficulty, dateCreated, tags, imagesUrl];
 
   @override
   String toString() {
-    return 'MyCard(front: $front, back: $back, me: $me, id: $id, difficulty: $difficulty, tags: $tags)';
+    return 'MyCard(front: $front)';
   }
 
   Map<String, dynamic> toMap() {
@@ -39,6 +40,7 @@ class MyCard extends Equatable {
       'dateCreated': dateCreated,
       'difficulty': difficulty,
       'tags': tags,
+      'imagesUrl': imagesUrl,
     };
   }
 
@@ -53,6 +55,7 @@ class MyCard extends Equatable {
       difficulty: map['difficulty'],
       dateCreated: map['dateCreated'],
       tags: List<String>.from(map['tags']),
+      imagesUrl: List<String>.from(map['imagesUrl']),
     );
   }
 
@@ -65,18 +68,21 @@ class MyCard extends Equatable {
       me: me,
       tags: tags,
       dateCreated: dateCreated,
+      imagesUrl: imagesUrl,
     );
   }
 
   static MyCard fromEntity(CardEntity entity) {
     return MyCard(
-        back: entity.back,
-        difficulty: entity.difficulty,
-        id: entity.id,
-        front: entity.front,
-        me: entity.me,
-        tags: entity.tags,
-        dateCreated: entity.dateCreated);
+      back: entity.back,
+      difficulty: entity.difficulty,
+      id: entity.id,
+      front: entity.front,
+      me: entity.me,
+      tags: entity.tags,
+      dateCreated: entity.dateCreated,
+      imagesUrl: entity.imagesUrl,
+    );
   }
 
   MyCard copyWith({
@@ -87,7 +93,7 @@ class MyCard extends Equatable {
     String difficulty,
     String dateCreated,
     List<String> tags,
-    bool isLocal,
+    List<String> imagesUrl,
   }) {
     return MyCard(
       front: front ?? this.front,
@@ -97,7 +103,7 @@ class MyCard extends Equatable {
       difficulty: difficulty ?? this.difficulty,
       dateCreated: dateCreated ?? this.dateCreated,
       tags: tags ?? this.tags,
-      isLocal: isLocal ?? this.isLocal,
+      imagesUrl: imagesUrl ?? this.imagesUrl,
     );
   }
 }

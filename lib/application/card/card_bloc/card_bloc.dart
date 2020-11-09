@@ -4,13 +4,10 @@ import 'dart:collection';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:riverpod/all.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
 import 'package:study_buddy/domain/core/database_repository.dart';
 import 'package:study_buddy/domain/core/scheduler/queue_scheduler.dart';
 import 'package:study_buddy/injection.dart';
-import 'package:study_buddy/presentation/study/widgets/body_wrapper.dart';
-
 part 'card_event.dart';
 part 'card_state.dart';
 part 'card_bloc.freezed.dart';
@@ -35,10 +32,9 @@ class CardBloc extends Bloc<CardEvent, CardState> {
   Stream<CardState> _mapCardsUpdateToState(CardUpdated event) async* {
     yield CardState.loading();
     try {
-      if (queueScheduler.isFinished == false) {
-        queueScheduler.clear();
-        queueScheduler.populate(event.cards);
-      }
+      queueScheduler.clear();
+      queueScheduler.populate(event.cards);
+
       yield CardState.success(cards: event.cards);
     } catch (e) {
       yield CardState.error(message: e.toString());

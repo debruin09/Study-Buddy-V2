@@ -40,6 +40,11 @@ class FirestoreService implements DatabaseRepository {
   /// Deletes the [Deck] specified
   @override
   Future<void> deleteDeck(Deck deck) {
+    userCollection
+        .deckCollection()
+        .doc(deck.id)
+        .collection("cards")
+        .deckCollection();
     return userCollection.deckCollection().doc(deck.id).delete();
   }
 

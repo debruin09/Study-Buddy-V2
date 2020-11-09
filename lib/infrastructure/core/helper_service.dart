@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:study_buddy/domain/auth/user.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
@@ -50,4 +52,20 @@ class CardScope {
   }
 
   List<MyCard> get cards => _cards;
+}
+
+class ImageFileDetails {
+  File _imageFile;
+  String _imageUrl;
+
+  void setImageFile(File value) {
+    _imageFile = value;
+  }
+
+  void setImageUrl(String value) {
+    _imageUrl = value;
+  }
+
+  File get imageFile => _imageFile;
+  String get imageUrl => _imageUrl;
 }

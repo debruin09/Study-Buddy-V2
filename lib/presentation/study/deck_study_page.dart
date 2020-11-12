@@ -6,11 +6,11 @@ import 'package:highlight_text/highlight_text.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
-import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
+import 'package:study_buddy/application/card/card_bloc.dart';
 import 'package:study_buddy/application/core/speech/speech_bloc.dart';
 import 'package:study_buddy/application/core/status/status_cubit.dart';
-import 'package:study_buddy/application/deck/deck_bloc/deck_bloc.dart';
-import 'package:study_buddy/application/similarity/similarity_bloc/similarity_bloc.dart';
+import 'package:study_buddy/application/deck/deck_bloc.dart';
+import 'package:study_buddy/application/similarity/similarity_bloc.dart';
 import 'package:study_buddy/domain/core/local_notification_repository.dart';
 import 'package:study_buddy/domain/core/scheduler/queue_scheduler.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
@@ -76,7 +76,7 @@ class _DeckStudyPageState extends State<DeckStudyPage> {
             if (choice == Choices.record) {
               BuildContextX(context).read(showRecordingProvider).state = true;
             } else if (choice == Choices.edit) {
-              _cardStatusCubit.changeCardStatus("edit");
+              _cardStatusCubit.editCard();
               ExtendedNavigator.root.push(Routes.createNewDeckPage,
                   arguments: CreateNewDeckPageArguments(
                     deck: widget.deck,
@@ -150,8 +150,7 @@ class _DeckStudyPageState extends State<DeckStudyPage> {
                   onPressed: () {
                     _cardBloc.add(
                       CardEvent.update(
-                        updatedCard: cardToBeUpdated,
-                        newData: updatedCard,
+                        updatedCard: updatedCard,
                       ),
                     );
                     BuildContextX(context).read(isListeningProvider).state =

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/all.dart';
-import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
+import 'package:study_buddy/application/card/card_bloc.dart';
 import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';

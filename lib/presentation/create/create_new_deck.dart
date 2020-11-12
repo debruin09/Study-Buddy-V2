@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
-import 'package:study_buddy/application/deck/deck_bloc/deck_bloc.dart';
+import 'package:study_buddy/application/card/card_bloc.dart';
+import 'package:study_buddy/application/deck/deck_bloc.dart';
 import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
@@ -114,7 +114,6 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
                     TagWrapper(
                       tagService: _tagService,
                       val: val,
-                      updateDeck: updateDeck,
                       deck: widget.deck,
                     ),
                     SizedBox(
@@ -133,31 +132,31 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: BlocBuilder<DeckStatusCubit, StatusState>(
+      floatingActionButton: BlocBuilder<DeckStatusCubit, DeckStatusState>(
         builder: (context, state) {
-          if (state is NewDeckState) {
-            return Container();
-          } else {
-            return FadeTransition(
-              opacity: _hideFabAnimController,
-              child: ScaleTransition(
-                scale: _hideFabAnimController,
-                child: FloatingActionButton(
-                  onPressed: () {
-                    cardStatusCubit.changeCardStatus("new");
-                    ExtendedNavigator.root.push(
-                      Routes.createNewCardPage,
-                      arguments: CreateNewCardPageArguments(),
-                    );
-                  },
-                  child: Icon(
-                    Icons.add,
-                    color: bgColor,
+          return state.map(
+              newDeck: (_) => Container(),
+              editDeck: (_) {
+                return FadeTransition(
+                  opacity: _hideFabAnimController,
+                  child: ScaleTransition(
+                    scale: _hideFabAnimController,
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        cardStatusCubit.newCard();
+                        ExtendedNavigator.root.push(
+                          Routes.createNewCardPage,
+                          arguments: CreateNewCardPageArguments(),
+                        );
+                      },
+                      child: Icon(
+                        Icons.add,
+                        color: bgColor,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            );
-          }
+                );
+              });
         },
       ),
     );
@@ -166,8 +165,7 @@ class _CreateNewDeckPageState extends State<CreateNewDeckPage>
   void updateDeck() {
     _deckBloc.add(
       DeckEvent.update(
-        updatedDeck: widget.deck,
-        newData: widget.deck.copyWith(
+        updatedDeck: widget.deck.copyWith(
           dateCreated: DateTime.now().toIso8601String().toString(),
           id: widget.deck.id,
           deckName: _deckNameController.text,

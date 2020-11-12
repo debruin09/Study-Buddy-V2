@@ -1,16 +1,13 @@
 part of 'status_cubit.dart';
 
-abstract class StatusState extends Equatable {
-  const StatusState();
-
-  @override
-  List<Object> get props => [];
+@freezed
+abstract class DeckStatusState with _$DeckStatusState {
+  const factory DeckStatusState.newDeck() = NewDeckState;
+  const factory DeckStatusState.editDeck() = EditDeckState;
 }
 
-class NewDeckState extends StatusState {}
-
-class EditDeckState extends StatusState {}
-
-class NewCardState extends StatusState {}
-
-class EditCardState extends StatusState {}
+@freezed
+abstract class CardStatusState with _$CardStatusState {
+  const factory CardStatusState.newCard() = NewCardState;
+  const factory CardStatusState.editCard() = EditCardState;
+}

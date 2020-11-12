@@ -10,7 +10,7 @@ Widget buildAppBar(
     {gKey,
     context,
     List<TextEditingController> controllers,
-    cardStatusCubit,
+    CardStatusCubit cardStatusCubit,
     List<VoidCallback> methods}) {
   return AppBar(
       elevation: 0.0,
@@ -35,15 +35,16 @@ Widget buildAppBar(
           onPressed: () => ExtendedNavigator.root.pop(),
         ),
       ),
-      title: BlocBuilder<CardStatusCubit, String>(
-        cubit: cardStatusCubit,
-        buildWhen: (p, c) => p != c,
-        builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 8.0, top: 10.0),
-            child: Text(state == "new" ? 'Create New Card' : 'Edit Card'),
-          );
-        },
+      title: Padding(
+        padding: const EdgeInsets.only(left: 8.0, top: 10.0),
+        child: BlocBuilder<CardStatusCubit, CardStatusState>(
+          cubit: cardStatusCubit,
+          buildWhen: (p, c) => p != c,
+          builder: (context, state) => state.map(
+            newCard: (_) => Text('Create New Card'),
+            editCard: (_) => Text('Edit Card'),
+          ),
+        ),
       ),
       backgroundColor: bgColor,
       actions: [
@@ -82,7 +83,11 @@ Widget buildAppBar(
                   ),
                 );
               } else {
-                cardStatusCubit.state == "new" ? methods[0]() : methods[1]();
+                cardStatusCubit.state.map(
+                  newCard: (_) => methods[0](),
+                  editCard: (_) => methods[1](),
+                );
+
                 BuildContextX(context).read(showAnswerProvider).state = false;
                 controllers[0].clear();
                 controllers[1].clear();

@@ -43,6 +43,7 @@ class TagWidget extends StatelessWidget {
       child: FlutterTagging<TagEntity>(
         initialItems: selectedTags,
         textFieldConfiguration: TextFieldConfiguration(
+
             // onChanged: (t) => print("Something changed this is T: $t"),
             decoration: InputDecoration(
           hintText: "tags",

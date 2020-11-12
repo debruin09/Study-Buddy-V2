@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:study_buddy/domain/auth/auth_failure.dart';
 import 'package:study_buddy/domain/auth/user.dart';
@@ -20,19 +21,22 @@ class AuthService implements AuthRepository {
 
   /// This will login the users with the email and password details
   @override
-  Future<Either<AuthFailure, Unit>> signInWithCredentials(
-      String email, String password) async {
+  Future<void> signInWithCredentials({
+    @required String emailAddress,
+    @required String password,
+  }) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+      final result = await _firebaseAuth.signInWithEmailAndPassword(
+          email: emailAddress, password: password);
 
-      return right(unit);
+      myUid.setUser(
+          User(uid: result.user.uid, username: result.user.displayName));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'ERROR_WRONG_PASSWORD' ||
           e.code == 'ERROR_USER_NOT_FOUND') {
-        return left(const AuthFailure.invalidEmailAndPasswordCombination());
+        return AuthFailure.invalidEmailAndPasswordCombination();
       } else {
-        return left(const AuthFailure.serverError());
+        return AuthFailure.serverError();
       }
     }
   }
@@ -47,25 +51,27 @@ class AuthService implements AuthRepository {
   }
 
   @override
-  Future<Either<AuthFailure, Unit>> signUp(
-      String email, String password) async {
+  Future<void> signUp({
+    @required String emailAddress,
+    @required String password,
+  }) async {
     try {
       final result = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
+        email: emailAddress,
         password: password,
       );
+      myUid.setUser(
+          User(uid: result.user.uid, username: result.user.displayName));
 
-      await FirestoreService(uid: result.user.uid).updateUserData(
+      return await FirestoreService(uid: result.user.uid).updateUserData(
         uid: result.user.uid,
         username: result.user.displayName ?? "Test user",
       );
-
-      return right(unit);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
-        return left(const AuthFailure.emailAlreadyInUse());
+        return AuthFailure.emailAlreadyInUse();
       } else {
-        return left(const AuthFailure.serverError());
+        return AuthFailure.serverError();
       }
     }
   }
@@ -75,11 +81,11 @@ class AuthService implements AuthRepository {
       optionOf(_firebaseAuth.currentUser?.toDomain());
 
   @override
-  Future<Either<AuthFailure, Unit>> signInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
-        return left(const AuthFailure.cancelledByUser());
+        return AuthFailure.cancelledByUser();
       }
 
       final googleAuthentication = await googleUser.authentication;
@@ -89,10 +95,12 @@ class AuthService implements AuthRepository {
         accessToken: googleAuthentication.accessToken,
       );
 
-      await _firebaseAuth.signInWithCredential(authCredential);
-      return right(unit);
+      final result = await _firebaseAuth.signInWithCredential(authCredential);
+
+      myUid.setUser(
+          User(uid: result.user.uid, username: result.user.displayName));
     } on FirebaseAuthException catch (_) {
-      return left(const AuthFailure.serverError());
+      return AuthFailure.serverError();
     }
   }
 }

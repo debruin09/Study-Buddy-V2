@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'package:study_buddy/domain/core/tag_entity.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
+import 'package:study_buddy/application/deck/deck_bloc.dart';
 import 'package:study_buddy/infrastructure/core/tag_service.dart';
+import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
 
 class TagWrapper extends StatelessWidget {
   final TagService tagService;
   final String val;
-  final Function updateDeck;
   final Deck deck;
 
   const TagWrapper({
     Key key,
     @required this.tagService,
     @required this.val,
-    @required this.updateDeck,
     @required this.deck,
   }) : super(key: key);
   @override
@@ -50,7 +50,12 @@ class TagWrapper extends StatelessWidget {
                         deleteIcon: Icon(Icons.cancel),
                         onDeleted: () {
                           tagService.tags.removeWhere((String t) => t == tag);
-                          updateDeck();
+                          locator.get<DeckBloc>().add(
+                                DeckEvent.update(
+                                  updatedDeck:
+                                      deck.copyWith(tags: tagService.tags),
+                                ),
+                              );
                         },
                       ),
                     )

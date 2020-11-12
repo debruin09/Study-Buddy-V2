@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hooks_riverpod/all.dart';
-import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
+import 'package:study_buddy/application/card/card_bloc.dart';
 import 'package:study_buddy/domain/core/scheduler/queue_scheduler.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
@@ -42,26 +42,30 @@ class BodyWrapper extends ConsumerWidget {
             if (queueScheduler.lengthAfterPopulation ==
                 queueScheduler.q2.length) {
               return Center(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Deck completed"),
-                  SizedBox(height: 8.0),
-                  RichText(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Deck completed"),
+                    SizedBox(height: 8.0),
+                    RichText(
                       text: TextSpan(
-                    text: "hard: ${queueScheduler.hard}  ",
-                    style: TextStyle(color: Colors.red),
-                    children: [
-                      TextSpan(
-                          text: "moderate: ${queueScheduler.moderate}  ",
-                          style: TextStyle(color: Colors.yellow)),
-                      TextSpan(
-                          text: "easy: ${queueScheduler.easy}  ",
-                          style: TextStyle(color: Colors.green))
-                    ],
-                  )),
-                ],
-              ));
+                        text: "hard: ${queueScheduler.hard}  ",
+                        style: TextStyle(color: Colors.red),
+                        children: [
+                          TextSpan(
+                            text: "moderate: ${queueScheduler.moderate}  ",
+                            style: TextStyle(color: Colors.yellow),
+                          ),
+                          TextSpan(
+                            text: "easy: ${queueScheduler.easy}  ",
+                            style: TextStyle(color: Colors.green),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
             }
             return Stack(
               children: [

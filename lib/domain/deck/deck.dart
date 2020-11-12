@@ -96,5 +96,5 @@ class Deck extends Equatable {
     );
   }
 
-  String toString() => "$deckName";
+  String toString() => "$deckName $tags";
 }

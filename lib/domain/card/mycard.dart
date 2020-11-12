@@ -10,7 +10,7 @@ class MyCard extends Equatable {
   String difficulty;
   String dateCreated;
   List<String> tags;
-  List<String> imagesUrl;
+  // List<String> imagesUrl;
 
   MyCard({
     this.front,
@@ -20,15 +20,21 @@ class MyCard extends Equatable {
     this.difficulty,
     this.tags,
     this.dateCreated,
-    this.imagesUrl,
+    // this.imagesUrl,
   });
   @override
-  List<Object> get props =>
-      [front, back, me, difficulty, dateCreated, tags, imagesUrl];
+  List<Object> get props => [
+        front,
+        back,
+        me,
+        difficulty,
+        dateCreated,
+        tags,
+      ];
 
   @override
   String toString() {
-    return 'MyCard(front: $front)';
+    return 'MyCard(front: $front, tags: $tags)';
   }
 
   Map<String, dynamic> toMap() {
@@ -40,7 +46,7 @@ class MyCard extends Equatable {
       'dateCreated': dateCreated,
       'difficulty': difficulty,
       'tags': tags,
-      'imagesUrl': imagesUrl,
+      // 'imagesUrl': imagesUrl,
     };
   }
 
@@ -55,7 +61,7 @@ class MyCard extends Equatable {
       difficulty: map['difficulty'],
       dateCreated: map['dateCreated'],
       tags: List<String>.from(map['tags']),
-      imagesUrl: List<String>.from(map['imagesUrl']),
+      // imagesUrl: List<String>.from(map['imagesUrl']),
     );
   }
 
@@ -68,7 +74,7 @@ class MyCard extends Equatable {
       me: me,
       tags: tags,
       dateCreated: dateCreated,
-      imagesUrl: imagesUrl,
+      // imagesUrl: imagesUrl,
     );
   }
 
@@ -81,7 +87,7 @@ class MyCard extends Equatable {
       me: entity.me,
       tags: entity.tags,
       dateCreated: entity.dateCreated,
-      imagesUrl: entity.imagesUrl,
+      // imagesUrl: entity.imagesUrl,
     );
   }
 
@@ -93,7 +99,7 @@ class MyCard extends Equatable {
     String difficulty,
     String dateCreated,
     List<String> tags,
-    List<String> imagesUrl,
+    // List<String> imagesUrl,
   }) {
     return MyCard(
       front: front ?? this.front,
@@ -103,7 +109,7 @@ class MyCard extends Equatable {
       difficulty: difficulty ?? this.difficulty,
       dateCreated: dateCreated ?? this.dateCreated,
       tags: tags ?? this.tags,
-      imagesUrl: imagesUrl ?? this.imagesUrl,
+      // imagesUrl: imagesUrl ?? this.imagesUrl,
     );
   }
 }

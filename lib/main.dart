@@ -24,10 +24,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => locator.get<AuthBloc>()
-              ..add(const AuthEvent.authCheckRequested())),
-        BlocProvider(create: (context) => DeckStatusCubit()),
-        BlocProvider(create: (context) => CardStatusCubit()),
+            create: (context) =>
+                locator.get<AuthBloc>()..add(const AuthEvent.authStateCheck())),
+        BlocProvider(create: (context) => locator.get<DeckStatusCubit>()),
+        BlocProvider(create: (context) => locator.get<CardStatusCubit>()),
       ],
       child: ProviderScope(
         child: MaterialApp(

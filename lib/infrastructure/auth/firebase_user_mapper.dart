@@ -3,6 +3,10 @@ import 'package:study_buddy/domain/auth/user.dart';
 
 extension FirebaseUserDomainX on firebase.User {
   User toDomain() {
-    return User();
+    return User(
+      uid: uid,
+      username: displayName == "" ? "Test Account" : displayName,
+      email: email,
+    );
   }
 }

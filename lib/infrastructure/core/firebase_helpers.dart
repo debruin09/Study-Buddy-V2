@@ -1,7 +1,9 @@
 import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:study_buddy/domain/auth/auth_repository.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
+import 'package:study_buddy/domain/core/failures/errors.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/injection.dart';
 
@@ -15,21 +17,24 @@ extension ListX<T> on List<MyCard> {
 
 extension CardCollectionX<T> on CollectionReference {
   /// Card collection reference extension
-  CollectionReference cardCollection() {
-    final globalId = locator.get<GlobalId>();
+  Future<CollectionReference> cardCollection() async {
+    final userOption = await locator.get<AuthRepository>().getSignedInUser();
+    final user = userOption.getOrElse(() => throw NotAuthenticatedError());
+    final deck = locator.get<GlobalId>();
     final collection = this
-        .doc(globalId.userId)
+        .doc(user.uid)
         .collection("decks")
-        .doc(globalId.deckId)
+        .doc(deck.deckId)
         .collection("cards");
 
     return collection;
   }
 
   /// Deck collection reference extension
-  CollectionReference deckCollection() {
-    final globalId = locator.get<GlobalId>();
-    final collection = this.doc(globalId.userId).collection("decks");
+  Future<CollectionReference> deckCollection() async {
+    final userOption = await locator.get<AuthRepository>().getSignedInUser();
+    final user = userOption.getOrElse(() => throw NotAuthenticatedError());
+    final collection = this.doc(user.uid).collection("decks");
     return collection;
   }
 }

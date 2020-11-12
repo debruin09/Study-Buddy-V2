@@ -12,7 +12,7 @@ class CardEntity extends Equatable {
   String difficulty;
   String dateCreated;
   List<String> tags;
-  List<String> imagesUrl;
+  // List<String> imagesUrl;
   CardEntity({
     this.front,
     this.back,
@@ -21,12 +21,19 @@ class CardEntity extends Equatable {
     this.difficulty,
     this.tags,
     this.dateCreated,
-    this.imagesUrl,
+    // this.imagesUrl,
   });
 
   @override
-  List<Object> get props =>
-      [front, back, id, me, difficulty, dateCreated, tags, imagesUrl];
+  List<Object> get props => [
+        front,
+        back,
+        id,
+        me,
+        difficulty,
+        dateCreated,
+        tags,
+      ];
 
   CardEntity copyWith({
     String front,
@@ -44,7 +51,7 @@ class CardEntity extends Equatable {
       me: me ?? this.me,
       difficulty: difficulty ?? this.difficulty,
       tags: tags ?? this.tags,
-      imagesUrl: imagesUrl ?? this.imagesUrl,
+      // imagesUrl: imagesUrl ?? this.imagesUrl,
     );
   }
 
@@ -57,7 +64,7 @@ class CardEntity extends Equatable {
       'difficulty': difficulty,
       'tags': tags,
       'dateCreated': dateCreated,
-      'imagesUrl': imagesUrl,
+      // 'imagesUrl': imagesUrl,
     };
   }
 
@@ -70,7 +77,7 @@ class CardEntity extends Equatable {
       'difficulty': difficulty,
       'tags': tags,
       'dateCreated': dateCreated,
-      'imagesUrl': imagesUrl,
+      // 'imagesUrl': imagesUrl,
     };
   }
 
@@ -83,7 +90,7 @@ class CardEntity extends Equatable {
       difficulty: snap?.data()['difficulty'],
       tags: List<String>.from(snap?.data()['tags']),
       dateCreated: snap.data()['dateCreated'],
-      imagesUrl: List<String>.from(snap?.data()['imagesUrl']) ?? [],
+      // imagesUrl: List<String>.from(snap?.data()['imagesUrl']) ?? [],
     );
   }
 
@@ -95,12 +102,12 @@ class CardEntity extends Equatable {
         me: map['me'] ?? "",
         difficulty: map['difficulty'] ?? "",
         tags: List<String>.from(map['tags']) ?? [],
-        imagesUrl: List<String>.from(map['imagesUrl']) ?? [],
+        // imagesUrl: List<String>.from(map['imagesUrl']) ?? [],
         dateCreated: map['dateCreated']);
   }
 
-  // @override
-  // String toString() {
-  //   return 'CardEntity(front: $front, back: $back, id: $id, me: $me, difficulty: $difficulty, tags: $tags)';
-  // }
+  @override
+  String toString() {
+    return 'CardEntity(front: $front, id: $id)';
+  }
 }

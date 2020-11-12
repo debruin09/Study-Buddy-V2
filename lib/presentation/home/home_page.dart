@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:study_buddy/application/core/status/status_cubit.dart';
-import 'package:study_buddy/application/deck/deck_bloc/deck_bloc.dart';
+import 'package:study_buddy/application/deck/deck_bloc.dart';
 import 'package:study_buddy/domain/auth/user.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
@@ -26,7 +26,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final deckBloc = locator.get<DeckBloc>();
   final globalId = locator.get<GlobalId>();
-  final deckStatusCubit = locator.get<DeckStatusCubit>();
   final GlobalKey<ScaffoldState> _gKey = GlobalKey<ScaffoldState>();
   final deckScope = locator.get<DecksScope>();
 

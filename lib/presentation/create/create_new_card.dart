@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
+import 'package:study_buddy/application/card/card_bloc.dart';
 import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
 import 'package:study_buddy/domain/core/tag_entity.dart';
-import 'package:study_buddy/infrastructure/core/image_service.dart';
-import 'package:study_buddy/infrastructure/core/storage_service.dart';
+// import 'package:study_buddy/infrastructure/core/image_service.dart';
+// import 'package:study_buddy/infrastructure/core/storage_service.dart';
 import 'package:study_buddy/infrastructure/core/tag_service.dart';
 import 'package:study_buddy/injection.dart';
-import 'package:study_buddy/presentation/core/widgets/image_viewer.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
@@ -33,29 +32,27 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
   final GlobalKey<ScaffoldState> _gKey = GlobalKey<ScaffoldState>();
   final cardBloc = locator.get<CardBloc>();
   final globalId = locator.get<GlobalId>();
-  final _imageFileDetails = locator.get<ImageFileDetails>();
+  // final _imageFileDetails = locator.get<ImageFileDetails>();
   final cardStatusCubit = locator.get<CardStatusCubit>();
   final _tagService = locator.get<TagService>();
-  final _imageService = locator.get<ImageService>();
-  final _storageService = locator.get<StorageService>();
+  // final _imageService = locator.get<ImageService>();
+  // final _storageService = locator.get<StorageService>();
   List<String> tags = [];
   List<String> imagesUrl = [];
   String val = "";
 
   @override
   void initState() {
-    if (cardStatusCubit.state == "new") {
+    cardStatusCubit.state.map(newCard: (_) {
       final newCardID = Uuid().v4();
       globalId.setCardId(newCardID);
-    }
-
-    if (cardStatusCubit.state == "edit") {
+    }, editCard: (_) {
       _frontController.text = widget.card.front;
       _backController.text = widget.card.back;
-
       widget.card.tags.addAll(tags);
-      widget.card.imagesUrl.addAll(imagesUrl);
-    }
+      // widget.card.imagesUrl.addAll(imagesUrl);
+    });
+
     super.initState();
     cardBloc.dispose();
   }
@@ -117,33 +114,16 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
                       Text("choose an image"),
                     ]),
                     onPressed: () async {
-                      _imageFileDetails
-                          .setImageFile(await _imageService.getImage());
-                      final imageUrl = _storageService.uploadImage(
-                          image: _imageFileDetails.imageFile);
-                      _imageFileDetails.setImageUrl(await imageUrl);
+                      // _imageFileDetails
+                      //     .setImageFile(await _imageService.getImage());
+                      // final imageUrl = _storageService.uploadImage(
+                      //     image: _imageFileDetails.imageFile);
+                      // _imageFileDetails.setImageUrl(await imageUrl);
 
-                      imagesUrl.add(_imageFileDetails.imageUrl);
-                      updateCard();
+                      // imagesUrl.add(_imageFileDetails.imageUrl);
+                      // updateCard();
                     }),
                 SizedBox(height: 5.0),
-                widget.card.imagesUrl != null
-                    ? Wrap(
-                        direction: Axis.horizontal,
-                        spacing: 5.0,
-                        runSpacing: 5.0,
-                        children: widget.card.imagesUrl
-                            .map(
-                              (url) => ImageViewer(
-                                onPressed: () {},
-                                imageUrl: url,
-                                height: 80.0,
-                                width: 60.0,
-                              ),
-                            )
-                            .toList(),
-                      )
-                    : Container(),
               ],
             ),
           ),
@@ -155,14 +135,12 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
   void updateCard() {
     cardBloc.add(
       CardEvent.update(
-        updatedCard: widget.card,
-        newData: widget.card.copyWith(
+        updatedCard: widget.card.copyWith(
           back: _backController.text,
           front: _frontController.text,
           dateCreated: DateTime.now().toIso8601String().toString(),
           difficulty: "easy",
           tags: tags.length == 0 ? widget.card.tags : tags,
-          imagesUrl: imagesUrl.length == 0 ? widget.card.imagesUrl : imagesUrl,
         ),
       ),
     );
@@ -178,7 +156,6 @@ class _CreateNewCardPageState extends State<CreateNewCardPage> {
           back: _backController.text,
           dateCreated: DateTime.now().toIso8601String().toString(),
           tags: tags,
-          imagesUrl: imagesUrl,
         ),
       ),
     );

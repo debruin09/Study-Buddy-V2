@@ -26,10 +26,9 @@ class _$CardEventTearOff {
   }
 
 // ignore: unused_element
-  UpdateCard update({@required MyCard updatedCard, @required MyCard newData}) {
+  UpdateCard update({@required MyCard updatedCard}) {
     return UpdateCard(
       updatedCard: updatedCard,
-      newData: newData,
     );
   }
 
@@ -58,7 +57,7 @@ mixin _$CardEvent {
   Result when<Result extends Object>({
     @required Result load(),
     @required Result delete(MyCard card),
-    @required Result update(MyCard updatedCard, MyCard newData),
+    @required Result update(MyCard updatedCard),
     @required Result add(MyCard card),
     @required Result updated(Queue<MyCard> cards),
   });
@@ -66,7 +65,7 @@ mixin _$CardEvent {
   Result maybeWhen<Result extends Object>({
     Result load(),
     Result delete(MyCard card),
-    Result update(MyCard updatedCard, MyCard newData),
+    Result update(MyCard updatedCard),
     Result add(MyCard card),
     Result updated(Queue<MyCard> cards),
     @required Result orElse(),
@@ -149,7 +148,7 @@ class _$LoadCards with DiagnosticableTreeMixin implements LoadCards {
   Result when<Result extends Object>({
     @required Result load(),
     @required Result delete(MyCard card),
-    @required Result update(MyCard updatedCard, MyCard newData),
+    @required Result update(MyCard updatedCard),
     @required Result add(MyCard card),
     @required Result updated(Queue<MyCard> cards),
   }) {
@@ -166,7 +165,7 @@ class _$LoadCards with DiagnosticableTreeMixin implements LoadCards {
   Result maybeWhen<Result extends Object>({
     Result load(),
     Result delete(MyCard card),
-    Result update(MyCard updatedCard, MyCard newData),
+    Result update(MyCard updatedCard),
     Result add(MyCard card),
     Result updated(Queue<MyCard> cards),
     @required Result orElse(),
@@ -285,7 +284,7 @@ class _$DeleteCard with DiagnosticableTreeMixin implements DeleteCard {
   Result when<Result extends Object>({
     @required Result load(),
     @required Result delete(MyCard card),
-    @required Result update(MyCard updatedCard, MyCard newData),
+    @required Result update(MyCard updatedCard),
     @required Result add(MyCard card),
     @required Result updated(Queue<MyCard> cards),
   }) {
@@ -302,7 +301,7 @@ class _$DeleteCard with DiagnosticableTreeMixin implements DeleteCard {
   Result maybeWhen<Result extends Object>({
     Result load(),
     Result delete(MyCard card),
-    Result update(MyCard updatedCard, MyCard newData),
+    Result update(MyCard updatedCard),
     Result add(MyCard card),
     Result updated(Queue<MyCard> cards),
     @required Result orElse(),
@@ -361,7 +360,7 @@ abstract class $UpdateCardCopyWith<$Res> {
   factory $UpdateCardCopyWith(
           UpdateCard value, $Res Function(UpdateCard) then) =
       _$UpdateCardCopyWithImpl<$Res>;
-  $Res call({MyCard updatedCard, MyCard newData});
+  $Res call({MyCard updatedCard});
 }
 
 /// @nodoc
@@ -376,30 +375,25 @@ class _$UpdateCardCopyWithImpl<$Res> extends _$CardEventCopyWithImpl<$Res>
   @override
   $Res call({
     Object updatedCard = freezed,
-    Object newData = freezed,
   }) {
     return _then(UpdateCard(
       updatedCard:
           updatedCard == freezed ? _value.updatedCard : updatedCard as MyCard,
-      newData: newData == freezed ? _value.newData : newData as MyCard,
     ));
   }
 }
 
 /// @nodoc
 class _$UpdateCard with DiagnosticableTreeMixin implements UpdateCard {
-  const _$UpdateCard({@required this.updatedCard, @required this.newData})
-      : assert(updatedCard != null),
-        assert(newData != null);
+  const _$UpdateCard({@required this.updatedCard})
+      : assert(updatedCard != null);
 
   @override
   final MyCard updatedCard;
-  @override
-  final MyCard newData;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CardEvent.update(updatedCard: $updatedCard, newData: $newData)';
+    return 'CardEvent.update(updatedCard: $updatedCard)';
   }
 
   @override
@@ -407,8 +401,7 @@ class _$UpdateCard with DiagnosticableTreeMixin implements UpdateCard {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'CardEvent.update'))
-      ..add(DiagnosticsProperty('updatedCard', updatedCard))
-      ..add(DiagnosticsProperty('newData', newData));
+      ..add(DiagnosticsProperty('updatedCard', updatedCard));
   }
 
   @override
@@ -417,16 +410,12 @@ class _$UpdateCard with DiagnosticableTreeMixin implements UpdateCard {
         (other is UpdateCard &&
             (identical(other.updatedCard, updatedCard) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedCard, updatedCard)) &&
-            (identical(other.newData, newData) ||
-                const DeepCollectionEquality().equals(other.newData, newData)));
+                    .equals(other.updatedCard, updatedCard)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(updatedCard) ^
-      const DeepCollectionEquality().hash(newData);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(updatedCard);
 
   @override
   $UpdateCardCopyWith<UpdateCard> get copyWith =>
@@ -437,7 +426,7 @@ class _$UpdateCard with DiagnosticableTreeMixin implements UpdateCard {
   Result when<Result extends Object>({
     @required Result load(),
     @required Result delete(MyCard card),
-    @required Result update(MyCard updatedCard, MyCard newData),
+    @required Result update(MyCard updatedCard),
     @required Result add(MyCard card),
     @required Result updated(Queue<MyCard> cards),
   }) {
@@ -446,7 +435,7 @@ class _$UpdateCard with DiagnosticableTreeMixin implements UpdateCard {
     assert(update != null);
     assert(add != null);
     assert(updated != null);
-    return update(updatedCard, newData);
+    return update(updatedCard);
   }
 
   @override
@@ -454,14 +443,14 @@ class _$UpdateCard with DiagnosticableTreeMixin implements UpdateCard {
   Result maybeWhen<Result extends Object>({
     Result load(),
     Result delete(MyCard card),
-    Result update(MyCard updatedCard, MyCard newData),
+    Result update(MyCard updatedCard),
     Result add(MyCard card),
     Result updated(Queue<MyCard> cards),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (update != null) {
-      return update(updatedCard, newData);
+      return update(updatedCard);
     }
     return orElse();
   }
@@ -502,11 +491,9 @@ class _$UpdateCard with DiagnosticableTreeMixin implements UpdateCard {
 }
 
 abstract class UpdateCard implements CardEvent {
-  const factory UpdateCard(
-      {@required MyCard updatedCard, @required MyCard newData}) = _$UpdateCard;
+  const factory UpdateCard({@required MyCard updatedCard}) = _$UpdateCard;
 
   MyCard get updatedCard;
-  MyCard get newData;
   $UpdateCardCopyWith<UpdateCard> get copyWith;
 }
 
@@ -577,7 +564,7 @@ class _$AddCard with DiagnosticableTreeMixin implements AddCard {
   Result when<Result extends Object>({
     @required Result load(),
     @required Result delete(MyCard card),
-    @required Result update(MyCard updatedCard, MyCard newData),
+    @required Result update(MyCard updatedCard),
     @required Result add(MyCard card),
     @required Result updated(Queue<MyCard> cards),
   }) {
@@ -594,7 +581,7 @@ class _$AddCard with DiagnosticableTreeMixin implements AddCard {
   Result maybeWhen<Result extends Object>({
     Result load(),
     Result delete(MyCard card),
-    Result update(MyCard updatedCard, MyCard newData),
+    Result update(MyCard updatedCard),
     Result add(MyCard card),
     Result updated(Queue<MyCard> cards),
     @required Result orElse(),
@@ -717,7 +704,7 @@ class _$CardUpdated with DiagnosticableTreeMixin implements CardUpdated {
   Result when<Result extends Object>({
     @required Result load(),
     @required Result delete(MyCard card),
-    @required Result update(MyCard updatedCard, MyCard newData),
+    @required Result update(MyCard updatedCard),
     @required Result add(MyCard card),
     @required Result updated(Queue<MyCard> cards),
   }) {
@@ -734,7 +721,7 @@ class _$CardUpdated with DiagnosticableTreeMixin implements CardUpdated {
   Result maybeWhen<Result extends Object>({
     Result load(),
     Result delete(MyCard card),
-    Result update(MyCard updatedCard, MyCard newData),
+    Result update(MyCard updatedCard),
     Result add(MyCard card),
     Result updated(Queue<MyCard> cards),
     @required Result orElse(),

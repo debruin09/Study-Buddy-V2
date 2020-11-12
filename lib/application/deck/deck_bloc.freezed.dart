@@ -26,10 +26,9 @@ class _$DeckEventTearOff {
   }
 
 // ignore: unused_element
-  UpdateDeck update({@required Deck updatedDeck, @required Deck newData}) {
+  UpdateDeck update({@required Deck updatedDeck}) {
     return UpdateDeck(
       updatedDeck: updatedDeck,
-      newData: newData,
     );
   }
 
@@ -58,7 +57,7 @@ mixin _$DeckEvent {
   Result when<Result extends Object>({
     @required Result load(),
     @required Result delete(Deck deck),
-    @required Result update(Deck updatedDeck, Deck newData),
+    @required Result update(Deck updatedDeck),
     @required Result add(Deck deck),
     @required Result updated(List<Deck> decks),
   });
@@ -66,7 +65,7 @@ mixin _$DeckEvent {
   Result maybeWhen<Result extends Object>({
     Result load(),
     Result delete(Deck deck),
-    Result update(Deck updatedDeck, Deck newData),
+    Result update(Deck updatedDeck),
     Result add(Deck deck),
     Result updated(List<Deck> decks),
     @required Result orElse(),
@@ -149,7 +148,7 @@ class _$LoadDecks with DiagnosticableTreeMixin implements LoadDecks {
   Result when<Result extends Object>({
     @required Result load(),
     @required Result delete(Deck deck),
-    @required Result update(Deck updatedDeck, Deck newData),
+    @required Result update(Deck updatedDeck),
     @required Result add(Deck deck),
     @required Result updated(List<Deck> decks),
   }) {
@@ -166,7 +165,7 @@ class _$LoadDecks with DiagnosticableTreeMixin implements LoadDecks {
   Result maybeWhen<Result extends Object>({
     Result load(),
     Result delete(Deck deck),
-    Result update(Deck updatedDeck, Deck newData),
+    Result update(Deck updatedDeck),
     Result add(Deck deck),
     Result updated(List<Deck> decks),
     @required Result orElse(),
@@ -285,7 +284,7 @@ class _$DeleteDeck with DiagnosticableTreeMixin implements DeleteDeck {
   Result when<Result extends Object>({
     @required Result load(),
     @required Result delete(Deck deck),
-    @required Result update(Deck updatedDeck, Deck newData),
+    @required Result update(Deck updatedDeck),
     @required Result add(Deck deck),
     @required Result updated(List<Deck> decks),
   }) {
@@ -302,7 +301,7 @@ class _$DeleteDeck with DiagnosticableTreeMixin implements DeleteDeck {
   Result maybeWhen<Result extends Object>({
     Result load(),
     Result delete(Deck deck),
-    Result update(Deck updatedDeck, Deck newData),
+    Result update(Deck updatedDeck),
     Result add(Deck deck),
     Result updated(List<Deck> decks),
     @required Result orElse(),
@@ -361,7 +360,7 @@ abstract class $UpdateDeckCopyWith<$Res> {
   factory $UpdateDeckCopyWith(
           UpdateDeck value, $Res Function(UpdateDeck) then) =
       _$UpdateDeckCopyWithImpl<$Res>;
-  $Res call({Deck updatedDeck, Deck newData});
+  $Res call({Deck updatedDeck});
 }
 
 /// @nodoc
@@ -376,30 +375,25 @@ class _$UpdateDeckCopyWithImpl<$Res> extends _$DeckEventCopyWithImpl<$Res>
   @override
   $Res call({
     Object updatedDeck = freezed,
-    Object newData = freezed,
   }) {
     return _then(UpdateDeck(
       updatedDeck:
           updatedDeck == freezed ? _value.updatedDeck : updatedDeck as Deck,
-      newData: newData == freezed ? _value.newData : newData as Deck,
     ));
   }
 }
 
 /// @nodoc
 class _$UpdateDeck with DiagnosticableTreeMixin implements UpdateDeck {
-  const _$UpdateDeck({@required this.updatedDeck, @required this.newData})
-      : assert(updatedDeck != null),
-        assert(newData != null);
+  const _$UpdateDeck({@required this.updatedDeck})
+      : assert(updatedDeck != null);
 
   @override
   final Deck updatedDeck;
-  @override
-  final Deck newData;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DeckEvent.update(updatedDeck: $updatedDeck, newData: $newData)';
+    return 'DeckEvent.update(updatedDeck: $updatedDeck)';
   }
 
   @override
@@ -407,8 +401,7 @@ class _$UpdateDeck with DiagnosticableTreeMixin implements UpdateDeck {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'DeckEvent.update'))
-      ..add(DiagnosticsProperty('updatedDeck', updatedDeck))
-      ..add(DiagnosticsProperty('newData', newData));
+      ..add(DiagnosticsProperty('updatedDeck', updatedDeck));
   }
 
   @override
@@ -417,16 +410,12 @@ class _$UpdateDeck with DiagnosticableTreeMixin implements UpdateDeck {
         (other is UpdateDeck &&
             (identical(other.updatedDeck, updatedDeck) ||
                 const DeepCollectionEquality()
-                    .equals(other.updatedDeck, updatedDeck)) &&
-            (identical(other.newData, newData) ||
-                const DeepCollectionEquality().equals(other.newData, newData)));
+                    .equals(other.updatedDeck, updatedDeck)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(updatedDeck) ^
-      const DeepCollectionEquality().hash(newData);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(updatedDeck);
 
   @override
   $UpdateDeckCopyWith<UpdateDeck> get copyWith =>
@@ -437,7 +426,7 @@ class _$UpdateDeck with DiagnosticableTreeMixin implements UpdateDeck {
   Result when<Result extends Object>({
     @required Result load(),
     @required Result delete(Deck deck),
-    @required Result update(Deck updatedDeck, Deck newData),
+    @required Result update(Deck updatedDeck),
     @required Result add(Deck deck),
     @required Result updated(List<Deck> decks),
   }) {
@@ -446,7 +435,7 @@ class _$UpdateDeck with DiagnosticableTreeMixin implements UpdateDeck {
     assert(update != null);
     assert(add != null);
     assert(updated != null);
-    return update(updatedDeck, newData);
+    return update(updatedDeck);
   }
 
   @override
@@ -454,14 +443,14 @@ class _$UpdateDeck with DiagnosticableTreeMixin implements UpdateDeck {
   Result maybeWhen<Result extends Object>({
     Result load(),
     Result delete(Deck deck),
-    Result update(Deck updatedDeck, Deck newData),
+    Result update(Deck updatedDeck),
     Result add(Deck deck),
     Result updated(List<Deck> decks),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (update != null) {
-      return update(updatedDeck, newData);
+      return update(updatedDeck);
     }
     return orElse();
   }
@@ -502,11 +491,9 @@ class _$UpdateDeck with DiagnosticableTreeMixin implements UpdateDeck {
 }
 
 abstract class UpdateDeck implements DeckEvent {
-  const factory UpdateDeck(
-      {@required Deck updatedDeck, @required Deck newData}) = _$UpdateDeck;
+  const factory UpdateDeck({@required Deck updatedDeck}) = _$UpdateDeck;
 
   Deck get updatedDeck;
-  Deck get newData;
   $UpdateDeckCopyWith<UpdateDeck> get copyWith;
 }
 
@@ -577,7 +564,7 @@ class _$AddDeck with DiagnosticableTreeMixin implements AddDeck {
   Result when<Result extends Object>({
     @required Result load(),
     @required Result delete(Deck deck),
-    @required Result update(Deck updatedDeck, Deck newData),
+    @required Result update(Deck updatedDeck),
     @required Result add(Deck deck),
     @required Result updated(List<Deck> decks),
   }) {
@@ -594,7 +581,7 @@ class _$AddDeck with DiagnosticableTreeMixin implements AddDeck {
   Result maybeWhen<Result extends Object>({
     Result load(),
     Result delete(Deck deck),
-    Result update(Deck updatedDeck, Deck newData),
+    Result update(Deck updatedDeck),
     Result add(Deck deck),
     Result updated(List<Deck> decks),
     @required Result orElse(),
@@ -717,7 +704,7 @@ class _$DeckUpdated with DiagnosticableTreeMixin implements DeckUpdated {
   Result when<Result extends Object>({
     @required Result load(),
     @required Result delete(Deck deck),
-    @required Result update(Deck updatedDeck, Deck newData),
+    @required Result update(Deck updatedDeck),
     @required Result add(Deck deck),
     @required Result updated(List<Deck> decks),
   }) {
@@ -734,7 +721,7 @@ class _$DeckUpdated with DiagnosticableTreeMixin implements DeckUpdated {
   Result maybeWhen<Result extends Object>({
     Result load(),
     Result delete(Deck deck),
-    Result update(Deck updatedDeck, Deck newData),
+    Result update(Deck updatedDeck),
     Result add(Deck deck),
     Result updated(List<Deck> decks),
     @required Result orElse(),

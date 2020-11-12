@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
+import 'package:study_buddy/application/card/card_bloc.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 
@@ -29,20 +29,14 @@ class DraggableCard extends StatelessWidget {
             color: primaryColor.withOpacity(0.3),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15.0),
-                  topRight: Radius.circular(15.0)),
+                  topLeft: Radius.circular(5.0),
+                  topRight: Radius.circular(5.0)),
             ),
             child: Container(
               margin: const EdgeInsets.only(top: 10.0),
               padding:
                   const EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(18.0),
-                  topRight: Radius.circular(18.0),
-                ),
-              ),
+              color: Colors.white,
               child: SingleChildScrollView(
                 controller: scrollController,
                 child: Column(

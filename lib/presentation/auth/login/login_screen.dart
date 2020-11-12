@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_buddy/application/auth/sign_in_form/sign_in_form_bloc.dart';
+import 'package:study_buddy/application/auth/login/login_bloc.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/auth/login/login_form.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
@@ -11,8 +11,8 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      body: BlocProvider<SignInFormBloc>(
-        create: (context) => locator.get<SignInFormBloc>(),
+      body: BlocProvider<LoginBloc>(
+        create: (context) => locator.get<LoginBloc>(),
         child: Center(
           child: SingleChildScrollView(
             child: Column(

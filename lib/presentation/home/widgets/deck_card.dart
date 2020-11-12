@@ -19,6 +19,7 @@ class DeckCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    print("This is the deck: $deck");
     return Padding(
       padding: const EdgeInsets.only(bottom: 15.0),
       child: Material(
@@ -88,7 +89,7 @@ class DeckCard extends StatelessWidget {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
-                          children: deck.tags == null
+                          children: deck.tags == null || deck.tags.isEmpty
                               ? [Container()]
                               : deck.tags
                                   .map(

@@ -1,17 +1,19 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'status_state.dart';
+part 'status_cubit.freezed.dart';
 
-class DeckStatusCubit extends Cubit<StatusState> {
-  DeckStatusCubit() : super(NewDeckState());
+class DeckStatusCubit extends Cubit<DeckStatusState> {
+  DeckStatusCubit() : super(DeckStatusState.newDeck());
 
-  void newDeck() => emit(NewDeckState());
-  void editDeck() => emit(EditDeckState());
+  void newDeck() => emit(DeckStatusState.newDeck());
+  void editDeck() => emit(DeckStatusState.editDeck());
 }
 
-class CardStatusCubit extends Cubit<String> {
-  CardStatusCubit() : super("");
+class CardStatusCubit extends Cubit<CardStatusState> {
+  CardStatusCubit() : super(CardStatusState.newCard());
 
-  void changeCardStatus(String status) => emit(status);
+  void newCard() => emit(CardStatusState.newCard());
+  void editCard() => emit(CardStatusState.editCard());
 }

@@ -56,7 +56,7 @@ class CardBloc extends Bloc<CardEvent, CardState> {
   }
 
   Stream<CardState> _mapUpdateCardToState(UpdateCard event) async* {
-    databaseRepository.updateCard(event.updatedCard, event.newData);
+    databaseRepository.updateCard(event.updatedCard);
   }
 
   Stream<CardState> _mapDeleteCardToState(DeleteCard event) async* {

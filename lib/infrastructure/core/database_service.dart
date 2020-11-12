@@ -31,37 +31,33 @@ class FirestoreService implements DatabaseRepository {
 
   @override
   Future<void> addNewDeck(Deck deck) async {
-    return userCollection
-        .deckCollection()
+    final deckCollection = await userCollection.deckCollection();
+    return deckCollection
         .doc(globalId.deckId)
         .set(deck.toEntity().toDocument());
   }
 
   /// Deletes the [Deck] specified
   @override
-  Future<void> deleteDeck(Deck deck) {
-    userCollection
-        .deckCollection()
-        .doc(deck.id)
-        .collection("cards")
-        .deckCollection();
-    return userCollection.deckCollection().doc(deck.id).delete();
+  Future<void> deleteDeck(Deck deck) async {
+    final deckCollection = await userCollection.deckCollection();
+    deckCollection.doc(deck.id).collection("cards").deckCollection();
+    return deckCollection.doc(deck.id).delete();
   }
 
   /// Updates the [Deck] specified
   @override
-  Future<void> updateDeck(Deck update, Deck newData) {
-    return userCollection
-        .deckCollection()
-        .doc(update.id)
-        .update(newData.toEntity().toDocument());
+  Future<void> updateDeck(Deck update) async {
+    final deckCollection = await userCollection.deckCollection();
+    return deckCollection.doc(update.id).update(update.toEntity().toDocument());
   }
 
   /// Listen to a stream of decks
   @override
-  Stream<List<Deck>> decks() {
+  Stream<List<Deck>> decks() async* {
     try {
-      return userCollection.deckCollection().snapshots().map((snapshot) {
+      final deckCollection = await userCollection.deckCollection();
+      yield* deckCollection.snapshots().map((snapshot) {
         return snapshot.docs
             .map((doc) => Deck.fromEntity(
                   DeckEntity.fromSnapshot(doc),
@@ -70,7 +66,7 @@ class FirestoreService implements DatabaseRepository {
       });
     } catch (e) {
       print(e.toString());
-      return null;
+      yield* null;
     }
   }
 
@@ -89,38 +85,40 @@ class FirestoreService implements DatabaseRepository {
   /// Adds a new [MyCard] to an existing [Deck]
   @override
   Future<void> addNewCard(MyCard card) async {
-    return userCollection
-        .cardCollection()
-        .doc(card.id)
-        .set(card.toEntity().toDocument());
+    final cardCollection = await userCollection.cardCollection();
+    return cardCollection.doc(card.id).set(card.toEntity().toDocument());
   }
 
   @override
-  Future<void> deleteCard(MyCard card) {
-    return userCollection.cardCollection().doc(card.id).delete();
+  Future<void> deleteCard(MyCard card) async {
+    final cardCollection = await userCollection.cardCollection();
+    return cardCollection.doc(card.id).delete();
   }
 
   @override
-  Future<void> updateCard(MyCard updateThisCard, MyCard updatedCard) {
-    return userCollection
-        .cardCollection()
+  Future<void> updateCard(MyCard updateThisCard) async {
+    final cardCollection = await userCollection.cardCollection();
+    return cardCollection
         .doc(updateThisCard.id)
-        .set(updatedCard.toEntity().toDocument(), SetOptions(merge: true));
+        .set(updateThisCard.toEntity().toDocument(), SetOptions(merge: true));
   }
 
   @override
-  Future<void> updateMyDefintion(MyCard updateThisCard, String myDefiniton) {
-    return userCollection.cardCollection().doc(updateThisCard.id).set({
+  Future<void> updateMyDefintion(
+      MyCard updateThisCard, String myDefiniton) async {
+    final cardCollection = await userCollection.cardCollection();
+    return cardCollection.doc(updateThisCard.id).set({
       "me": myDefiniton,
     }, SetOptions(merge: true));
   }
 
   /// Listen to a stream of cards
   @override
-  Stream<Queue<MyCard>> cards() {
+  Stream<Queue<MyCard>> cards() async* {
     try {
-      return userCollection
-          .cardCollection()
+      final cardCollection = await userCollection.cardCollection();
+
+      yield* cardCollection
           .orderBy("dateCreated", descending: true)
           .snapshots()
           .map((snapshot) => snapshot.docs
@@ -131,7 +129,7 @@ class FirestoreService implements DatabaseRepository {
               .toQueue());
     } catch (e) {
       print(e.toString());
-      return null;
+      yield* null;
     }
   }
 }

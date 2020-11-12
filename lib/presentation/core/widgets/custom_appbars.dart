@@ -47,22 +47,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         elevation: 2.0,
         centerTitle: true,
-        title: BlocBuilder<DeckStatusCubit, StatusState>(
+        title: BlocBuilder<DeckStatusCubit, DeckStatusState>(
           buildWhen: (p, c) => p != c,
-          builder: (context, state) {
-            if (state is NewDeckState) {
-              return Text(
-                'Create New Deck',
-                style: TextStyle(color: Colors.black),
-              );
-            } else if (state is EditDeckState) {
-              return Text(
-                'Edit Deck',
-                style: TextStyle(color: Colors.black),
-              );
-            }
-            return Container();
-          },
+          builder: (context, state) => state.map(
+            newDeck: (_) => Text(
+              'Create New Deck',
+              style: TextStyle(color: Colors.black),
+            ),
+            editDeck: (_) => Text(
+              'Edit Deck',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
         ),
         backgroundColor: bgColor,
         actions: [
@@ -81,7 +77,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 )),
             child: IconButton(
               onPressed: () {
-                cardStatusCubit.changeCardStatus("new");
+                cardStatusCubit.newCard();
                 if (context.read<DeckStatusCubit>().state is NewDeckState &&
                     deckNameController.text.isNotEmpty) {
                   methods[0]();

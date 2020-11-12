@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
-import 'package:study_buddy/application/card/card_bloc/card_bloc.dart';
+import 'package:study_buddy/application/card/card_bloc.dart';
 import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/domain/card/mycard.dart';
 import 'package:study_buddy/domain/core/scheduler/queue_scheduler.dart';
@@ -35,7 +35,7 @@ class CustomMyCard extends ConsumerWidget {
       child: GestureDetector(
         onLongPress: () {
           globalId.setCardId(card.id);
-          cardStatusCubit.changeCardStatus("edit");
+          cardStatusCubit.editCard();
           ExtendedNavigator.root.push(
             Routes.createNewCardPage,
             arguments: CreateNewCardPageArguments(

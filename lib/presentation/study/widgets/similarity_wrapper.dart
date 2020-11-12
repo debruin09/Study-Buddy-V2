@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:study_buddy/application/similarity/similarity_bloc/similarity_bloc.dart';
+import 'package:study_buddy/application/similarity/similarity_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';

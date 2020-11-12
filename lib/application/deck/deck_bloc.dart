@@ -53,7 +53,7 @@ class DeckBloc extends Bloc<DeckEvent, DeckState> {
   }
 
   Stream<DeckState> _mapUpdateDeckToState(UpdateDeck event) async* {
-    databaseRepository.updateDeck(event.updatedDeck, event.newData);
+    databaseRepository.updateDeck(event.updatedDeck);
   }
 
   Stream<DeckState> _mapDeleteDeckToState(DeleteDeck event) async* {

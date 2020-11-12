@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:study_buddy/application/auth/auth_bloc.dart';
+import 'package:study_buddy/domain/auth/auth_repository.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
@@ -17,13 +18,17 @@ class LandingPage extends StatelessWidget {
       listener: (context, state) {
         state.map(
           initial: (_) {},
-          authenticated: (success) {
-            userScope.setUser(success.user);
+          authenticated: (success) async {
+            final user = userScope.getUser;
+            final z = await locator.get<AuthRepository>().getSignedInUser();
+            z.fold(() {}, (user) => print(user));
+            print("This is the user: $user VS  ${success.user}");
             return ExtendedNavigator.root.replace(Routes.homePage,
                 arguments: HomePageArguments(user: success.user));
           },
-          unauthenticated: (_) =>
-              ExtendedNavigator.root.replace(Routes.loginScreen),
+          unauthenticated: (_) {
+            ExtendedNavigator.root.replace(Routes.loginScreen);
+          },
         );
       },
       child: _SplashScreen(),

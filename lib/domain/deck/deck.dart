@@ -1,100 +1,49 @@
-import 'dart:convert';
+import 'package:dartz/dartz.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:kt_dart/kt.dart';
+import 'package:study_buddy/domain/core/failures.dart';
+import 'package:study_buddy/domain/core/value_objects.dart';
+import 'package:study_buddy/domain/deck/card_item.dart';
 
-import 'package:equatable/equatable.dart';
+import 'package:study_buddy/domain/deck/value_objects.dart';
 
-import 'package:study_buddy/domain/deck/deck_entity.dart';
+part 'deck.freezed.dart';
 
-// ignore: must_be_immutable
-class Deck extends Equatable {
-  String deckName;
-  String id;
-  List<String> tags = [];
-  String dateCreated;
+@freezed
+abstract class Deck implements _$Deck {
+  const Deck._();
 
-  Deck({
-    this.deckName,
-    this.id,
-    this.tags,
-    this.dateCreated,
-  });
+  const factory Deck({
+    @required UniqueId id,
+    @required DeckName name,
+    @required HardCard hardCard,
+    @required ModerateCard moderateCard,
+    @required EasyCard easyCard,
+    @required List6<CardItem> cards,
+  }) = _Deck;
 
-  @override
-  List<Object> get props => [
-        deckName,
-        id,
-        tags,
-        dateCreated,
-      ];
+  factory Deck.empty() => Deck(
+        id: UniqueId(),
+        name: DeckName(''),
+        cards: List6(emptyList()),
+        hardCard: HardCard(0),
+        moderateCard: ModerateCard(0),
+        easyCard: EasyCard(0),
+      );
 
-  Map<String, dynamic> toMap() {
-    return {
-      'deckName': deckName,
-      'id': id,
-      'tags': tags,
-      'dateCreated': dateCreated,
-    };
+  Option<ValueFailure<dynamic>> get failureOption {
+    return name.failureOrUnit
+        .andThen(cards.failureOrUnit)
+        .andThen(
+          cards
+              .getOrCrash()
+              // Getting the failureOption from the CardItem ENTITY - NOT a failureOrUnit from a VALUE OBJECT
+              .map((cardItem) => cardItem.failureOption)
+              .filter((o) => o.isSome())
+              // If we can't get the 0th element, the list is empty. In such a case, it's valid.
+              .getOrElse(0, (_) => none())
+              .fold(() => right(unit), (f) => left(f)),
+        )
+        .fold((f) => some(f), (_) => none());
   }
-
-  static String encodeDeck(List<Deck> decks) =>
-      jsonEncode(decks.map((deck) => deck.toMap()).toList());
-
-  static List<Deck> decodeDeck(String decks) =>
-      (jsonDecode(decks) as List<dynamic>)
-          .map((deck) => Deck.fromJson(deck))
-          .toList();
-
-  static Deck fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
-    return Deck(
-      deckName: map['deckName'],
-      tags: List<String>.from(map['tags']),
-      dateCreated: map["dateCreated"],
-    );
-  }
-
-  factory Deck.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
-
-    return Deck(
-      deckName: json['deckName'],
-      id: json["id"],
-      tags: List<String>.from(json['tags']),
-      dateCreated: json["dateCreated"],
-    );
-  }
-
-  static Deck fromEntity(DeckEntity entity) {
-    return Deck(
-      deckName: entity.deckName ?? "",
-      id: entity.id ?? "",
-      tags: entity.tags ?? "",
-      dateCreated: entity.dateCreated,
-    );
-  }
-
-  DeckEntity toEntity() {
-    return DeckEntity(
-      deckName: deckName,
-      id: id,
-      tags: tags,
-      dateCreated: dateCreated,
-    );
-  }
-
-  Deck copyWith({
-    String deckName,
-    String id,
-    List<String> tags,
-    String dateCreated,
-  }) {
-    return Deck(
-      deckName: deckName ?? this.deckName,
-      id: id ?? this.id,
-      tags: tags ?? this.tags,
-      dateCreated: dateCreated ?? this.dateCreated,
-    );
-  }
-
-  String toString() => "$deckName $tags";
 }

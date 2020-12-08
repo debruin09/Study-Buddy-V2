@@ -25,7 +25,7 @@ class _$SimilarityStateTearOff {
 
 // ignore: unused_element
   _SuccessSimilarityState success(
-      {@required Either<Failure, Similarity> similarityScore}) {
+      {@required Either<AuthFailure, Similarity> similarityScore}) {
     return _SuccessSimilarityState(
       similarityScore: similarityScore,
     );
@@ -39,30 +39,30 @@ const $SimilarityState = _$SimilarityStateTearOff();
 /// @nodoc
 mixin _$SimilarityState {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result success(Either<Failure, Similarity> similarityScore),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loading(),
+    @required TResult success(Either<AuthFailure, Similarity> similarityScore),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result success(Either<Failure, Similarity> similarityScore),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loading(),
+    TResult success(Either<AuthFailure, Similarity> similarityScore),
+    @required TResult orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_InitialSimilarityState value),
-    @required Result loading(_LoadSimilarityState value),
-    @required Result success(_SuccessSimilarityState value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_InitialSimilarityState value),
+    @required TResult loading(_LoadSimilarityState value),
+    @required TResult success(_SuccessSimilarityState value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_InitialSimilarityState value),
-    Result loading(_LoadSimilarityState value),
-    Result success(_SuccessSimilarityState value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_InitialSimilarityState value),
+    TResult loading(_LoadSimilarityState value),
+    TResult success(_SuccessSimilarityState value),
+    @required TResult orElse(),
   });
 }
 
@@ -129,10 +129,10 @@ class _$_InitialSimilarityState
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result success(Either<Failure, Similarity> similarityScore),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loading(),
+    @required TResult success(Either<AuthFailure, Similarity> similarityScore),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -142,11 +142,11 @@ class _$_InitialSimilarityState
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result success(Either<Failure, Similarity> similarityScore),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loading(),
+    TResult success(Either<AuthFailure, Similarity> similarityScore),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -157,10 +157,10 @@ class _$_InitialSimilarityState
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_InitialSimilarityState value),
-    @required Result loading(_LoadSimilarityState value),
-    @required Result success(_SuccessSimilarityState value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_InitialSimilarityState value),
+    @required TResult loading(_LoadSimilarityState value),
+    @required TResult success(_SuccessSimilarityState value),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -170,11 +170,11 @@ class _$_InitialSimilarityState
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_InitialSimilarityState value),
-    Result loading(_LoadSimilarityState value),
-    Result success(_SuccessSimilarityState value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_InitialSimilarityState value),
+    TResult loading(_LoadSimilarityState value),
+    TResult success(_SuccessSimilarityState value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (initial != null) {
@@ -234,10 +234,10 @@ class _$_LoadSimilarityState
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result success(Either<Failure, Similarity> similarityScore),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loading(),
+    @required TResult success(Either<AuthFailure, Similarity> similarityScore),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -247,11 +247,11 @@ class _$_LoadSimilarityState
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result success(Either<Failure, Similarity> similarityScore),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loading(),
+    TResult success(Either<AuthFailure, Similarity> similarityScore),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loading != null) {
@@ -262,10 +262,10 @@ class _$_LoadSimilarityState
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_InitialSimilarityState value),
-    @required Result loading(_LoadSimilarityState value),
-    @required Result success(_SuccessSimilarityState value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_InitialSimilarityState value),
+    @required TResult loading(_LoadSimilarityState value),
+    @required TResult success(_SuccessSimilarityState value),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -275,11 +275,11 @@ class _$_LoadSimilarityState
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_InitialSimilarityState value),
-    Result loading(_LoadSimilarityState value),
-    Result success(_SuccessSimilarityState value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_InitialSimilarityState value),
+    TResult loading(_LoadSimilarityState value),
+    TResult success(_SuccessSimilarityState value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (loading != null) {
@@ -298,7 +298,7 @@ abstract class _$SuccessSimilarityStateCopyWith<$Res> {
   factory _$SuccessSimilarityStateCopyWith(_SuccessSimilarityState value,
           $Res Function(_SuccessSimilarityState) then) =
       __$SuccessSimilarityStateCopyWithImpl<$Res>;
-  $Res call({Either<Failure, Similarity> similarityScore});
+  $Res call({Either<AuthFailure, Similarity> similarityScore});
 }
 
 /// @nodoc
@@ -319,7 +319,7 @@ class __$SuccessSimilarityStateCopyWithImpl<$Res>
     return _then(_SuccessSimilarityState(
       similarityScore: similarityScore == freezed
           ? _value.similarityScore
-          : similarityScore as Either<Failure, Similarity>,
+          : similarityScore as Either<AuthFailure, Similarity>,
     ));
   }
 }
@@ -332,7 +332,7 @@ class _$_SuccessSimilarityState
       : assert(similarityScore != null);
 
   @override
-  final Either<Failure, Similarity> similarityScore;
+  final Either<AuthFailure, Similarity> similarityScore;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -368,10 +368,10 @@ class _$_SuccessSimilarityState
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result success(Either<Failure, Similarity> similarityScore),
+  TResult when<TResult extends Object>({
+    @required TResult initial(),
+    @required TResult loading(),
+    @required TResult success(Either<AuthFailure, Similarity> similarityScore),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -381,11 +381,11 @@ class _$_SuccessSimilarityState
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result success(Either<Failure, Similarity> similarityScore),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(),
+    TResult loading(),
+    TResult success(Either<AuthFailure, Similarity> similarityScore),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (success != null) {
@@ -396,10 +396,10 @@ class _$_SuccessSimilarityState
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_InitialSimilarityState value),
-    @required Result loading(_LoadSimilarityState value),
-    @required Result success(_SuccessSimilarityState value),
+  TResult map<TResult extends Object>({
+    @required TResult initial(_InitialSimilarityState value),
+    @required TResult loading(_LoadSimilarityState value),
+    @required TResult success(_SuccessSimilarityState value),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -409,11 +409,11 @@ class _$_SuccessSimilarityState
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_InitialSimilarityState value),
-    Result loading(_LoadSimilarityState value),
-    Result success(_SuccessSimilarityState value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_InitialSimilarityState value),
+    TResult loading(_LoadSimilarityState value),
+    TResult success(_SuccessSimilarityState value),
+    @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (success != null) {
@@ -425,9 +425,9 @@ class _$_SuccessSimilarityState
 
 abstract class _SuccessSimilarityState implements SimilarityState {
   factory _SuccessSimilarityState(
-          {@required Either<Failure, Similarity> similarityScore}) =
+          {@required Either<AuthFailure, Similarity> similarityScore}) =
       _$_SuccessSimilarityState;
 
-  Either<Failure, Similarity> get similarityScore;
+  Either<AuthFailure, Similarity> get similarityScore;
   _$SuccessSimilarityStateCopyWith<_SuccessSimilarityState> get copyWith;
 }

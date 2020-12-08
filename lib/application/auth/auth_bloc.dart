@@ -1,32 +1,38 @@
+import 'dart:async';
+
+import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:study_buddy/domain/auth/auth_repository.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_buddy/domain/auth/user.dart';
+import 'package:injectable/injectable.dart';
+import 'package:meta/meta.dart';
+import 'package:study_buddy/domain/auth/i_auth_facade.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 part 'auth_bloc.freezed.dart';
 
-/// This is the Auth bloc that maps incoming user events to states
+@injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository _authRepository;
+  final IAuthFacade _authFacade;
 
-  AuthBloc({AuthRepository authRepository})
-      : _authRepository = authRepository,
-        super(AuthState.initial());
+  AuthBloc(this._authFacade) : super(const AuthState.initial());
 
   @override
-  Stream<AuthState> mapEventToState(AuthEvent event) async* {
-    yield* event.map(authStateCheck: (_) async* {
-      final isSignedInOption = await _authRepository.getSignedInUser();
-      yield isSignedInOption.fold(
-        () => AuthState.unauthenticated(),
-        (user) => AuthState.authenticated(user: user),
-      );
-    }, authLoggedOut: (_) async* {
-      yield AuthState.unauthenticated();
-      _authRepository.signOut();
-    });
+  Stream<AuthState> mapEventToState(
+    AuthEvent event,
+  ) async* {
+    yield* event.map(
+      authCheckRequested: (e) async* {
+        final userOption = await _authFacade.getSignedInUser();
+        yield userOption.fold(
+          () => const AuthState.unauthenticated(),
+          (_) => const AuthState.authenticated(),
+        );
+      },
+      signedOut: (e) async* {
+        await _authFacade.signOut();
+        yield const AuthState.unauthenticated();
+      },
+    );
   }
 }

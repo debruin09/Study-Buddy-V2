@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:study_buddy/domain/auth/user.dart';
-import 'package:study_buddy/domain/card/mycard.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 
 class GlobalId {
@@ -42,16 +41,6 @@ class DecksScope {
   }
 
   List<Deck> get decks => _decks;
-}
-
-class CardScope {
-  List<MyCard> _cards;
-
-  void addCard(MyCard card) {
-    _cards.add(card);
-  }
-
-  List<MyCard> get cards => _cards;
 }
 
 class ImageFileDetails {

@@ -1,167 +1,119 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_buddy/application/auth/auth_bloc.dart';
-import 'package:study_buddy/application/auth/login/login_bloc.dart';
+import 'package:study_buddy/application/auth/sign_in_form/sign_in_form_bloc.dart';
+import 'package:study_buddy/presentation/core/theme_colors.dart';
 import 'package:study_buddy/presentation/core/widgets/auth_button.dart';
-import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
 
-/// This is the register form UI
-class RegisterForm extends StatefulWidget {
-  @override
-  _RegisterFormState createState() => _RegisterFormState();
-}
-
-class _RegisterFormState extends State<RegisterForm> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  bool get isPopulated =>
-      _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
-
-  bool isButtonEnabled(LoginState state) {
-    return state.isFormValid && isPopulated && !state.isSubmitting;
-  }
-
-  LoginBloc _loginBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _loginBloc = BlocProvider.of<LoginBloc>(context);
-    _emailController.addListener(_onEmailChange);
-    _passwordController.addListener(_onPasswordChange);
-  }
-
+class RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
-      if (state.isFailure) {
-        Scaffold.of(context)
-          ..removeCurrentSnackBar()
-          ..showSnackBar(
-            SnackBar(
-              content: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('Register failed'),
-                  Icon(Icons.error),
-                ],
-              ),
-              backgroundColor: primaryColor,
-            ),
-          );
-      }
-
-      if (state.isSubmitting) {
-        Scaffold.of(context)
-          ..removeCurrentSnackBar()
-          ..showSnackBar(
-            SnackBar(
-              content: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('Registering account'),
-                  CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  )
-                ],
-              ),
-              backgroundColor: primaryColor,
-            ),
-          );
-      }
-
-      if (state.isSuccess) {
-        context.read<AuthBloc>().add(
-              const AuthEvent.authStateCheck(),
-            );
-      }
-    }, builder: (context, state) {
-      return Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
+    return BlocConsumer<SignInFormBloc, SignInFormState>(
+      listener: (context, state) {
+        state.authFailureOrSuccessOption.fold(
+          () {},
+          (either) => either.fold(
+            (failure) {
+              FlushbarHelper.createError(
+                message: failure.map(
+                  cancelledByUser: (_) => 'Cancelled',
+                  serverError: (_) => 'Server error',
+                  emailAlreadyInUse: (_) => 'Email already in use',
+                  invalidEmailAndPasswordCombination: (_) =>
+                      'Invalid email and password combination',
+                ),
+              ).show(context);
+            },
+            (_) {
+              ExtendedNavigator.of(context).replace(Routes.homePage);
+              context
+                  .read<AuthBloc>()
+                  .add(const AuthEvent.authCheckRequested());
+            },
+          ),
+        );
+      },
+      builder: (context, state) {
+        return Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
-            children: <Widget>[
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
               TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.email),
-                  labelText: "Email",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: primaryColor,
-                      style: BorderStyle.solid,
-                      width: 3.0,
-                    ),
-                  ),
+                  labelText: 'Email',
                 ),
-                keyboardType: TextInputType.emailAddress,
-                autovalidateMode: AutovalidateMode.always,
                 autocorrect: false,
-                validator: (_) => !state.isEmailValid ? 'Invalid Email' : null,
+                onChanged: (value) => context
+                    .read<SignInFormBloc>()
+                    .add(SignInFormEvent.emailChanged(value)),
+                validator: (_) => context
+                    .read<SignInFormBloc>()
+                    .state
+                    .emailAddress
+                    .value
+                    .fold(
+                      (f) => f.maybeMap(
+                        invalidEmail: (_) => 'Invalid Email',
+                        orElse: () => null,
+                      ),
+                      (_) => null,
+                    ),
               ),
-              const SizedBox(
-                height: 10.0,
-              ),
+              const SizedBox(height: 8),
               TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.lock),
-                  labelText: "Password",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: primaryColor,
-                      style: BorderStyle.solid,
-                      width: 3.0,
-                    ),
-                  ),
+                  labelText: 'Password',
                 ),
-                obscureText: true,
-                autovalidateMode: AutovalidateMode.always,
                 autocorrect: false,
+                obscureText: true,
+                onChanged: (value) => context
+                    .read<SignInFormBloc>()
+                    .add(SignInFormEvent.passwordChanged(value)),
                 validator: (_) =>
-                    !state.isPasswordValid ? 'Invalid Password' : null,
+                    context.read<SignInFormBloc>().state.password.value.fold(
+                          (f) => f.maybeMap(
+                            shortPassword: (_) => 'Short Password',
+                            orElse: () => null,
+                          ),
+                          (_) => null,
+                        ),
               ),
-              SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 8),
               AuthButton(
                 color: primaryColor,
                 onPressed: () {
-                  if (isButtonEnabled(state)) {
-                    _onFormSubmitted();
-                  }
+                  context.read<SignInFormBloc>().add(
+                        const SignInFormEvent
+                            .registerWithEmailAndPasswordPressed(),
+                      );
                 },
-                text: Text(
-                  'Register',
-                  style: TextStyle(color: Colors.white),
-                ),
+                text: const Text('REGISTER',
+                    style: TextStyle(color: Colors.white)),
               ),
-              SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10.0),
               AuthButton(
-                color: Colors.red,
                 onPressed: () {
                   context
-                      .read<LoginBloc>()
-                      .add(const LoginEvent.signInWithGooglePressed());
+                      .read<SignInFormBloc>()
+                      .add(const SignInFormEvent.signInWithGooglePressed());
                 },
-                text: Text(
-                  "Sign up with Google",
+                color: Colors.red,
+                text: const Text(
+                  'SIGN IN WITH GOOGLE',
                   style: TextStyle(
                     color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 20.0),
               RichText(
                 text: TextSpan(
                   text: "Already have an account? ",
@@ -180,31 +132,14 @@ class _RegisterFormState extends State<RegisterForm> {
                   ],
                 ),
               ),
+              if (state.isSubmitting) ...[
+                const SizedBox(height: 8),
+                const LinearProgressIndicator(value: null),
+              ]
             ],
           ),
-        ),
-      );
-    });
-  }
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  void _onEmailChange() {
-    _loginBloc.add(LoginEvent.emailChanged(email: _emailController.text));
-  }
-
-  void _onPasswordChange() {
-    _loginBloc
-        .add(LoginEvent.passwordChanged(password: _passwordController.text));
-  }
-
-  void _onFormSubmitted() {
-    _loginBloc.add(LoginEvent.registerWithCredentials(
-        email: _emailController.text, password: _passwordController.text));
+        );
+      },
+    );
   }
 }

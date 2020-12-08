@@ -1,121 +1,140 @@
 // Deck Widget
+// Deck Widget
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:study_buddy/application/core/status/status_cubit.dart';
+import 'package:flutter_riverpod/all.dart';
+import 'package:study_buddy/application/deck/deck_actor/deck_actor_bloc.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
-import 'package:study_buddy/injection.dart';
-import 'package:study_buddy/infrastructure/core/helper_service.dart';
+import 'package:study_buddy/presentation/decks/misc/card_item_presentation_classes.dart';
+import 'package:kt_dart/collection.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
-import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/core/theme_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_buddy/domain/core/utils/custom_extensions.dart';
 
-class DeckCard extends StatelessWidget {
+class DeckCard extends ConsumerWidget {
   final Deck deck;
-  final globalId = locator.get<GlobalId>();
+
+  final GlobalKey<ScaffoldState> gKey;
 
   DeckCard({
     @required this.deck,
+    @required this.gKey,
   });
-  @override
-  Widget build(BuildContext context) {
-    print("This is the deck: $deck");
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 15.0),
-      child: Material(
-        elevation: 5.0,
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.circular(20.0),
-        color: cardColor,
-        child: InkWell(
-          onTap: () async {
-            globalId.setDeckId(deck.id);
-            ExtendedNavigator.root.push(
-              Routes.deckStudyPage,
-              arguments: DeckStudyPageArguments(deck: deck),
-            );
+  Widget build(BuildContext context, ScopedReader watch) {
+    final formProvider = watch(formCardsProvider);
+    return Material(
+      elevation: 1.0,
+      clipBehavior: Clip.antiAlias,
+      borderRadius: BorderRadius.circular(10.0),
+      color: cardColor,
+      child: InkWell(
+        splashColor: primaryColor.withOpacity(0.5),
+        onTap: () async {
+          // Pushes a edit deck page
+          ExtendedNavigator.root.pushDeckFormPage(deck: deck);
+        },
+        child: ListTile(
+          contentPadding: const EdgeInsets.all(0.0),
+          title: Text(
+            "${deck.name.getOrCrash()}",
+            style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.w600,
+              color: Colors.black87,
+            ),
+          ),
+          onTap: () {
+            formProvider.value = deck.cards
+                .getOrCrash()
+                .map((_) => CardItemPrimitive.fromDomain(_));
+
+            ExtendedNavigator.root.pushStudyPage(deck: deck);
           },
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: Image.asset("assets/images/card-bg.png"),
-              ),
-              Container(
-                padding: EdgeInsets.only(
-                    left: 30.0, top: 10.0, bottom: 10.0, right: 10.0),
-                alignment: Alignment.topLeft,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              "${deck.deckName}",
-                              style: TextStyle(
-                                  fontSize: 25.0, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: IconButton(
-                              onPressed: () {
-                                globalId.setDeckId(deck.id);
-                                context.read<DeckStatusCubit>().editDeck();
-                                ExtendedNavigator.root.push(
-                                  Routes.createNewDeckPage,
-                                  arguments:
-                                      CreateNewDeckPageArguments(deck: deck),
-                                );
-                              },
-                              icon: Icon(
-                                Icons.edit_outlined,
-                                color: primaryColor,
-                                size: 30.0,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Text(DateTime.parse(deck.dateCreated).formatDate()),
-                      const SizedBox(
-                        height: 15.0,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 50.0,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          children: deck.tags == null || deck.tags.isEmpty
-                              ? [Container()]
-                              : deck.tags
-                                  .map(
-                                    (tag) => Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 5.0, vertical: 5.0),
-                                      child: Chip(
-                                        backgroundColor: tagsColor,
-                                        label: Text('$tag'),
-                                        labelStyle: TextStyle(
-                                          fontSize: 11.0,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                        ),
-                      ),
-                    ]),
-              ),
-            ],
+          onLongPress: () {
+            final deckActorBloc = ReadContext(context).read<DeckActorBloc>();
+
+            deleteDialogue(gKey, context, deckActorBloc);
+          },
+          leading: Container(
+            width: 7.0,
+            height: double.infinity,
+            color: primaryColor,
+          ),
+          subtitle: difficultyCount(deck),
+          trailing: IconButton(
+            onPressed: () {
+              formProvider.value = deck.cards
+                  .getOrCrash()
+                  .map((_) => CardItemPrimitive.fromDomain(_));
+
+              ExtendedNavigator.root.push(
+                Routes.deckFormPage,
+                arguments: DeckFormPageArguments(deck: deck),
+              );
+            },
+            icon: Icon(
+              Icons.edit_outlined,
+              color: primaryColor,
+              size: 25.0,
+            ),
           ),
         ),
       ),
     );
   }
+
+  Future<void> deleteDialogue(GlobalKey<ScaffoldState> state, context,
+      DeckActorBloc deckActorBloc) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Are you sure you want to delete: "),
+            content: Text(deck.name.getOrCrash()),
+            actions: [
+              FlatButton(
+                onPressed: () {
+                  deckActorBloc.add(DeckActorEvent.deleted(deck));
+                  ExtendedNavigator.root.pop();
+                  state.currentState.showSnackBar(SnackBar(
+                      content: Text("${deck.name.getOrCrash()} deleted")));
+                },
+                child: Text(
+                  "Delete",
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+              FlatButton(
+                onPressed: () {
+                  ExtendedNavigator.root.pop();
+                },
+                child: Text(
+                  "cancel",
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+}
+
+Widget difficultyCount(Deck deck) {
+  return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+    Text(
+      "${deck.hardCard.getOrCrash()}",
+      style: TextStyle(color: Colors.red, fontSize: 20.0),
+    ),
+    const SizedBox(width: 5.0),
+    Text(
+      "${deck.moderateCard.getOrCrash()}",
+      style: TextStyle(color: Colors.blueAccent, fontSize: 20.0),
+    ),
+    const SizedBox(width: 5.0),
+    Text(
+      "${deck.easyCard.getOrCrash()}",
+      style: TextStyle(color: Colors.green, fontSize: 20.0),
+    ),
+  ]);
 }

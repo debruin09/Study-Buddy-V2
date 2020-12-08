@@ -1,18 +1,28 @@
 import 'package:auto_route/auto_route.dart' as e;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hooks_riverpod/all.dart';
+import 'package:injectable/injectable.dart';
 import 'package:study_buddy/application/auth/auth_bloc.dart';
-import 'package:study_buddy/application/core/status/status_cubit.dart';
 import 'package:study_buddy/injection.dart';
+import 'package:study_buddy/presentation/core/theme_colors.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart' as auto;
 import 'package:timezone/data/latest.dart' as lz;
-import 'presentation/core/theme/theme_styles.dart';
+import 'presentation/core/theme_styles.dart';
 
 Future<void> main() async {
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: primaryColor,
+      statusBarIconBrightness: Brightness.light,
+    ),
+  );
+
   WidgetsFlutterBinding.ensureInitialized();
   lz.initializeTimeZones();
+  configureInjection(Environment.dev);
   setupLocator();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -25,9 +35,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
             create: (context) =>
-                locator.get<AuthBloc>()..add(const AuthEvent.authStateCheck())),
-        BlocProvider(create: (context) => locator.get<DeckStatusCubit>()),
-        BlocProvider(create: (context) => locator.get<CardStatusCubit>()),
+                locator<AuthBloc>()..add(const AuthEvent.authCheckRequested())),
       ],
       child: ProviderScope(
         child: MaterialApp(

@@ -6,7 +6,6 @@ import 'package:study_buddy/domain/similarity/api_client_repository.dart';
 import 'package:study_buddy/domain/similarity/similarity.dart';
 // import 'package:dartz/dartz.dart';
 // import 'package:http/http.dart' as http;
-import 'package:study_buddy/domain/core/failures.dart';
 
 class FakeHttpService {
   Future<double> getData() async {
@@ -39,4 +38,10 @@ class ApiClientService implements ApiClientRepository {
       throw Failure("Bad response format 👎");
     }
   }
+}
+
+class Failure {
+  final String message;
+
+  Failure(this.message);
 }

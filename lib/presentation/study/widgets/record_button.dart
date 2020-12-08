@@ -1,7 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
-import 'package:study_buddy/presentation/study/deck_study_page.dart';
+import 'package:study_buddy/presentation/study/study_page.dart';
 
 class RecordButton extends StatelessWidget {
   final Function listen;
@@ -11,7 +11,8 @@ class RecordButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, watch, child) {
-        final listening = watch(isListeningProvider).state;
+        final listening = true;
+        // watch(isListeningProvider).state;
         return AvatarGlow(
             animate: listening,
             glowColor: Colors.greenAccent,

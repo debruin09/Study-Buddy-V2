@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:study_buddy/domain/core/failures.dart';
+import 'package:study_buddy/domain/auth/auth_failure.dart';
 import 'package:study_buddy/domain/similarity/similarity.dart';
 import 'package:study_buddy/domain/similarity/api_client_repository.dart';
 
@@ -17,7 +17,7 @@ class SimilarityBloc extends Bloc<SimilarityEvent, SimilarityState> {
   SimilarityBloc(this.repository) : super(SimilarityState.initial());
 
   final ApiClientRepository repository;
-  Either<Failure, Similarity> similarityScore;
+  Either<AuthFailure, Similarity> similarityScore;
 
   @override
   Stream<SimilarityState> mapEventToState(
@@ -39,11 +39,11 @@ class SimilarityBloc extends Bloc<SimilarityEvent, SimilarityState> {
 }
 
 extension TaskX<T extends Either<Object, U>, U> on Task<T> {
-  Task<Either<Failure, U>> mapLeftToFailure() {
+  Task<Either<AuthFailure, U>> mapLeftToFailure() {
     return this.map(
       (either) => either.leftMap((obj) {
         try {
-          return obj as Failure;
+          return obj as AuthFailure;
         } catch (e) {
           throw obj;
         }

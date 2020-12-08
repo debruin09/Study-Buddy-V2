@@ -11,34 +11,33 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/auth/user.dart';
-import '../../domain/card/mycard.dart';
 import '../../domain/deck/deck.dart';
 import '../auth/login/login_screen.dart';
 import '../auth/register/register_screen.dart';
 import '../core/widgets/image_viewer.dart';
-import '../create/create_new_card.dart';
-import '../create/create_new_deck.dart';
+import '../decks/deck_form_page.dart';
 import '../home/home_page.dart';
 import '../splash/splash_page.dart';
-import '../study/deck_study_page.dart';
+import '../studied_cards/studied_cards_page.dart';
+import '../study/study_page.dart';
 
 class Routes {
   static const String homePage = '/home-page';
   static const String landingPage = '/';
-  static const String createNewCardPage = '/create-new-card-page';
-  static const String createNewDeckPage = '/create-new-deck-page';
-  static const String deckStudyPage = '/deck-study-page';
+  static const String deckFormPage = '/deck-form-page';
+  static const String studyPage = '/study-page';
   static const String loginScreen = '/login-screen';
   static const String imageViewerPage = '/image-viewer-page';
+  static const String studiedCardsPage = '/studied-cards-page';
   static const String registerScreen = '/register-screen';
   static const all = <String>{
     homePage,
     landingPage,
-    createNewCardPage,
-    createNewDeckPage,
-    deckStudyPage,
+    deckFormPage,
+    studyPage,
     loginScreen,
     imageViewerPage,
+    studiedCardsPage,
     registerScreen,
   };
 }
@@ -49,11 +48,11 @@ class Router extends RouterBase {
   final _routes = <RouteDef>[
     RouteDef(Routes.homePage, page: HomePage),
     RouteDef(Routes.landingPage, page: LandingPage),
-    RouteDef(Routes.createNewCardPage, page: CreateNewCardPage),
-    RouteDef(Routes.createNewDeckPage, page: CreateNewDeckPage),
-    RouteDef(Routes.deckStudyPage, page: DeckStudyPage),
+    RouteDef(Routes.deckFormPage, page: DeckFormPage),
+    RouteDef(Routes.studyPage, page: StudyPage),
     RouteDef(Routes.loginScreen, page: LoginScreen),
     RouteDef(Routes.imageViewerPage, page: ImageViewerPage),
+    RouteDef(Routes.studiedCardsPage, page: StudiedCardsPage),
     RouteDef(Routes.registerScreen, page: RegisterScreen),
   ];
   @override
@@ -77,25 +76,10 @@ class Router extends RouterBase {
         settings: data,
       );
     },
-    CreateNewCardPage: (data) {
-      final args = data.getArgs<CreateNewCardPageArguments>(
-        orElse: () => CreateNewCardPageArguments(),
-      );
+    DeckFormPage: (data) {
+      final args = data.getArgs<DeckFormPageArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => CreateNewCardPage(
-          key: args.key,
-          card: args.card,
-        ),
-        settings: data,
-        fullscreenDialog: true,
-      );
-    },
-    CreateNewDeckPage: (data) {
-      final args = data.getArgs<CreateNewDeckPageArguments>(
-        orElse: () => CreateNewDeckPageArguments(),
-      );
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => CreateNewDeckPage(
+        builder: (context) => DeckFormPage(
           key: args.key,
           deck: args.deck,
         ),
@@ -103,10 +87,10 @@ class Router extends RouterBase {
         fullscreenDialog: true,
       );
     },
-    DeckStudyPage: (data) {
-      final args = data.getArgs<DeckStudyPageArguments>(nullOk: false);
+    StudyPage: (data) {
+      final args = data.getArgs<StudyPageArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
-        builder: (context) => DeckStudyPage(
+        builder: (context) => StudyPage(
           key: args.key,
           deck: args.deck,
         ),
@@ -128,6 +112,13 @@ class Router extends RouterBase {
           imageFile: args.imageFile,
         ),
         settings: data,
+      );
+    },
+    StudiedCardsPage: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const StudiedCardsPage(),
+        settings: data,
+        fullscreenDialog: true,
       );
     },
     RegisterScreen: (data) {
@@ -155,31 +146,22 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
 
   Future<dynamic> pushLandingPage() => push<dynamic>(Routes.landingPage);
 
-  Future<dynamic> pushCreateNewCardPage({
-    Key key,
-    MyCard card,
-  }) =>
-      push<dynamic>(
-        Routes.createNewCardPage,
-        arguments: CreateNewCardPageArguments(key: key, card: card),
-      );
-
-  Future<dynamic> pushCreateNewDeckPage({
-    Key key,
-    Deck deck,
-  }) =>
-      push<dynamic>(
-        Routes.createNewDeckPage,
-        arguments: CreateNewDeckPageArguments(key: key, deck: deck),
-      );
-
-  Future<dynamic> pushDeckStudyPage({
+  Future<dynamic> pushDeckFormPage({
     Key key,
     @required Deck deck,
   }) =>
       push<dynamic>(
-        Routes.deckStudyPage,
-        arguments: DeckStudyPageArguments(key: key, deck: deck),
+        Routes.deckFormPage,
+        arguments: DeckFormPageArguments(key: key, deck: deck),
+      );
+
+  Future<dynamic> pushStudyPage({
+    Key key,
+    @required Deck deck,
+  }) =>
+      push<dynamic>(
+        Routes.studyPage,
+        arguments: StudyPageArguments(key: key, deck: deck),
       );
 
   Future<dynamic> pushLoginScreen() => push<dynamic>(Routes.loginScreen);
@@ -192,6 +174,9 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
         Routes.imageViewerPage,
         arguments: ImageViewerPageArguments(key: key, imageFile: imageFile),
       );
+
+  Future<dynamic> pushStudiedCardsPage() =>
+      push<dynamic>(Routes.studiedCardsPage);
 
   Future<dynamic> pushRegisterScreen() => push<dynamic>(Routes.registerScreen);
 }
@@ -207,25 +192,18 @@ class HomePageArguments {
   HomePageArguments({this.key, this.user});
 }
 
-/// CreateNewCardPage arguments holder class
-class CreateNewCardPageArguments {
-  final Key key;
-  final MyCard card;
-  CreateNewCardPageArguments({this.key, this.card});
-}
-
-/// CreateNewDeckPage arguments holder class
-class CreateNewDeckPageArguments {
+/// DeckFormPage arguments holder class
+class DeckFormPageArguments {
   final Key key;
   final Deck deck;
-  CreateNewDeckPageArguments({this.key, this.deck});
+  DeckFormPageArguments({this.key, @required this.deck});
 }
 
-/// DeckStudyPage arguments holder class
-class DeckStudyPageArguments {
+/// StudyPage arguments holder class
+class StudyPageArguments {
   final Key key;
   final Deck deck;
-  DeckStudyPageArguments({this.key, @required this.deck});
+  StudyPageArguments({this.key, @required this.deck});
 }
 
 /// ImageViewerPage arguments holder class

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:study_buddy/application/similarity/similarity_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:study_buddy/presentation/core/theme/theme_colors.dart';
+import 'package:study_buddy/presentation/core/theme_colors.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
 
 class RefineButton extends StatelessWidget {
@@ -55,7 +55,7 @@ class SimilarityWrapper extends StatelessWidget {
                             ),
                         success: (data) {
                           return data.similarityScore.fold(
-                            (f) => Text("${f.message}"),
+                            (f) => Text("Failure"),
                             (s) => Padding(
                               padding: const EdgeInsets.only(right: 10.0),
                               child: Text(

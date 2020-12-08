@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:highlight_text/highlight_text.dart';
-import 'package:study_buddy/application/core/speech/speech_bloc.dart';
+import 'package:study_buddy/application/speech/speech_bloc.dart';
 
 class DraggableSpeechCard extends StatelessWidget {
   final SpeechBloc speechBloc;

@@ -19,13 +19,15 @@ class _$CardItemTearOff {
       @required CardFront front,
       @required CardBack back,
       @required CardMe me,
-      @required bool studied}) {
+      @required bool studied,
+      @required Color color}) {
     return _CardItem(
       id: id,
       front: front,
       back: back,
       me: me,
       studied: studied,
+      color: color,
     );
   }
 }
@@ -41,6 +43,7 @@ mixin _$CardItem {
   CardBack get back;
   CardMe get me;
   bool get studied;
+  Color get color;
 
   $CardItemCopyWith<CardItem> get copyWith;
 }
@@ -50,7 +53,12 @@ abstract class $CardItemCopyWith<$Res> {
   factory $CardItemCopyWith(CardItem value, $Res Function(CardItem) then) =
       _$CardItemCopyWithImpl<$Res>;
   $Res call(
-      {UniqueId id, CardFront front, CardBack back, CardMe me, bool studied});
+      {UniqueId id,
+      CardFront front,
+      CardBack back,
+      CardMe me,
+      bool studied,
+      Color color});
 }
 
 /// @nodoc
@@ -68,6 +76,7 @@ class _$CardItemCopyWithImpl<$Res> implements $CardItemCopyWith<$Res> {
     Object back = freezed,
     Object me = freezed,
     Object studied = freezed,
+    Object color = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as UniqueId,
@@ -75,6 +84,7 @@ class _$CardItemCopyWithImpl<$Res> implements $CardItemCopyWith<$Res> {
       back: back == freezed ? _value.back : back as CardBack,
       me: me == freezed ? _value.me : me as CardMe,
       studied: studied == freezed ? _value.studied : studied as bool,
+      color: color == freezed ? _value.color : color as Color,
     ));
   }
 }
@@ -85,7 +95,12 @@ abstract class _$CardItemCopyWith<$Res> implements $CardItemCopyWith<$Res> {
       __$CardItemCopyWithImpl<$Res>;
   @override
   $Res call(
-      {UniqueId id, CardFront front, CardBack back, CardMe me, bool studied});
+      {UniqueId id,
+      CardFront front,
+      CardBack back,
+      CardMe me,
+      bool studied,
+      Color color});
 }
 
 /// @nodoc
@@ -104,6 +119,7 @@ class __$CardItemCopyWithImpl<$Res> extends _$CardItemCopyWithImpl<$Res>
     Object back = freezed,
     Object me = freezed,
     Object studied = freezed,
+    Object color = freezed,
   }) {
     return _then(_CardItem(
       id: id == freezed ? _value.id : id as UniqueId,
@@ -111,6 +127,7 @@ class __$CardItemCopyWithImpl<$Res> extends _$CardItemCopyWithImpl<$Res>
       back: back == freezed ? _value.back : back as CardBack,
       me: me == freezed ? _value.me : me as CardMe,
       studied: studied == freezed ? _value.studied : studied as bool,
+      color: color == freezed ? _value.color : color as Color,
     ));
   }
 }
@@ -122,12 +139,14 @@ class _$_CardItem extends _CardItem {
       @required this.front,
       @required this.back,
       @required this.me,
-      @required this.studied})
+      @required this.studied,
+      @required this.color})
       : assert(id != null),
         assert(front != null),
         assert(back != null),
         assert(me != null),
         assert(studied != null),
+        assert(color != null),
         super._();
 
   @override
@@ -140,10 +159,12 @@ class _$_CardItem extends _CardItem {
   final CardMe me;
   @override
   final bool studied;
+  @override
+  final Color color;
 
   @override
   String toString() {
-    return 'CardItem(id: $id, front: $front, back: $back, me: $me, studied: $studied)';
+    return 'CardItem(id: $id, front: $front, back: $back, me: $me, studied: $studied, color: $color)';
   }
 
   @override
@@ -159,7 +180,10 @@ class _$_CardItem extends _CardItem {
             (identical(other.me, me) ||
                 const DeepCollectionEquality().equals(other.me, me)) &&
             (identical(other.studied, studied) ||
-                const DeepCollectionEquality().equals(other.studied, studied)));
+                const DeepCollectionEquality()
+                    .equals(other.studied, studied)) &&
+            (identical(other.color, color) ||
+                const DeepCollectionEquality().equals(other.color, color)));
   }
 
   @override
@@ -169,7 +193,8 @@ class _$_CardItem extends _CardItem {
       const DeepCollectionEquality().hash(front) ^
       const DeepCollectionEquality().hash(back) ^
       const DeepCollectionEquality().hash(me) ^
-      const DeepCollectionEquality().hash(studied);
+      const DeepCollectionEquality().hash(studied) ^
+      const DeepCollectionEquality().hash(color);
 
   @override
   _$CardItemCopyWith<_CardItem> get copyWith =>
@@ -183,7 +208,8 @@ abstract class _CardItem extends CardItem {
       @required CardFront front,
       @required CardBack back,
       @required CardMe me,
-      @required bool studied}) = _$_CardItem;
+      @required bool studied,
+      @required Color color}) = _$_CardItem;
 
   @override
   UniqueId get id;
@@ -195,6 +221,8 @@ abstract class _CardItem extends CardItem {
   CardMe get me;
   @override
   bool get studied;
+  @override
+  Color get color;
   @override
   _$CardItemCopyWith<_CardItem> get copyWith;
 }

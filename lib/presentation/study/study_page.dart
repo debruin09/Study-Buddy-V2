@@ -8,7 +8,7 @@ import 'package:study_buddy/application/deck/deck_form/deck_form_bloc.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
-import 'package:study_buddy/presentation/study/widgets/study_deck.dart';
+import 'package:study_buddy/presentation/study/widgets/study_page_body.dart';
 
 class StudyPage extends StatelessWidget {
   final Deck deck;
@@ -43,7 +43,7 @@ class StudyPage extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.only(top: 10.0),
-          child: StudyDeck(deck: deck),
+          child: StudyPageBody(deck: deck),
         ),
       ),
     );

@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:study_buddy/domain/core/local_notification_repository.dart';
 
 import 'application/auth/auth_bloc.dart';
 import 'application/deck/deck_actor/deck_actor_bloc.dart';
@@ -41,7 +42,8 @@ GetIt $initGetIt(
   gh.factory<SignInFormBloc>(() => SignInFormBloc(get<IAuthFacade>()));
   gh.factory<AuthBloc>(() => AuthBloc(get<IAuthFacade>()));
   gh.factory<DeckActorBloc>(() => DeckActorBloc(get<IDeckRepository>()));
-  gh.factory<DeckFormBloc>(() => DeckFormBloc(get<IDeckRepository>()));
+  gh.factory<DeckFormBloc>(() =>
+      DeckFormBloc(get<IDeckRepository>(), get<LocalNotificationRepository>()));
   gh.factory<DeckWatcherBloc>(() => DeckWatcherBloc(get<IDeckRepository>()));
   return get;
 }

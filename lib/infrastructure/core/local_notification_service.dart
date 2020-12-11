@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:kt_dart/collection.dart';
 import 'package:study_buddy/domain/core/local_notification_repository.dart';
+import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -24,7 +26,9 @@ class LocalNotificationService implements LocalNotificationRepository {
   }
 
   @override
-  Future<void> notification({@required String front}) async {
+  Future<void> notification({@required Deck deck}) async {
+    final front = deck.cards.getOrCrash().first().front.getOrCrash();
+
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
             'Channel ID', 'Channel title', 'channel body',
@@ -44,10 +48,11 @@ class LocalNotificationService implements LocalNotificationRepository {
   /// The default [TimeDelayType] is in seconds
   @override
   Future<void> notificationDelay(
-      {@required String front,
+      {@required Deck deck,
       @required TimeDelayType timeDelayType,
       @required int timeValue}) async {
     tz.TZDateTime zone;
+    final front = deck.cards.getOrCrash().first().front.getOrCrash();
 
     if (timeDelayType == TimeDelayType.minutes) {
       zone = tz.TZDateTime.now(tz.local).add(Duration(seconds: timeValue));

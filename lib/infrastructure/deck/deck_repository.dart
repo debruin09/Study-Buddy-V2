@@ -59,7 +59,7 @@ class DeckRepository implements IDeckRepository {
       if (e is FirebaseException && e.message.contains('PERMISSION_DENIED')) {
         return left(const DeckFailure.insufficientPermission());
       } else {
-        print("LOG: RETRIEVING DECKS FROM FIREBASE: " + e.toString());
+        print("LOG: <STREAM DECKS FROM FIREBASE>: " + e.toString());
         return left(const DeckFailure.unexpected());
       }
     });

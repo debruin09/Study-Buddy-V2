@@ -6,6 +6,7 @@ import 'package:study_buddy/domain/deck/card_item.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/domain/deck/value_objects.dart';
 import 'package:kt_dart/collection.dart';
+import 'dart:ui';
 
 part 'deck_dtos.freezed.dart';
 part 'deck_dtos.g.dart';
@@ -84,6 +85,7 @@ abstract class CardItemDto implements _$CardItemDto {
     @required String back,
     @required String me,
     @required bool studied,
+    @required int color,
   }) = _CardItemDto;
 
   factory CardItemDto.fromDomain(CardItem cardItem) {
@@ -93,6 +95,7 @@ abstract class CardItemDto implements _$CardItemDto {
       back: cardItem.back.getOrCrash(),
       me: cardItem.me.getOrCrash(),
       studied: cardItem.studied,
+      color: cardItem.color.value,
     );
   }
 
@@ -103,6 +106,7 @@ abstract class CardItemDto implements _$CardItemDto {
       back: CardBack(back),
       me: CardMe(me),
       studied: studied,
+      color: Color(color),
     );
   }
 

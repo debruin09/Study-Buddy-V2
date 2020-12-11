@@ -90,24 +90,29 @@ class SavingInProgressOverlay extends StatelessWidget {
       ignoring: !isSaving,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 150),
-        color: isSaving ? primaryColor.withOpacity(0.8) : Colors.transparent,
+        color: isSaving ? Colors.black.withOpacity(0.4) : Colors.transparent,
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Visibility(
           visible: isSaving,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Loader(),
-              const SizedBox(height: 8),
-              Text(
-                'Saving',
-                style: Theme.of(context).textTheme.bodyText2.copyWith(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-              ),
-            ],
+          child: Container(
+            width: 120.0,
+            height: 30.0,
+            color: Colors.white,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Loader(color: primaryColor),
+                const SizedBox(height: 8),
+                Text(
+                  'Saving',
+                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        color: primaryColor,
+                        fontSize: 16,
+                      ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

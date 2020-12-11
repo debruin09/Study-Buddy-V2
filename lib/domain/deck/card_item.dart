@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:study_buddy/domain/core/failures.dart';
 import 'package:study_buddy/domain/core/value_objects.dart';
 import 'package:study_buddy/domain/deck/value_objects.dart';
+import 'package:flutter/material.dart';
 
 part 'card_item.freezed.dart';
 
@@ -16,6 +17,7 @@ abstract class CardItem implements _$CardItem {
     @required CardBack back,
     @required CardMe me,
     @required bool studied,
+    @required Color color,
   }) = _CardItem;
 
   factory CardItem.empty() => CardItem(
@@ -24,6 +26,7 @@ abstract class CardItem implements _$CardItem {
         back: CardBack(''),
         me: CardMe(''),
         studied: false,
+        color: Color(Colors.white.value),
       );
 
   Option<ValueFailure<dynamic>> get failureOption {

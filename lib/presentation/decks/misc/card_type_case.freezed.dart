@@ -101,7 +101,7 @@ class _$_Front implements _Front {
 
   @override
   String toString() {
-    return 'Front';
+    return 'CardTypeCase.front()';
   }
 
   @override
@@ -195,7 +195,7 @@ class _$_Back implements _Back {
 
   @override
   String toString() {
-    return 'Back';
+    return 'CardTypeCase.back()';
   }
 
   @override
@@ -289,7 +289,7 @@ class _$_Me implements _Me {
 
   @override
   String toString() {
-    return 'Me';
+    return 'CardTypeCase.me()';
   }
 
   @override

@@ -25,6 +25,7 @@ abstract class CardItemPrimitive implements _$CardItemPrimitive {
     @required String back,
     @required String me,
     @required bool studied,
+    @required int color,
   }) = _CardItemPrimitive;
 
   factory CardItemPrimitive.empty() => CardItemPrimitive(
@@ -33,6 +34,7 @@ abstract class CardItemPrimitive implements _$CardItemPrimitive {
         back: '',
         me: '',
         studied: false,
+        color: Colors.white.value,
       );
 
   factory CardItemPrimitive.fromDomain(CardItem cardItem) {
@@ -42,6 +44,7 @@ abstract class CardItemPrimitive implements _$CardItemPrimitive {
       back: cardItem.back.getOrCrash(),
       me: cardItem.me.getOrCrash(),
       studied: cardItem.studied,
+      color: cardItem.color.value,
     );
   }
 
@@ -52,6 +55,7 @@ abstract class CardItemPrimitive implements _$CardItemPrimitive {
       back: CardBack(back),
       me: CardMe(me),
       studied: studied,
+      color: Color(color),
     );
   }
 }

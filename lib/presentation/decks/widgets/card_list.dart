@@ -6,8 +6,8 @@ import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 // import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/all.dart';
+import 'package:kt_dart/collection.dart';
 import 'package:study_buddy/application/deck/deck_form/deck_form_bloc.dart';
-import 'package:study_buddy/presentation/decks/widgets/card_form_fields.dart';
 import 'package:study_buddy/presentation/decks/misc/card_item_presentation_classes.dart';
 
 class CardList extends HookWidget {
@@ -58,12 +58,11 @@ class CardTile extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(children: [
-        CardFrontField(index: index),
-        CardBackField(index: index),
-        CardMeField(index: index),
-      ]),
+    final formCards = useProvider(formCardsProvider).value;
+    final card = formCards.getOrElse(index, (_) => CardItemPrimitive.empty());
+    return ListTile(
+      title: Text(card.front),
+      subtitle: Text(card.back),
     );
   }
 }

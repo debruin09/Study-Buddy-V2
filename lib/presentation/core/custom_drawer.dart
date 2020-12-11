@@ -14,20 +14,21 @@ class CustomDrawer extends StatelessWidget {
     Size screenSize = MediaQuery.of(context).size;
     return Container(
       padding: EdgeInsets.only(bottom: 20.0),
+      margin: EdgeInsets.only(top: 25.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(15.0),
+          bottomRight: Radius.circular(20.0),
           topRight: Radius.circular(15.0),
         ),
       ),
-      width: screenSize.width * 0.6,
-      height: screenSize.height * 0.8,
+      width: screenSize.width * 0.75,
+      height: screenSize.height,
       child: ListView(
         children: [
           Container(
             width: double.infinity,
-            height: 80.0,
+            height: 100.0,
             alignment: Alignment.center,
             margin: EdgeInsets.only(top: 30.0, bottom: 40.0),
             padding: EdgeInsets.only(
@@ -44,8 +45,11 @@ class CustomDrawer extends StatelessWidget {
                 const SizedBox(width: 10.0),
                 Expanded(
                   child: Text(
-                    "Welcome",
-                    style: TextStyle(color: Colors.black, fontSize: 26.0),
+                    "Study Buddy",
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 26.0,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ],

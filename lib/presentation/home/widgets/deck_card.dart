@@ -17,66 +17,64 @@ class DeckCard extends ConsumerWidget {
 
   final GlobalKey<ScaffoldState> gKey;
 
-  DeckCard({
-    @required this.deck,
-    @required this.gKey,
-  });
+  DeckCard({@required this.deck, @required this.gKey});
   Widget build(BuildContext context, ScopedReader watch) {
     final formProvider = watch(formCardsProvider);
-    return Material(
-      elevation: 1.0,
-      clipBehavior: Clip.antiAlias,
-      borderRadius: BorderRadius.circular(10.0),
-      color: cardColor,
-      child: InkWell(
-        splashColor: primaryColor.withOpacity(0.5),
-        onTap: () async {
-          // Pushes a edit deck page
-          ExtendedNavigator.root.pushDeckFormPage(deck: deck);
-        },
-        child: ListTile(
-          contentPadding: const EdgeInsets.all(0.0),
-          title: Text(
-            "${deck.name.getOrCrash()}",
-            style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Material(
+        elevation: 1.0,
+        clipBehavior: Clip.antiAlias,
+        color: cardColor,
+        child: InkWell(
+          splashColor: primaryColor.withOpacity(0.5),
+          onTap: () async {
+            ExtendedNavigator.root.pushDeckFormPage(deck: deck);
+          },
+          child: ListTile(
+            contentPadding: const EdgeInsets.all(0.0),
+            leading: Container(
+              color: Colors.blue[800],
+              height: double.infinity,
+              width: 5.0,
             ),
-          ),
-          onTap: () {
-            formProvider.value = deck.cards
-                .getOrCrash()
-                .map((_) => CardItemPrimitive.fromDomain(_));
-
-            ExtendedNavigator.root.pushStudyPage(deck: deck);
-          },
-          onLongPress: () {
-            final deckActorBloc = ReadContext(context).read<DeckActorBloc>();
-
-            deleteDialogue(gKey, context, deckActorBloc);
-          },
-          leading: Container(
-            width: 7.0,
-            height: double.infinity,
-            color: primaryColor,
-          ),
-          subtitle: difficultyCount(deck),
-          trailing: IconButton(
-            onPressed: () {
+            title: Text(
+              "${deck.name.getOrCrash()}",
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+              ),
+            ),
+            onTap: () {
               formProvider.value = deck.cards
                   .getOrCrash()
                   .map((_) => CardItemPrimitive.fromDomain(_));
 
-              ExtendedNavigator.root.push(
-                Routes.deckFormPage,
-                arguments: DeckFormPageArguments(deck: deck),
-              );
+              ExtendedNavigator.root.pushStudyPage(deck: deck);
             },
-            icon: Icon(
-              Icons.edit_outlined,
-              color: primaryColor,
-              size: 25.0,
+            onLongPress: () {
+              final deckActorBloc = ReadContext(context).read<DeckActorBloc>();
+
+              deleteDialogue(gKey, context, deckActorBloc);
+            },
+            subtitle: difficultyCount(deck),
+            trailing: IconButton(
+              onPressed: () {
+                formProvider.value = deck.cards
+                    .getOrCrash()
+                    .map((_) => CardItemPrimitive.fromDomain(_));
+
+                ExtendedNavigator.root.push(
+                  Routes.deckFormPage,
+                  arguments: DeckFormPageArguments(deck: deck),
+                );
+              },
+              icon: Icon(
+                Icons.edit_outlined,
+                color: Colors.blue[800],
+                size: 25.0,
+              ),
             ),
           ),
         ),
@@ -86,7 +84,7 @@ class DeckCard extends ConsumerWidget {
 
   Future<void> deleteDialogue(GlobalKey<ScaffoldState> state, context,
       DeckActorBloc deckActorBloc) async {
-    return await showDialog(
+    return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(

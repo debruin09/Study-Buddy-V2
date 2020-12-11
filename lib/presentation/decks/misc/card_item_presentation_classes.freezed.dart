@@ -19,13 +19,15 @@ class _$CardItemPrimitiveTearOff {
       @required String front,
       @required String back,
       @required String me,
-      @required bool studied}) {
+      @required bool studied,
+      @required int color}) {
     return _CardItemPrimitive(
       id: id,
       front: front,
       back: back,
       me: me,
       studied: studied,
+      color: color,
     );
   }
 }
@@ -41,6 +43,7 @@ mixin _$CardItemPrimitive {
   String get back;
   String get me;
   bool get studied;
+  int get color;
 
   $CardItemPrimitiveCopyWith<CardItemPrimitive> get copyWith;
 }
@@ -50,7 +53,13 @@ abstract class $CardItemPrimitiveCopyWith<$Res> {
   factory $CardItemPrimitiveCopyWith(
           CardItemPrimitive value, $Res Function(CardItemPrimitive) then) =
       _$CardItemPrimitiveCopyWithImpl<$Res>;
-  $Res call({UniqueId id, String front, String back, String me, bool studied});
+  $Res call(
+      {UniqueId id,
+      String front,
+      String back,
+      String me,
+      bool studied,
+      int color});
 }
 
 /// @nodoc
@@ -69,6 +78,7 @@ class _$CardItemPrimitiveCopyWithImpl<$Res>
     Object back = freezed,
     Object me = freezed,
     Object studied = freezed,
+    Object color = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as UniqueId,
@@ -76,6 +86,7 @@ class _$CardItemPrimitiveCopyWithImpl<$Res>
       back: back == freezed ? _value.back : back as String,
       me: me == freezed ? _value.me : me as String,
       studied: studied == freezed ? _value.studied : studied as bool,
+      color: color == freezed ? _value.color : color as int,
     ));
   }
 }
@@ -87,7 +98,13 @@ abstract class _$CardItemPrimitiveCopyWith<$Res>
           _CardItemPrimitive value, $Res Function(_CardItemPrimitive) then) =
       __$CardItemPrimitiveCopyWithImpl<$Res>;
   @override
-  $Res call({UniqueId id, String front, String back, String me, bool studied});
+  $Res call(
+      {UniqueId id,
+      String front,
+      String back,
+      String me,
+      bool studied,
+      int color});
 }
 
 /// @nodoc
@@ -108,6 +125,7 @@ class __$CardItemPrimitiveCopyWithImpl<$Res>
     Object back = freezed,
     Object me = freezed,
     Object studied = freezed,
+    Object color = freezed,
   }) {
     return _then(_CardItemPrimitive(
       id: id == freezed ? _value.id : id as UniqueId,
@@ -115,6 +133,7 @@ class __$CardItemPrimitiveCopyWithImpl<$Res>
       back: back == freezed ? _value.back : back as String,
       me: me == freezed ? _value.me : me as String,
       studied: studied == freezed ? _value.studied : studied as bool,
+      color: color == freezed ? _value.color : color as int,
     ));
   }
 }
@@ -126,12 +145,14 @@ class _$_CardItemPrimitive extends _CardItemPrimitive {
       @required this.front,
       @required this.back,
       @required this.me,
-      @required this.studied})
+      @required this.studied,
+      @required this.color})
       : assert(id != null),
         assert(front != null),
         assert(back != null),
         assert(me != null),
         assert(studied != null),
+        assert(color != null),
         super._();
 
   @override
@@ -144,10 +165,12 @@ class _$_CardItemPrimitive extends _CardItemPrimitive {
   final String me;
   @override
   final bool studied;
+  @override
+  final int color;
 
   @override
   String toString() {
-    return 'CardItemPrimitive(id: $id, front: $front, back: $back, me: $me, studied: $studied)';
+    return 'CardItemPrimitive(id: $id, front: $front, back: $back, me: $me, studied: $studied, color: $color)';
   }
 
   @override
@@ -163,7 +186,10 @@ class _$_CardItemPrimitive extends _CardItemPrimitive {
             (identical(other.me, me) ||
                 const DeepCollectionEquality().equals(other.me, me)) &&
             (identical(other.studied, studied) ||
-                const DeepCollectionEquality().equals(other.studied, studied)));
+                const DeepCollectionEquality()
+                    .equals(other.studied, studied)) &&
+            (identical(other.color, color) ||
+                const DeepCollectionEquality().equals(other.color, color)));
   }
 
   @override
@@ -173,7 +199,8 @@ class _$_CardItemPrimitive extends _CardItemPrimitive {
       const DeepCollectionEquality().hash(front) ^
       const DeepCollectionEquality().hash(back) ^
       const DeepCollectionEquality().hash(me) ^
-      const DeepCollectionEquality().hash(studied);
+      const DeepCollectionEquality().hash(studied) ^
+      const DeepCollectionEquality().hash(color);
 
   @override
   _$CardItemPrimitiveCopyWith<_CardItemPrimitive> get copyWith =>
@@ -187,7 +214,8 @@ abstract class _CardItemPrimitive extends CardItemPrimitive {
       @required String front,
       @required String back,
       @required String me,
-      @required bool studied}) = _$_CardItemPrimitive;
+      @required bool studied,
+      @required int color}) = _$_CardItemPrimitive;
 
   @override
   UniqueId get id;
@@ -199,6 +227,8 @@ abstract class _CardItemPrimitive extends CardItemPrimitive {
   String get me;
   @override
   bool get studied;
+  @override
+  int get color;
   @override
   _$CardItemPrimitiveCopyWith<_CardItemPrimitive> get copyWith;
 }

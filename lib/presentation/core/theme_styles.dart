@@ -34,7 +34,6 @@ final appThemeStyle = ThemeData(
   buttonTheme: ButtonThemeData(),
   accentColor: titleColor,
   inputDecorationTheme: InputDecorationTheme(
-    contentPadding: const EdgeInsets.only(left: 8.0),
     focusedBorder: UnderlineInputBorder(
       borderRadius: BorderRadius.circular(20.0),
       borderSide: BorderSide(

@@ -1,11 +1,14 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:study_buddy/application/deck/deck_form/deck_form_helper_functions.dart';
+import 'package:study_buddy/domain/core/local_notification_repository.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/domain/deck/deck_failure.dart';
 import 'package:study_buddy/domain/deck/i_deck_repository.dart';
@@ -19,14 +22,17 @@ part 'deck_form_bloc.freezed.dart';
 @injectable
 class DeckFormBloc extends Bloc<DeckFormEvent, DeckFormState> {
   final IDeckRepository _deckRepository;
+  final LocalNotificationRepository _localNotificationRepository;
 
-  DeckFormBloc(this._deckRepository) : super(DeckFormState.initial());
+  DeckFormBloc(this._deckRepository, this._localNotificationRepository)
+      : super(DeckFormState.initial());
   @override
   Stream<DeckFormState> mapEventToState(
     DeckFormEvent event,
   ) async* {
     yield* event.map(
       initialized: (e) async* {
+        _localNotificationRepository.initializing();
         yield e.initialDeckOption.fold(
           () => state,
           (initialDeck) => state.copyWith(
@@ -48,8 +54,14 @@ class DeckFormBloc extends Bloc<DeckFormEvent, DeckFormState> {
         await _deckRepository.update(
           state.deck.copyWith(
             easyCard: EasyCard(counter + 1),
-            cards: List6(deckFormHelperFunction(state.deck)),
+            cards: List6(
+                deckFormHelperFunction(state.deck, Color(Colors.green.value))),
           ),
+        );
+        _localNotificationRepository.notificationDelay(
+          deck: state.deck,
+          timeDelayType: TimeDelayType.seconds,
+          timeValue: 5,
         );
 
         yield state;
@@ -59,16 +71,28 @@ class DeckFormBloc extends Bloc<DeckFormEvent, DeckFormState> {
 
         await _deckRepository.update(state.deck.copyWith(
           moderateCard: ModerateCard(counter + 1),
-          cards: List6(deckFormHelperFunction(state.deck)),
+          cards: List6(
+              deckFormHelperFunction(state.deck, Color(Colors.blue.value))),
         ));
+
+        _localNotificationRepository.notificationDelay(
+          deck: state.deck,
+          timeDelayType: TimeDelayType.seconds,
+          timeValue: 5,
+        );
+
         yield state;
       },
       hardIncrement: (e) async* {
         final counter = state.deck.hardCard.getOrCrash();
         await _deckRepository.update(state.deck.copyWith(
           hardCard: HardCard(counter + 1),
-          cards: List6(deckFormHelperFunction(state.deck)),
+          cards: List6(
+              deckFormHelperFunction(state.deck, Color(Colors.red.value))),
         ));
+
+        _localNotificationRepository.notification(deck: state.deck);
+
         yield state;
       },
 

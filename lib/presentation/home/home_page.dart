@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:study_buddy/application/auth/auth_bloc.dart';
 
@@ -69,6 +70,8 @@ class HomePage extends StatelessWidget {
           key: _gKey,
           backgroundColor: bgColor,
           appBar: AppBar(
+            brightness: Brightness.dark,
+            centerTitle: false,
             leading: IconButton(
               icon: Icon(
                 Icons.menu,
@@ -76,15 +79,19 @@ class HomePage extends StatelessWidget {
               onPressed: () => _gKey.currentState.openDrawer(),
             ),
             automaticallyImplyLeading: false,
-            title: Text(
-              "Home",
-              style: Theme.of(context)
-                  .appBarTheme
-                  .textTheme
-                  .headline6
-                  .copyWith(fontWeight: FontWeight.bold, letterSpacing: 3.0),
+            title: Row(
+              children: [
+                Text("Home"),
+                const SizedBox(width: 10.0),
+                Text("beta release",
+                    style: TextStyle(color: Colors.yellow, fontSize: 12.0))
+              ],
             ),
             actions: [
+              IconButton(
+                  icon: Icon(Icons.watch_later, size: 30.0),
+                  tooltip: "Pomodoro",
+                  onPressed: () => ExtendedNavigator.root.pushPomodoroPage()),
               IconButton(
                 onPressed: () {
                   showSearch(context: context, delegate: DeckSearch());

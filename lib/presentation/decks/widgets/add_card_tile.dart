@@ -7,7 +7,7 @@ import 'package:kt_dart/kt.dart';
 
 import 'package:study_buddy/application/deck/deck_form/deck_form_bloc.dart';
 import 'package:study_buddy/presentation/decks/misc/card_item_presentation_classes.dart';
-import 'package:study_buddy/presentation/decks/widgets/card_form_fields.dart';
+import 'package:study_buddy/presentation/routes/router.gr.dart';
 
 class AddCardTile extends HookWidget {
   const AddCardTile({Key key}) : super(key: key);
@@ -27,63 +27,30 @@ class AddCardTile extends HookWidget {
       },
       buildWhen: (p, c) => p.deck.cards.isFull != c.deck.cards.isFull,
       builder: (context, state) {
-        return ListTile(
-          enabled: !state.deck.cards.isFull,
-          title: const Text('Add a card'),
-          leading: const Padding(
-            padding: EdgeInsets.all(12.0),
-            child: Icon(Icons.add),
-          ),
-          onTap: () {
-            formProvider.value =
-                formProvider.value.plusElement(CardItemPrimitive.empty());
-            final index = formProvider.value.size - 1;
-            ReadContext(context).read<DeckFormBloc>().add(
-                  DeckFormEvent.cardsChanged(formProvider.value),
-                );
-            final deckFormBloc = ReadContext(context).read<DeckFormBloc>();
+        return SliverToBoxAdapter(
+          child: ListTile(
+            enabled: !state.deck.cards.isFull,
+            title: const Text('Add a card'),
+            leading: const Padding(
+              padding: EdgeInsets.all(12.0),
+              child: Icon(Icons.add),
+            ),
+            onTap: () {
+              formProvider.value =
+                  formProvider.value.plusElement(CardItemPrimitive.empty());
+              final index = formProvider.value.size - 1;
+              ReadContext(context).read<DeckFormBloc>().add(
+                    DeckFormEvent.cardsChanged(formProvider.value),
+                  );
 
-            _showEditDialog(context, deckFormBloc, index);
-          },
+              ExtendedNavigator.root.pushCardFormPage(
+                deckFormBloc: ReadContext(context).read<DeckFormBloc>(),
+                index: index,
+              );
+            },
+          ),
         );
       },
     );
-  }
-
-  Future<void> _showEditDialog(
-      context, DeckFormBloc deckFormBloc, int index) async {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Test gou iets uit"),
-            content: Column(
-              children: [
-                CardFrontField(
-                  index: index,
-                  deckFormBloc: deckFormBloc,
-                ),
-                CardBackField(
-                  index: index,
-                  deckFormBloc: deckFormBloc,
-                ),
-                CardMeField(
-                  index: index,
-                  deckFormBloc: deckFormBloc,
-                )
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  deckFormBloc.add(const DeckFormEvent.saved());
-                  print("Saved to db");
-                  ExtendedNavigator.root.pop();
-                },
-                child: Text("save", style: TextStyle(color: Colors.black)),
-              ),
-            ],
-          );
-        });
   }
 }

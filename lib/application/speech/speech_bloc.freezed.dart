@@ -26,6 +26,11 @@ class _$SpeechEventTearOff {
       errorMessage: errorMessage,
     );
   }
+
+// ignore: unused_element
+  _GetFromDatabase getFromDatabase() {
+    return const _GetFromDatabase();
+  }
 }
 
 /// @nodoc
@@ -38,22 +43,26 @@ mixin _$SpeechEvent {
   TResult when<TResult extends Object>({
     @required TResult onChange(String text),
     @required TResult error(String errorMessage),
+    @required TResult getFromDatabase(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult onChange(String text),
     TResult error(String errorMessage),
+    TResult getFromDatabase(),
     @required TResult orElse(),
   });
   @optionalTypeArgs
   TResult map<TResult extends Object>({
     @required TResult onChange(_OnChange value),
     @required TResult error(_SpeechEventError value),
+    @required TResult getFromDatabase(_GetFromDatabase value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
     TResult onChange(_OnChange value),
     TResult error(_SpeechEventError value),
+    TResult getFromDatabase(_GetFromDatabase value),
     @required TResult orElse(),
   });
 }
@@ -133,9 +142,11 @@ class _$_OnChange implements _OnChange {
   TResult when<TResult extends Object>({
     @required TResult onChange(String text),
     @required TResult error(String errorMessage),
+    @required TResult getFromDatabase(),
   }) {
     assert(onChange != null);
     assert(error != null);
+    assert(getFromDatabase != null);
     return onChange(text);
   }
 
@@ -144,6 +155,7 @@ class _$_OnChange implements _OnChange {
   TResult maybeWhen<TResult extends Object>({
     TResult onChange(String text),
     TResult error(String errorMessage),
+    TResult getFromDatabase(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -158,9 +170,11 @@ class _$_OnChange implements _OnChange {
   TResult map<TResult extends Object>({
     @required TResult onChange(_OnChange value),
     @required TResult error(_SpeechEventError value),
+    @required TResult getFromDatabase(_GetFromDatabase value),
   }) {
     assert(onChange != null);
     assert(error != null);
+    assert(getFromDatabase != null);
     return onChange(this);
   }
 
@@ -169,6 +183,7 @@ class _$_OnChange implements _OnChange {
   TResult maybeMap<TResult extends Object>({
     TResult onChange(_OnChange value),
     TResult error(_SpeechEventError value),
+    TResult getFromDatabase(_GetFromDatabase value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -252,9 +267,11 @@ class _$_SpeechEventError implements _SpeechEventError {
   TResult when<TResult extends Object>({
     @required TResult onChange(String text),
     @required TResult error(String errorMessage),
+    @required TResult getFromDatabase(),
   }) {
     assert(onChange != null);
     assert(error != null);
+    assert(getFromDatabase != null);
     return error(errorMessage);
   }
 
@@ -263,6 +280,7 @@ class _$_SpeechEventError implements _SpeechEventError {
   TResult maybeWhen<TResult extends Object>({
     TResult onChange(String text),
     TResult error(String errorMessage),
+    TResult getFromDatabase(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -277,9 +295,11 @@ class _$_SpeechEventError implements _SpeechEventError {
   TResult map<TResult extends Object>({
     @required TResult onChange(_OnChange value),
     @required TResult error(_SpeechEventError value),
+    @required TResult getFromDatabase(_GetFromDatabase value),
   }) {
     assert(onChange != null);
     assert(error != null);
+    assert(getFromDatabase != null);
     return error(this);
   }
 
@@ -288,6 +308,7 @@ class _$_SpeechEventError implements _SpeechEventError {
   TResult maybeMap<TResult extends Object>({
     TResult onChange(_OnChange value),
     TResult error(_SpeechEventError value),
+    TResult getFromDatabase(_GetFromDatabase value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -307,6 +328,103 @@ abstract class _SpeechEventError implements SpeechEvent {
 }
 
 /// @nodoc
+abstract class _$GetFromDatabaseCopyWith<$Res> {
+  factory _$GetFromDatabaseCopyWith(
+          _GetFromDatabase value, $Res Function(_GetFromDatabase) then) =
+      __$GetFromDatabaseCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$GetFromDatabaseCopyWithImpl<$Res>
+    extends _$SpeechEventCopyWithImpl<$Res>
+    implements _$GetFromDatabaseCopyWith<$Res> {
+  __$GetFromDatabaseCopyWithImpl(
+      _GetFromDatabase _value, $Res Function(_GetFromDatabase) _then)
+      : super(_value, (v) => _then(v as _GetFromDatabase));
+
+  @override
+  _GetFromDatabase get _value => super._value as _GetFromDatabase;
+}
+
+/// @nodoc
+class _$_GetFromDatabase implements _GetFromDatabase {
+  const _$_GetFromDatabase();
+
+  @override
+  String toString() {
+    return 'SpeechEvent.getFromDatabase()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _GetFromDatabase);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult onChange(String text),
+    @required TResult error(String errorMessage),
+    @required TResult getFromDatabase(),
+  }) {
+    assert(onChange != null);
+    assert(error != null);
+    assert(getFromDatabase != null);
+    return getFromDatabase();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult onChange(String text),
+    TResult error(String errorMessage),
+    TResult getFromDatabase(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (getFromDatabase != null) {
+      return getFromDatabase();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult onChange(_OnChange value),
+    @required TResult error(_SpeechEventError value),
+    @required TResult getFromDatabase(_GetFromDatabase value),
+  }) {
+    assert(onChange != null);
+    assert(error != null);
+    assert(getFromDatabase != null);
+    return getFromDatabase(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult onChange(_OnChange value),
+    TResult error(_SpeechEventError value),
+    TResult getFromDatabase(_GetFromDatabase value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (getFromDatabase != null) {
+      return getFromDatabase(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetFromDatabase implements SpeechEvent {
+  const factory _GetFromDatabase() = _$_GetFromDatabase;
+}
+
+/// @nodoc
 class _$SpeechStateTearOff {
   const _$SpeechStateTearOff();
 
@@ -323,6 +441,11 @@ class _$SpeechStateTearOff {
       speechEntity: speechEntity,
     );
   }
+
+// ignore: unused_element
+  _FromDatabase fromDatabase() {
+    return const _FromDatabase();
+  }
 }
 
 /// @nodoc
@@ -331,32 +454,32 @@ const $SpeechState = _$SpeechStateTearOff();
 
 /// @nodoc
 mixin _$SpeechState {
-  SpeechEntity get speechEntity;
-
   @optionalTypeArgs
   TResult when<TResult extends Object>({
     @required TResult initial(SpeechEntity speechEntity),
     @required TResult isListening(SpeechEntity speechEntity),
+    @required TResult fromDatabase(),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult initial(SpeechEntity speechEntity),
     TResult isListening(SpeechEntity speechEntity),
+    TResult fromDatabase(),
     @required TResult orElse(),
   });
   @optionalTypeArgs
   TResult map<TResult extends Object>({
     @required TResult initial(_Initial value),
     @required TResult isListening(_IsListening value),
+    @required TResult fromDatabase(_FromDatabase value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
     TResult initial(_Initial value),
     TResult isListening(_IsListening value),
+    TResult fromDatabase(_FromDatabase value),
     @required TResult orElse(),
   });
-
-  $SpeechStateCopyWith<SpeechState> get copyWith;
 }
 
 /// @nodoc
@@ -364,7 +487,6 @@ abstract class $SpeechStateCopyWith<$Res> {
   factory $SpeechStateCopyWith(
           SpeechState value, $Res Function(SpeechState) then) =
       _$SpeechStateCopyWithImpl<$Res>;
-  $Res call({SpeechEntity speechEntity});
 }
 
 /// @nodoc
@@ -374,24 +496,12 @@ class _$SpeechStateCopyWithImpl<$Res> implements $SpeechStateCopyWith<$Res> {
   final SpeechState _value;
   // ignore: unused_field
   final $Res Function(SpeechState) _then;
-
-  @override
-  $Res call({
-    Object speechEntity = freezed,
-  }) {
-    return _then(_value.copyWith(
-      speechEntity: speechEntity == freezed
-          ? _value.speechEntity
-          : speechEntity as SpeechEntity,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> implements $SpeechStateCopyWith<$Res> {
+abstract class _$InitialCopyWith<$Res> {
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
       __$InitialCopyWithImpl<$Res>;
-  @override
   $Res call({SpeechEntity speechEntity});
 }
 
@@ -451,9 +561,11 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object>({
     @required TResult initial(SpeechEntity speechEntity),
     @required TResult isListening(SpeechEntity speechEntity),
+    @required TResult fromDatabase(),
   }) {
     assert(initial != null);
     assert(isListening != null);
+    assert(fromDatabase != null);
     return initial(speechEntity);
   }
 
@@ -462,6 +574,7 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object>({
     TResult initial(SpeechEntity speechEntity),
     TResult isListening(SpeechEntity speechEntity),
+    TResult fromDatabase(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -476,9 +589,11 @@ class _$_Initial implements _Initial {
   TResult map<TResult extends Object>({
     @required TResult initial(_Initial value),
     @required TResult isListening(_IsListening value),
+    @required TResult fromDatabase(_FromDatabase value),
   }) {
     assert(initial != null);
     assert(isListening != null);
+    assert(fromDatabase != null);
     return initial(this);
   }
 
@@ -487,6 +602,7 @@ class _$_Initial implements _Initial {
   TResult maybeMap<TResult extends Object>({
     TResult initial(_Initial value),
     TResult isListening(_IsListening value),
+    TResult fromDatabase(_FromDatabase value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -500,19 +616,15 @@ class _$_Initial implements _Initial {
 abstract class _Initial implements SpeechState {
   const factory _Initial({@required SpeechEntity speechEntity}) = _$_Initial;
 
-  @override
   SpeechEntity get speechEntity;
-  @override
   _$InitialCopyWith<_Initial> get copyWith;
 }
 
 /// @nodoc
-abstract class _$IsListeningCopyWith<$Res>
-    implements $SpeechStateCopyWith<$Res> {
+abstract class _$IsListeningCopyWith<$Res> {
   factory _$IsListeningCopyWith(
           _IsListening value, $Res Function(_IsListening) then) =
       __$IsListeningCopyWithImpl<$Res>;
-  @override
   $Res call({SpeechEntity speechEntity});
 }
 
@@ -573,9 +685,11 @@ class _$_IsListening implements _IsListening {
   TResult when<TResult extends Object>({
     @required TResult initial(SpeechEntity speechEntity),
     @required TResult isListening(SpeechEntity speechEntity),
+    @required TResult fromDatabase(),
   }) {
     assert(initial != null);
     assert(isListening != null);
+    assert(fromDatabase != null);
     return isListening(speechEntity);
   }
 
@@ -584,6 +698,7 @@ class _$_IsListening implements _IsListening {
   TResult maybeWhen<TResult extends Object>({
     TResult initial(SpeechEntity speechEntity),
     TResult isListening(SpeechEntity speechEntity),
+    TResult fromDatabase(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -598,9 +713,11 @@ class _$_IsListening implements _IsListening {
   TResult map<TResult extends Object>({
     @required TResult initial(_Initial value),
     @required TResult isListening(_IsListening value),
+    @required TResult fromDatabase(_FromDatabase value),
   }) {
     assert(initial != null);
     assert(isListening != null);
+    assert(fromDatabase != null);
     return isListening(this);
   }
 
@@ -609,6 +726,7 @@ class _$_IsListening implements _IsListening {
   TResult maybeMap<TResult extends Object>({
     TResult initial(_Initial value),
     TResult isListening(_IsListening value),
+    TResult fromDatabase(_FromDatabase value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -623,8 +741,102 @@ abstract class _IsListening implements SpeechState {
   const factory _IsListening({@required SpeechEntity speechEntity}) =
       _$_IsListening;
 
-  @override
   SpeechEntity get speechEntity;
-  @override
   _$IsListeningCopyWith<_IsListening> get copyWith;
+}
+
+/// @nodoc
+abstract class _$FromDatabaseCopyWith<$Res> {
+  factory _$FromDatabaseCopyWith(
+          _FromDatabase value, $Res Function(_FromDatabase) then) =
+      __$FromDatabaseCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$FromDatabaseCopyWithImpl<$Res> extends _$SpeechStateCopyWithImpl<$Res>
+    implements _$FromDatabaseCopyWith<$Res> {
+  __$FromDatabaseCopyWithImpl(
+      _FromDatabase _value, $Res Function(_FromDatabase) _then)
+      : super(_value, (v) => _then(v as _FromDatabase));
+
+  @override
+  _FromDatabase get _value => super._value as _FromDatabase;
+}
+
+/// @nodoc
+class _$_FromDatabase implements _FromDatabase {
+  const _$_FromDatabase();
+
+  @override
+  String toString() {
+    return 'SpeechState.fromDatabase()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _FromDatabase);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required TResult initial(SpeechEntity speechEntity),
+    @required TResult isListening(SpeechEntity speechEntity),
+    @required TResult fromDatabase(),
+  }) {
+    assert(initial != null);
+    assert(isListening != null);
+    assert(fromDatabase != null);
+    return fromDatabase();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult initial(SpeechEntity speechEntity),
+    TResult isListening(SpeechEntity speechEntity),
+    TResult fromDatabase(),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (fromDatabase != null) {
+      return fromDatabase();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult initial(_Initial value),
+    @required TResult isListening(_IsListening value),
+    @required TResult fromDatabase(_FromDatabase value),
+  }) {
+    assert(initial != null);
+    assert(isListening != null);
+    assert(fromDatabase != null);
+    return fromDatabase(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult initial(_Initial value),
+    TResult isListening(_IsListening value),
+    TResult fromDatabase(_FromDatabase value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (fromDatabase != null) {
+      return fromDatabase(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FromDatabase implements SpeechState {
+  const factory _FromDatabase() = _$_FromDatabase;
 }

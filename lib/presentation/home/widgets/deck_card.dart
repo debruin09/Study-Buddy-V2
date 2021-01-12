@@ -51,7 +51,8 @@ class DeckCard extends ConsumerWidget {
                   .getOrCrash()
                   .map((_) => CardItemPrimitive.fromDomain(_));
 
-              ExtendedNavigator.root.pushStudyPage(deck: deck);
+              ExtendedNavigator.root
+                  .pushStudyPage(deck: deck, withPomodoro: false);
             },
             onLongPress: () {
               final deckActorBloc = ReadContext(context).read<DeckActorBloc>();

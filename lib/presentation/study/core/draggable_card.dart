@@ -46,5 +46,3 @@ class DraggableCard extends StatelessWidget {
         });
   }
 }
-
-// style: Theme.of(context).textTheme.bodyText1,

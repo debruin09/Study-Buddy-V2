@@ -22,8 +22,8 @@ class RefineButton extends StatelessWidget {
         padding: EdgeInsets.all(20.0),
         color: primaryColor.withOpacity(0.6),
         onPressed: () {
-          simBloc.add(
-              GetSimilarityScoreEvent(original: "null", myDefinition: "null"));
+          simBloc.add(SimilarityEvent.getSimialrityScore(
+              original: "null", myDefinition: "null"));
         },
       ),
     );
@@ -49,22 +49,20 @@ class SimilarityWrapper extends StatelessWidget {
                   cubit: simBloc,
                   builder: (context, state) {
                     return state.map(
+                        failed: (_) => Container(color: Colors.red),
                         initial: (_) => Container(),
                         loading: (_) => Loader(
                               color: primaryColor,
                             ),
-                        success: (data) {
-                          return data.similarityScore.fold(
-                            (f) => Text("Failure"),
-                            (s) => Padding(
-                              padding: const EdgeInsets.only(right: 10.0),
-                              child: Text(
-                                "${s.similarityScore}%",
-                                style: GoogleFonts.laila(
-                                    color: Colors.black45,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                        success: (similarity) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Text(
+                              "${similarity.similarityScore}%",
+                              style: GoogleFonts.laila(
+                                  color: Colors.black45,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold),
                             ),
                           );
                         });

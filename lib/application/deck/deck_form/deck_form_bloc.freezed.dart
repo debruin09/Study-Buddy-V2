@@ -35,18 +35,18 @@ class _$DeckFormEventTearOff {
   }
 
 // ignore: unused_element
-  _EasyIncrement easyIncrement() {
-    return const _EasyIncrement();
+  _EasyCardChange easyCardChange() {
+    return const _EasyCardChange();
   }
 
 // ignore: unused_element
-  _ModerateIncrement moderateIncrement() {
-    return const _ModerateIncrement();
+  _ModerateCardChange moderateCardChange() {
+    return const _ModerateCardChange();
   }
 
 // ignore: unused_element
-  _HardIncrement hardIncrement() {
-    return const _HardIncrement();
+  _HardCardChange hardCardChange() {
+    return const _HardCardChange();
   }
 
 // ignore: unused_element
@@ -66,9 +66,9 @@ mixin _$DeckFormEvent {
     @required TResult initialized(Option<Deck> initialDeckOption),
     @required TResult nameChanged(String nameStr),
     @required TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    @required TResult easyIncrement(),
-    @required TResult moderateIncrement(),
-    @required TResult hardIncrement(),
+    @required TResult easyCardChange(),
+    @required TResult moderateCardChange(),
+    @required TResult hardCardChange(),
     @required TResult saved(),
   });
   @optionalTypeArgs
@@ -76,9 +76,9 @@ mixin _$DeckFormEvent {
     TResult initialized(Option<Deck> initialDeckOption),
     TResult nameChanged(String nameStr),
     TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    TResult easyIncrement(),
-    TResult moderateIncrement(),
-    TResult hardIncrement(),
+    TResult easyCardChange(),
+    TResult moderateCardChange(),
+    TResult hardCardChange(),
     TResult saved(),
     @required TResult orElse(),
   });
@@ -87,9 +87,9 @@ mixin _$DeckFormEvent {
     @required TResult initialized(_Initialized value),
     @required TResult nameChanged(_NameChanged value),
     @required TResult cardsChanged(_CardsChanged value),
-    @required TResult easyIncrement(_EasyIncrement value),
-    @required TResult moderateIncrement(_ModerateIncrement value),
-    @required TResult hardIncrement(_HardIncrement value),
+    @required TResult easyCardChange(_EasyCardChange value),
+    @required TResult moderateCardChange(_ModerateCardChange value),
+    @required TResult hardCardChange(_HardCardChange value),
     @required TResult saved(_Saved value),
   });
   @optionalTypeArgs
@@ -97,9 +97,9 @@ mixin _$DeckFormEvent {
     TResult initialized(_Initialized value),
     TResult nameChanged(_NameChanged value),
     TResult cardsChanged(_CardsChanged value),
-    TResult easyIncrement(_EasyIncrement value),
-    TResult moderateIncrement(_ModerateIncrement value),
-    TResult hardIncrement(_HardIncrement value),
+    TResult easyCardChange(_EasyCardChange value),
+    TResult moderateCardChange(_ModerateCardChange value),
+    TResult hardCardChange(_HardCardChange value),
     TResult saved(_Saved value),
     @required TResult orElse(),
   });
@@ -189,17 +189,17 @@ class _$_Initialized implements _Initialized {
     @required TResult initialized(Option<Deck> initialDeckOption),
     @required TResult nameChanged(String nameStr),
     @required TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    @required TResult easyIncrement(),
-    @required TResult moderateIncrement(),
-    @required TResult hardIncrement(),
+    @required TResult easyCardChange(),
+    @required TResult moderateCardChange(),
+    @required TResult hardCardChange(),
     @required TResult saved(),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
     assert(cardsChanged != null);
-    assert(easyIncrement != null);
-    assert(moderateIncrement != null);
-    assert(hardIncrement != null);
+    assert(easyCardChange != null);
+    assert(moderateCardChange != null);
+    assert(hardCardChange != null);
     assert(saved != null);
     return initialized(initialDeckOption);
   }
@@ -210,9 +210,9 @@ class _$_Initialized implements _Initialized {
     TResult initialized(Option<Deck> initialDeckOption),
     TResult nameChanged(String nameStr),
     TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    TResult easyIncrement(),
-    TResult moderateIncrement(),
-    TResult hardIncrement(),
+    TResult easyCardChange(),
+    TResult moderateCardChange(),
+    TResult hardCardChange(),
     TResult saved(),
     @required TResult orElse(),
   }) {
@@ -229,17 +229,17 @@ class _$_Initialized implements _Initialized {
     @required TResult initialized(_Initialized value),
     @required TResult nameChanged(_NameChanged value),
     @required TResult cardsChanged(_CardsChanged value),
-    @required TResult easyIncrement(_EasyIncrement value),
-    @required TResult moderateIncrement(_ModerateIncrement value),
-    @required TResult hardIncrement(_HardIncrement value),
+    @required TResult easyCardChange(_EasyCardChange value),
+    @required TResult moderateCardChange(_ModerateCardChange value),
+    @required TResult hardCardChange(_HardCardChange value),
     @required TResult saved(_Saved value),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
     assert(cardsChanged != null);
-    assert(easyIncrement != null);
-    assert(moderateIncrement != null);
-    assert(hardIncrement != null);
+    assert(easyCardChange != null);
+    assert(moderateCardChange != null);
+    assert(hardCardChange != null);
     assert(saved != null);
     return initialized(this);
   }
@@ -250,9 +250,9 @@ class _$_Initialized implements _Initialized {
     TResult initialized(_Initialized value),
     TResult nameChanged(_NameChanged value),
     TResult cardsChanged(_CardsChanged value),
-    TResult easyIncrement(_EasyIncrement value),
-    TResult moderateIncrement(_ModerateIncrement value),
-    TResult hardIncrement(_HardIncrement value),
+    TResult easyCardChange(_EasyCardChange value),
+    TResult moderateCardChange(_ModerateCardChange value),
+    TResult hardCardChange(_HardCardChange value),
     TResult saved(_Saved value),
     @required TResult orElse(),
   }) {
@@ -333,17 +333,17 @@ class _$_NameChanged implements _NameChanged {
     @required TResult initialized(Option<Deck> initialDeckOption),
     @required TResult nameChanged(String nameStr),
     @required TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    @required TResult easyIncrement(),
-    @required TResult moderateIncrement(),
-    @required TResult hardIncrement(),
+    @required TResult easyCardChange(),
+    @required TResult moderateCardChange(),
+    @required TResult hardCardChange(),
     @required TResult saved(),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
     assert(cardsChanged != null);
-    assert(easyIncrement != null);
-    assert(moderateIncrement != null);
-    assert(hardIncrement != null);
+    assert(easyCardChange != null);
+    assert(moderateCardChange != null);
+    assert(hardCardChange != null);
     assert(saved != null);
     return nameChanged(nameStr);
   }
@@ -354,9 +354,9 @@ class _$_NameChanged implements _NameChanged {
     TResult initialized(Option<Deck> initialDeckOption),
     TResult nameChanged(String nameStr),
     TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    TResult easyIncrement(),
-    TResult moderateIncrement(),
-    TResult hardIncrement(),
+    TResult easyCardChange(),
+    TResult moderateCardChange(),
+    TResult hardCardChange(),
     TResult saved(),
     @required TResult orElse(),
   }) {
@@ -373,17 +373,17 @@ class _$_NameChanged implements _NameChanged {
     @required TResult initialized(_Initialized value),
     @required TResult nameChanged(_NameChanged value),
     @required TResult cardsChanged(_CardsChanged value),
-    @required TResult easyIncrement(_EasyIncrement value),
-    @required TResult moderateIncrement(_ModerateIncrement value),
-    @required TResult hardIncrement(_HardIncrement value),
+    @required TResult easyCardChange(_EasyCardChange value),
+    @required TResult moderateCardChange(_ModerateCardChange value),
+    @required TResult hardCardChange(_HardCardChange value),
     @required TResult saved(_Saved value),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
     assert(cardsChanged != null);
-    assert(easyIncrement != null);
-    assert(moderateIncrement != null);
-    assert(hardIncrement != null);
+    assert(easyCardChange != null);
+    assert(moderateCardChange != null);
+    assert(hardCardChange != null);
     assert(saved != null);
     return nameChanged(this);
   }
@@ -394,9 +394,9 @@ class _$_NameChanged implements _NameChanged {
     TResult initialized(_Initialized value),
     TResult nameChanged(_NameChanged value),
     TResult cardsChanged(_CardsChanged value),
-    TResult easyIncrement(_EasyIncrement value),
-    TResult moderateIncrement(_ModerateIncrement value),
-    TResult hardIncrement(_HardIncrement value),
+    TResult easyCardChange(_EasyCardChange value),
+    TResult moderateCardChange(_ModerateCardChange value),
+    TResult hardCardChange(_HardCardChange value),
     TResult saved(_Saved value),
     @required TResult orElse(),
   }) {
@@ -478,17 +478,17 @@ class _$_CardsChanged implements _CardsChanged {
     @required TResult initialized(Option<Deck> initialDeckOption),
     @required TResult nameChanged(String nameStr),
     @required TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    @required TResult easyIncrement(),
-    @required TResult moderateIncrement(),
-    @required TResult hardIncrement(),
+    @required TResult easyCardChange(),
+    @required TResult moderateCardChange(),
+    @required TResult hardCardChange(),
     @required TResult saved(),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
     assert(cardsChanged != null);
-    assert(easyIncrement != null);
-    assert(moderateIncrement != null);
-    assert(hardIncrement != null);
+    assert(easyCardChange != null);
+    assert(moderateCardChange != null);
+    assert(hardCardChange != null);
     assert(saved != null);
     return cardsChanged(cards);
   }
@@ -499,9 +499,9 @@ class _$_CardsChanged implements _CardsChanged {
     TResult initialized(Option<Deck> initialDeckOption),
     TResult nameChanged(String nameStr),
     TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    TResult easyIncrement(),
-    TResult moderateIncrement(),
-    TResult hardIncrement(),
+    TResult easyCardChange(),
+    TResult moderateCardChange(),
+    TResult hardCardChange(),
     TResult saved(),
     @required TResult orElse(),
   }) {
@@ -518,17 +518,17 @@ class _$_CardsChanged implements _CardsChanged {
     @required TResult initialized(_Initialized value),
     @required TResult nameChanged(_NameChanged value),
     @required TResult cardsChanged(_CardsChanged value),
-    @required TResult easyIncrement(_EasyIncrement value),
-    @required TResult moderateIncrement(_ModerateIncrement value),
-    @required TResult hardIncrement(_HardIncrement value),
+    @required TResult easyCardChange(_EasyCardChange value),
+    @required TResult moderateCardChange(_ModerateCardChange value),
+    @required TResult hardCardChange(_HardCardChange value),
     @required TResult saved(_Saved value),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
     assert(cardsChanged != null);
-    assert(easyIncrement != null);
-    assert(moderateIncrement != null);
-    assert(hardIncrement != null);
+    assert(easyCardChange != null);
+    assert(moderateCardChange != null);
+    assert(hardCardChange != null);
     assert(saved != null);
     return cardsChanged(this);
   }
@@ -539,9 +539,9 @@ class _$_CardsChanged implements _CardsChanged {
     TResult initialized(_Initialized value),
     TResult nameChanged(_NameChanged value),
     TResult cardsChanged(_CardsChanged value),
-    TResult easyIncrement(_EasyIncrement value),
-    TResult moderateIncrement(_ModerateIncrement value),
-    TResult hardIncrement(_HardIncrement value),
+    TResult easyCardChange(_EasyCardChange value),
+    TResult moderateCardChange(_ModerateCardChange value),
+    TResult hardCardChange(_HardCardChange value),
     TResult saved(_Saved value),
     @required TResult orElse(),
   }) {
@@ -562,36 +562,36 @@ abstract class _CardsChanged implements DeckFormEvent {
 }
 
 /// @nodoc
-abstract class _$EasyIncrementCopyWith<$Res> {
-  factory _$EasyIncrementCopyWith(
-          _EasyIncrement value, $Res Function(_EasyIncrement) then) =
-      __$EasyIncrementCopyWithImpl<$Res>;
+abstract class _$EasyCardChangeCopyWith<$Res> {
+  factory _$EasyCardChangeCopyWith(
+          _EasyCardChange value, $Res Function(_EasyCardChange) then) =
+      __$EasyCardChangeCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$EasyIncrementCopyWithImpl<$Res>
+class __$EasyCardChangeCopyWithImpl<$Res>
     extends _$DeckFormEventCopyWithImpl<$Res>
-    implements _$EasyIncrementCopyWith<$Res> {
-  __$EasyIncrementCopyWithImpl(
-      _EasyIncrement _value, $Res Function(_EasyIncrement) _then)
-      : super(_value, (v) => _then(v as _EasyIncrement));
+    implements _$EasyCardChangeCopyWith<$Res> {
+  __$EasyCardChangeCopyWithImpl(
+      _EasyCardChange _value, $Res Function(_EasyCardChange) _then)
+      : super(_value, (v) => _then(v as _EasyCardChange));
 
   @override
-  _EasyIncrement get _value => super._value as _EasyIncrement;
+  _EasyCardChange get _value => super._value as _EasyCardChange;
 }
 
 /// @nodoc
-class _$_EasyIncrement implements _EasyIncrement {
-  const _$_EasyIncrement();
+class _$_EasyCardChange implements _EasyCardChange {
+  const _$_EasyCardChange();
 
   @override
   String toString() {
-    return 'DeckFormEvent.easyIncrement()';
+    return 'DeckFormEvent.easyCardChange()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _EasyIncrement);
+    return identical(this, other) || (other is _EasyCardChange);
   }
 
   @override
@@ -603,19 +603,19 @@ class _$_EasyIncrement implements _EasyIncrement {
     @required TResult initialized(Option<Deck> initialDeckOption),
     @required TResult nameChanged(String nameStr),
     @required TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    @required TResult easyIncrement(),
-    @required TResult moderateIncrement(),
-    @required TResult hardIncrement(),
+    @required TResult easyCardChange(),
+    @required TResult moderateCardChange(),
+    @required TResult hardCardChange(),
     @required TResult saved(),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
     assert(cardsChanged != null);
-    assert(easyIncrement != null);
-    assert(moderateIncrement != null);
-    assert(hardIncrement != null);
+    assert(easyCardChange != null);
+    assert(moderateCardChange != null);
+    assert(hardCardChange != null);
     assert(saved != null);
-    return easyIncrement();
+    return easyCardChange();
   }
 
   @override
@@ -624,15 +624,15 @@ class _$_EasyIncrement implements _EasyIncrement {
     TResult initialized(Option<Deck> initialDeckOption),
     TResult nameChanged(String nameStr),
     TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    TResult easyIncrement(),
-    TResult moderateIncrement(),
-    TResult hardIncrement(),
+    TResult easyCardChange(),
+    TResult moderateCardChange(),
+    TResult hardCardChange(),
     TResult saved(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
-    if (easyIncrement != null) {
-      return easyIncrement();
+    if (easyCardChange != null) {
+      return easyCardChange();
     }
     return orElse();
   }
@@ -643,19 +643,19 @@ class _$_EasyIncrement implements _EasyIncrement {
     @required TResult initialized(_Initialized value),
     @required TResult nameChanged(_NameChanged value),
     @required TResult cardsChanged(_CardsChanged value),
-    @required TResult easyIncrement(_EasyIncrement value),
-    @required TResult moderateIncrement(_ModerateIncrement value),
-    @required TResult hardIncrement(_HardIncrement value),
+    @required TResult easyCardChange(_EasyCardChange value),
+    @required TResult moderateCardChange(_ModerateCardChange value),
+    @required TResult hardCardChange(_HardCardChange value),
     @required TResult saved(_Saved value),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
     assert(cardsChanged != null);
-    assert(easyIncrement != null);
-    assert(moderateIncrement != null);
-    assert(hardIncrement != null);
+    assert(easyCardChange != null);
+    assert(moderateCardChange != null);
+    assert(hardCardChange != null);
     assert(saved != null);
-    return easyIncrement(this);
+    return easyCardChange(this);
   }
 
   @override
@@ -664,55 +664,55 @@ class _$_EasyIncrement implements _EasyIncrement {
     TResult initialized(_Initialized value),
     TResult nameChanged(_NameChanged value),
     TResult cardsChanged(_CardsChanged value),
-    TResult easyIncrement(_EasyIncrement value),
-    TResult moderateIncrement(_ModerateIncrement value),
-    TResult hardIncrement(_HardIncrement value),
+    TResult easyCardChange(_EasyCardChange value),
+    TResult moderateCardChange(_ModerateCardChange value),
+    TResult hardCardChange(_HardCardChange value),
     TResult saved(_Saved value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
-    if (easyIncrement != null) {
-      return easyIncrement(this);
+    if (easyCardChange != null) {
+      return easyCardChange(this);
     }
     return orElse();
   }
 }
 
-abstract class _EasyIncrement implements DeckFormEvent {
-  const factory _EasyIncrement() = _$_EasyIncrement;
+abstract class _EasyCardChange implements DeckFormEvent {
+  const factory _EasyCardChange() = _$_EasyCardChange;
 }
 
 /// @nodoc
-abstract class _$ModerateIncrementCopyWith<$Res> {
-  factory _$ModerateIncrementCopyWith(
-          _ModerateIncrement value, $Res Function(_ModerateIncrement) then) =
-      __$ModerateIncrementCopyWithImpl<$Res>;
+abstract class _$ModerateCardChangeCopyWith<$Res> {
+  factory _$ModerateCardChangeCopyWith(
+          _ModerateCardChange value, $Res Function(_ModerateCardChange) then) =
+      __$ModerateCardChangeCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ModerateIncrementCopyWithImpl<$Res>
+class __$ModerateCardChangeCopyWithImpl<$Res>
     extends _$DeckFormEventCopyWithImpl<$Res>
-    implements _$ModerateIncrementCopyWith<$Res> {
-  __$ModerateIncrementCopyWithImpl(
-      _ModerateIncrement _value, $Res Function(_ModerateIncrement) _then)
-      : super(_value, (v) => _then(v as _ModerateIncrement));
+    implements _$ModerateCardChangeCopyWith<$Res> {
+  __$ModerateCardChangeCopyWithImpl(
+      _ModerateCardChange _value, $Res Function(_ModerateCardChange) _then)
+      : super(_value, (v) => _then(v as _ModerateCardChange));
 
   @override
-  _ModerateIncrement get _value => super._value as _ModerateIncrement;
+  _ModerateCardChange get _value => super._value as _ModerateCardChange;
 }
 
 /// @nodoc
-class _$_ModerateIncrement implements _ModerateIncrement {
-  const _$_ModerateIncrement();
+class _$_ModerateCardChange implements _ModerateCardChange {
+  const _$_ModerateCardChange();
 
   @override
   String toString() {
-    return 'DeckFormEvent.moderateIncrement()';
+    return 'DeckFormEvent.moderateCardChange()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _ModerateIncrement);
+    return identical(this, other) || (other is _ModerateCardChange);
   }
 
   @override
@@ -724,19 +724,19 @@ class _$_ModerateIncrement implements _ModerateIncrement {
     @required TResult initialized(Option<Deck> initialDeckOption),
     @required TResult nameChanged(String nameStr),
     @required TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    @required TResult easyIncrement(),
-    @required TResult moderateIncrement(),
-    @required TResult hardIncrement(),
+    @required TResult easyCardChange(),
+    @required TResult moderateCardChange(),
+    @required TResult hardCardChange(),
     @required TResult saved(),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
     assert(cardsChanged != null);
-    assert(easyIncrement != null);
-    assert(moderateIncrement != null);
-    assert(hardIncrement != null);
+    assert(easyCardChange != null);
+    assert(moderateCardChange != null);
+    assert(hardCardChange != null);
     assert(saved != null);
-    return moderateIncrement();
+    return moderateCardChange();
   }
 
   @override
@@ -745,15 +745,15 @@ class _$_ModerateIncrement implements _ModerateIncrement {
     TResult initialized(Option<Deck> initialDeckOption),
     TResult nameChanged(String nameStr),
     TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    TResult easyIncrement(),
-    TResult moderateIncrement(),
-    TResult hardIncrement(),
+    TResult easyCardChange(),
+    TResult moderateCardChange(),
+    TResult hardCardChange(),
     TResult saved(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
-    if (moderateIncrement != null) {
-      return moderateIncrement();
+    if (moderateCardChange != null) {
+      return moderateCardChange();
     }
     return orElse();
   }
@@ -764,19 +764,19 @@ class _$_ModerateIncrement implements _ModerateIncrement {
     @required TResult initialized(_Initialized value),
     @required TResult nameChanged(_NameChanged value),
     @required TResult cardsChanged(_CardsChanged value),
-    @required TResult easyIncrement(_EasyIncrement value),
-    @required TResult moderateIncrement(_ModerateIncrement value),
-    @required TResult hardIncrement(_HardIncrement value),
+    @required TResult easyCardChange(_EasyCardChange value),
+    @required TResult moderateCardChange(_ModerateCardChange value),
+    @required TResult hardCardChange(_HardCardChange value),
     @required TResult saved(_Saved value),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
     assert(cardsChanged != null);
-    assert(easyIncrement != null);
-    assert(moderateIncrement != null);
-    assert(hardIncrement != null);
+    assert(easyCardChange != null);
+    assert(moderateCardChange != null);
+    assert(hardCardChange != null);
     assert(saved != null);
-    return moderateIncrement(this);
+    return moderateCardChange(this);
   }
 
   @override
@@ -785,55 +785,55 @@ class _$_ModerateIncrement implements _ModerateIncrement {
     TResult initialized(_Initialized value),
     TResult nameChanged(_NameChanged value),
     TResult cardsChanged(_CardsChanged value),
-    TResult easyIncrement(_EasyIncrement value),
-    TResult moderateIncrement(_ModerateIncrement value),
-    TResult hardIncrement(_HardIncrement value),
+    TResult easyCardChange(_EasyCardChange value),
+    TResult moderateCardChange(_ModerateCardChange value),
+    TResult hardCardChange(_HardCardChange value),
     TResult saved(_Saved value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
-    if (moderateIncrement != null) {
-      return moderateIncrement(this);
+    if (moderateCardChange != null) {
+      return moderateCardChange(this);
     }
     return orElse();
   }
 }
 
-abstract class _ModerateIncrement implements DeckFormEvent {
-  const factory _ModerateIncrement() = _$_ModerateIncrement;
+abstract class _ModerateCardChange implements DeckFormEvent {
+  const factory _ModerateCardChange() = _$_ModerateCardChange;
 }
 
 /// @nodoc
-abstract class _$HardIncrementCopyWith<$Res> {
-  factory _$HardIncrementCopyWith(
-          _HardIncrement value, $Res Function(_HardIncrement) then) =
-      __$HardIncrementCopyWithImpl<$Res>;
+abstract class _$HardCardChangeCopyWith<$Res> {
+  factory _$HardCardChangeCopyWith(
+          _HardCardChange value, $Res Function(_HardCardChange) then) =
+      __$HardCardChangeCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$HardIncrementCopyWithImpl<$Res>
+class __$HardCardChangeCopyWithImpl<$Res>
     extends _$DeckFormEventCopyWithImpl<$Res>
-    implements _$HardIncrementCopyWith<$Res> {
-  __$HardIncrementCopyWithImpl(
-      _HardIncrement _value, $Res Function(_HardIncrement) _then)
-      : super(_value, (v) => _then(v as _HardIncrement));
+    implements _$HardCardChangeCopyWith<$Res> {
+  __$HardCardChangeCopyWithImpl(
+      _HardCardChange _value, $Res Function(_HardCardChange) _then)
+      : super(_value, (v) => _then(v as _HardCardChange));
 
   @override
-  _HardIncrement get _value => super._value as _HardIncrement;
+  _HardCardChange get _value => super._value as _HardCardChange;
 }
 
 /// @nodoc
-class _$_HardIncrement implements _HardIncrement {
-  const _$_HardIncrement();
+class _$_HardCardChange implements _HardCardChange {
+  const _$_HardCardChange();
 
   @override
   String toString() {
-    return 'DeckFormEvent.hardIncrement()';
+    return 'DeckFormEvent.hardCardChange()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _HardIncrement);
+    return identical(this, other) || (other is _HardCardChange);
   }
 
   @override
@@ -845,19 +845,19 @@ class _$_HardIncrement implements _HardIncrement {
     @required TResult initialized(Option<Deck> initialDeckOption),
     @required TResult nameChanged(String nameStr),
     @required TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    @required TResult easyIncrement(),
-    @required TResult moderateIncrement(),
-    @required TResult hardIncrement(),
+    @required TResult easyCardChange(),
+    @required TResult moderateCardChange(),
+    @required TResult hardCardChange(),
     @required TResult saved(),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
     assert(cardsChanged != null);
-    assert(easyIncrement != null);
-    assert(moderateIncrement != null);
-    assert(hardIncrement != null);
+    assert(easyCardChange != null);
+    assert(moderateCardChange != null);
+    assert(hardCardChange != null);
     assert(saved != null);
-    return hardIncrement();
+    return hardCardChange();
   }
 
   @override
@@ -866,15 +866,15 @@ class _$_HardIncrement implements _HardIncrement {
     TResult initialized(Option<Deck> initialDeckOption),
     TResult nameChanged(String nameStr),
     TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    TResult easyIncrement(),
-    TResult moderateIncrement(),
-    TResult hardIncrement(),
+    TResult easyCardChange(),
+    TResult moderateCardChange(),
+    TResult hardCardChange(),
     TResult saved(),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
-    if (hardIncrement != null) {
-      return hardIncrement();
+    if (hardCardChange != null) {
+      return hardCardChange();
     }
     return orElse();
   }
@@ -885,19 +885,19 @@ class _$_HardIncrement implements _HardIncrement {
     @required TResult initialized(_Initialized value),
     @required TResult nameChanged(_NameChanged value),
     @required TResult cardsChanged(_CardsChanged value),
-    @required TResult easyIncrement(_EasyIncrement value),
-    @required TResult moderateIncrement(_ModerateIncrement value),
-    @required TResult hardIncrement(_HardIncrement value),
+    @required TResult easyCardChange(_EasyCardChange value),
+    @required TResult moderateCardChange(_ModerateCardChange value),
+    @required TResult hardCardChange(_HardCardChange value),
     @required TResult saved(_Saved value),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
     assert(cardsChanged != null);
-    assert(easyIncrement != null);
-    assert(moderateIncrement != null);
-    assert(hardIncrement != null);
+    assert(easyCardChange != null);
+    assert(moderateCardChange != null);
+    assert(hardCardChange != null);
     assert(saved != null);
-    return hardIncrement(this);
+    return hardCardChange(this);
   }
 
   @override
@@ -906,22 +906,22 @@ class _$_HardIncrement implements _HardIncrement {
     TResult initialized(_Initialized value),
     TResult nameChanged(_NameChanged value),
     TResult cardsChanged(_CardsChanged value),
-    TResult easyIncrement(_EasyIncrement value),
-    TResult moderateIncrement(_ModerateIncrement value),
-    TResult hardIncrement(_HardIncrement value),
+    TResult easyCardChange(_EasyCardChange value),
+    TResult moderateCardChange(_ModerateCardChange value),
+    TResult hardCardChange(_HardCardChange value),
     TResult saved(_Saved value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
-    if (hardIncrement != null) {
-      return hardIncrement(this);
+    if (hardCardChange != null) {
+      return hardCardChange(this);
     }
     return orElse();
   }
 }
 
-abstract class _HardIncrement implements DeckFormEvent {
-  const factory _HardIncrement() = _$_HardIncrement;
+abstract class _HardCardChange implements DeckFormEvent {
+  const factory _HardCardChange() = _$_HardCardChange;
 }
 
 /// @nodoc
@@ -963,17 +963,17 @@ class _$_Saved implements _Saved {
     @required TResult initialized(Option<Deck> initialDeckOption),
     @required TResult nameChanged(String nameStr),
     @required TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    @required TResult easyIncrement(),
-    @required TResult moderateIncrement(),
-    @required TResult hardIncrement(),
+    @required TResult easyCardChange(),
+    @required TResult moderateCardChange(),
+    @required TResult hardCardChange(),
     @required TResult saved(),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
     assert(cardsChanged != null);
-    assert(easyIncrement != null);
-    assert(moderateIncrement != null);
-    assert(hardIncrement != null);
+    assert(easyCardChange != null);
+    assert(moderateCardChange != null);
+    assert(hardCardChange != null);
     assert(saved != null);
     return saved();
   }
@@ -984,9 +984,9 @@ class _$_Saved implements _Saved {
     TResult initialized(Option<Deck> initialDeckOption),
     TResult nameChanged(String nameStr),
     TResult cardsChanged(KtList<CardItemPrimitive> cards),
-    TResult easyIncrement(),
-    TResult moderateIncrement(),
-    TResult hardIncrement(),
+    TResult easyCardChange(),
+    TResult moderateCardChange(),
+    TResult hardCardChange(),
     TResult saved(),
     @required TResult orElse(),
   }) {
@@ -1003,17 +1003,17 @@ class _$_Saved implements _Saved {
     @required TResult initialized(_Initialized value),
     @required TResult nameChanged(_NameChanged value),
     @required TResult cardsChanged(_CardsChanged value),
-    @required TResult easyIncrement(_EasyIncrement value),
-    @required TResult moderateIncrement(_ModerateIncrement value),
-    @required TResult hardIncrement(_HardIncrement value),
+    @required TResult easyCardChange(_EasyCardChange value),
+    @required TResult moderateCardChange(_ModerateCardChange value),
+    @required TResult hardCardChange(_HardCardChange value),
     @required TResult saved(_Saved value),
   }) {
     assert(initialized != null);
     assert(nameChanged != null);
     assert(cardsChanged != null);
-    assert(easyIncrement != null);
-    assert(moderateIncrement != null);
-    assert(hardIncrement != null);
+    assert(easyCardChange != null);
+    assert(moderateCardChange != null);
+    assert(hardCardChange != null);
     assert(saved != null);
     return saved(this);
   }
@@ -1024,9 +1024,9 @@ class _$_Saved implements _Saved {
     TResult initialized(_Initialized value),
     TResult nameChanged(_NameChanged value),
     TResult cardsChanged(_CardsChanged value),
-    TResult easyIncrement(_EasyIncrement value),
-    TResult moderateIncrement(_ModerateIncrement value),
-    TResult hardIncrement(_HardIncrement value),
+    TResult easyCardChange(_EasyCardChange value),
+    TResult moderateCardChange(_ModerateCardChange value),
+    TResult hardCardChange(_HardCardChange value),
     TResult saved(_Saved value),
     @required TResult orElse(),
   }) {

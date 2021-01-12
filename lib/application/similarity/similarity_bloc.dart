@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:study_buddy/domain/auth/auth_failure.dart';
 import 'package:study_buddy/domain/similarity/similarity.dart';
 import 'package:study_buddy/domain/similarity/api_client_repository.dart';
+import 'package:study_buddy/domain/similarity/similarity_failure.dart';
 
 part 'similarity_event.dart';
 part 'similarity_state.dart';
@@ -17,13 +16,13 @@ class SimilarityBloc extends Bloc<SimilarityEvent, SimilarityState> {
   SimilarityBloc(this.repository) : super(SimilarityState.initial());
 
   final ApiClientRepository repository;
-  Either<AuthFailure, Similarity> similarityScore;
+  Either<SimilarityFailure, Similarity> failureOrSimialrity;
 
   @override
   Stream<SimilarityState> mapEventToState(
     SimilarityEvent event,
   ) async* {
-    if (event is GetSimilarityScoreEvent) {
+    yield* event.map(getSimialrityScore: (e) async* {
       yield SimilarityState.loading();
 
       await Task(() => repository.getSimilarityScore(
@@ -31,19 +30,22 @@ class SimilarityBloc extends Bloc<SimilarityEvent, SimilarityState> {
           .attempt()
           .mapLeftToFailure()
           .run()
-          .then((value) => similarityScore = value);
+          .then((value) => failureOrSimialrity = value);
 
-      yield SimilarityState.success(similarityScore: similarityScore);
-    }
+      yield failureOrSimialrity.fold(
+        (failure) => SimilarityState.failed(similarityFailure: failure),
+        (similarity) => SimilarityState.success(similarityScore: similarity),
+      );
+    });
   }
 }
 
 extension TaskX<T extends Either<Object, U>, U> on Task<T> {
-  Task<Either<AuthFailure, U>> mapLeftToFailure() {
+  Task<Either<SimilarityFailure, U>> mapLeftToFailure() {
     return this.map(
       (either) => either.leftMap((obj) {
         try {
-          return obj as AuthFailure;
+          return obj as SimilarityFailure;
         } catch (e) {
           throw obj;
         }

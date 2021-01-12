@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:study_buddy/application/deck/deck_watcher/deck_watcher_bloc.dart';
@@ -19,6 +20,12 @@ class HomePageBody extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: primaryColor,
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
     final _deckSingleton = locator<DeckSingleton>();
     return Padding(
       padding: const EdgeInsets.all(10.0),

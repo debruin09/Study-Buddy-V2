@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:study_buddy/application/auth/auth_bloc.dart';
 import 'package:study_buddy/presentation/core/theme_colors.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
@@ -29,30 +30,19 @@ class CustomDrawer extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 100.0,
-            alignment: Alignment.center,
+            alignment: Alignment.centerLeft,
             margin: EdgeInsets.only(top: 30.0, bottom: 40.0),
             padding: EdgeInsets.only(
               top: 30.0,
               left: 30.0,
             ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.person_pin,
-                  color: primaryColor,
-                  size: 30.0,
-                ),
-                const SizedBox(width: 10.0),
-                Expanded(
-                  child: Text(
-                    "Study Buddy",
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 26.0,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
+            child: Text(
+              "Study Buddy",
+              style: GoogleFonts.courgette(
+                  color: Colors.red,
+                  letterSpacing: 2.0,
+                  fontSize: 26.0,
+                  fontWeight: FontWeight.bold),
             ),
           ),
           Divider(),

@@ -40,6 +40,7 @@ _$_CardItemDto _$_$_CardItemDtoFromJson(Map<String, dynamic> json) {
     me: json['me'] as String,
     studied: json['studied'] as bool,
     color: json['color'] as int,
+    tags: (json['tags'] as List)?.map((e) => e as String)?.toList(),
   );
 }
 
@@ -51,4 +52,5 @@ Map<String, dynamic> _$_$_CardItemDtoToJson(_$_CardItemDto instance) =>
       'me': instance.me,
       'studied': instance.studied,
       'color': instance.color,
+      'tags': instance.tags,
     };

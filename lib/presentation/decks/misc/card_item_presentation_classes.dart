@@ -26,6 +26,7 @@ abstract class CardItemPrimitive implements _$CardItemPrimitive {
     @required String me,
     @required bool studied,
     @required int color,
+    @required List<String> tags,
   }) = _CardItemPrimitive;
 
   factory CardItemPrimitive.empty() => CardItemPrimitive(
@@ -35,6 +36,7 @@ abstract class CardItemPrimitive implements _$CardItemPrimitive {
         me: '',
         studied: false,
         color: Colors.white.value,
+        tags: emptyList<String>().iter.toList(),
       );
 
   factory CardItemPrimitive.fromDomain(CardItem cardItem) {
@@ -45,9 +47,11 @@ abstract class CardItemPrimitive implements _$CardItemPrimitive {
       me: cardItem.me.getOrCrash(),
       studied: cardItem.studied,
       color: cardItem.color.value,
+      tags: cardItem.tags.iter.toList(),
     );
   }
 
+  /// Converts [CardItemPrimitive] to a [CardItem] with immutable fields
   CardItem toDomain() {
     return CardItem(
       id: id,
@@ -56,6 +60,7 @@ abstract class CardItemPrimitive implements _$CardItemPrimitive {
       me: CardMe(me),
       studied: studied,
       color: Color(color),
+      tags: tags.toImmutableList(),
     );
   }
 }

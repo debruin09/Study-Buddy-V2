@@ -118,6 +118,25 @@ class CardMeField extends HookWidget {
   }
 }
 
+class TagsField extends HookWidget {
+  final int index;
+  final DeckFormBloc deckFormBloc;
+
+  TagsField({
+    @required this.deckFormBloc,
+    @required this.index,
+  });
+  @override
+  Widget build(BuildContext context) {
+    final formProvider = useProvider(formCardsProvider);
+    final card =
+        formProvider.value.getOrElse(index, (_) => CardItemPrimitive.empty());
+    return Wrap(
+      children: card.tags.map((tag) => Chip(label: Text(tag))).toList(),
+    );
+  }
+}
+
 class CardItemFormField extends StatelessWidget {
   final TextEditingController controller;
   final FormCards provider;
@@ -146,7 +165,9 @@ class CardItemFormField extends StatelessWidget {
     }
 
     return TextFormField(
-        autovalidateMode: AutovalidateMode.always,
+        autovalidateMode: deckFormBloc.state.isEditing
+            ? AutovalidateMode.disabled
+            : AutovalidateMode.always,
         controller: controller,
         decoration: InputDecoration(
           labelText: cleanString(cardTypeCase.toString().substring(13)),

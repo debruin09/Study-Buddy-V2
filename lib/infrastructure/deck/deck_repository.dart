@@ -44,7 +44,6 @@ class DeckRepository implements IDeckRepository {
   @override
   Stream<Either<DeckFailure, KtList<Deck>>> watchAll() async* {
     final userDoc = await _firestore.userDocument();
-
     yield* userDoc.deckCollection
         .orderBy('serverTimeStamp', descending: true)
         .snapshots()

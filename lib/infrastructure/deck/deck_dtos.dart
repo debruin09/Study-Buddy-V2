@@ -86,6 +86,7 @@ abstract class CardItemDto implements _$CardItemDto {
     @required String me,
     @required bool studied,
     @required int color,
+    @required List<String> tags,
   }) = _CardItemDto;
 
   factory CardItemDto.fromDomain(CardItem cardItem) {
@@ -96,6 +97,7 @@ abstract class CardItemDto implements _$CardItemDto {
       me: cardItem.me.getOrCrash(),
       studied: cardItem.studied,
       color: cardItem.color.value,
+      tags: cardItem.tags.iter.toList(),
     );
   }
 
@@ -107,6 +109,7 @@ abstract class CardItemDto implements _$CardItemDto {
       me: CardMe(me),
       studied: studied,
       color: Color(color),
+      tags: tags.toImmutableList(),
     );
   }
 

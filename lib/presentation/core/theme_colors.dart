@@ -6,6 +6,6 @@ const successColor = Colors.green;
 const secondaryColor = Colors.black;
 const tagsColor = Color(0xff4A4E69);
 const cardColor = Colors.white;
-const bgColor = Color(0xffFBFBFB);
+final bgColor = Color(0xffFBFBFB).withOpacity(0.96);
 const bgDarkColor = Color(0xffdddee2);
 const titleColor = Colors.black;

@@ -20,7 +20,8 @@ class _$CardItemTearOff {
       @required CardBack back,
       @required CardMe me,
       @required bool studied,
-      @required Color color}) {
+      @required Color color,
+      @required KtList<String> tags}) {
     return _CardItem(
       id: id,
       front: front,
@@ -28,6 +29,7 @@ class _$CardItemTearOff {
       me: me,
       studied: studied,
       color: color,
+      tags: tags,
     );
   }
 }
@@ -44,6 +46,7 @@ mixin _$CardItem {
   CardMe get me;
   bool get studied;
   Color get color;
+  KtList<String> get tags;
 
   $CardItemCopyWith<CardItem> get copyWith;
 }
@@ -58,7 +61,8 @@ abstract class $CardItemCopyWith<$Res> {
       CardBack back,
       CardMe me,
       bool studied,
-      Color color});
+      Color color,
+      KtList<String> tags});
 }
 
 /// @nodoc
@@ -77,6 +81,7 @@ class _$CardItemCopyWithImpl<$Res> implements $CardItemCopyWith<$Res> {
     Object me = freezed,
     Object studied = freezed,
     Object color = freezed,
+    Object tags = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as UniqueId,
@@ -85,6 +90,7 @@ class _$CardItemCopyWithImpl<$Res> implements $CardItemCopyWith<$Res> {
       me: me == freezed ? _value.me : me as CardMe,
       studied: studied == freezed ? _value.studied : studied as bool,
       color: color == freezed ? _value.color : color as Color,
+      tags: tags == freezed ? _value.tags : tags as KtList<String>,
     ));
   }
 }
@@ -100,7 +106,8 @@ abstract class _$CardItemCopyWith<$Res> implements $CardItemCopyWith<$Res> {
       CardBack back,
       CardMe me,
       bool studied,
-      Color color});
+      Color color,
+      KtList<String> tags});
 }
 
 /// @nodoc
@@ -120,6 +127,7 @@ class __$CardItemCopyWithImpl<$Res> extends _$CardItemCopyWithImpl<$Res>
     Object me = freezed,
     Object studied = freezed,
     Object color = freezed,
+    Object tags = freezed,
   }) {
     return _then(_CardItem(
       id: id == freezed ? _value.id : id as UniqueId,
@@ -128,6 +136,7 @@ class __$CardItemCopyWithImpl<$Res> extends _$CardItemCopyWithImpl<$Res>
       me: me == freezed ? _value.me : me as CardMe,
       studied: studied == freezed ? _value.studied : studied as bool,
       color: color == freezed ? _value.color : color as Color,
+      tags: tags == freezed ? _value.tags : tags as KtList<String>,
     ));
   }
 }
@@ -140,13 +149,15 @@ class _$_CardItem extends _CardItem {
       @required this.back,
       @required this.me,
       @required this.studied,
-      @required this.color})
+      @required this.color,
+      @required this.tags})
       : assert(id != null),
         assert(front != null),
         assert(back != null),
         assert(me != null),
         assert(studied != null),
         assert(color != null),
+        assert(tags != null),
         super._();
 
   @override
@@ -161,10 +172,12 @@ class _$_CardItem extends _CardItem {
   final bool studied;
   @override
   final Color color;
+  @override
+  final KtList<String> tags;
 
   @override
   String toString() {
-    return 'CardItem(id: $id, front: $front, back: $back, me: $me, studied: $studied, color: $color)';
+    return 'CardItem(id: $id, front: $front, back: $back, me: $me, studied: $studied, color: $color, tags: $tags)';
   }
 
   @override
@@ -183,7 +196,9 @@ class _$_CardItem extends _CardItem {
                 const DeepCollectionEquality()
                     .equals(other.studied, studied)) &&
             (identical(other.color, color) ||
-                const DeepCollectionEquality().equals(other.color, color)));
+                const DeepCollectionEquality().equals(other.color, color)) &&
+            (identical(other.tags, tags) ||
+                const DeepCollectionEquality().equals(other.tags, tags)));
   }
 
   @override
@@ -194,7 +209,8 @@ class _$_CardItem extends _CardItem {
       const DeepCollectionEquality().hash(back) ^
       const DeepCollectionEquality().hash(me) ^
       const DeepCollectionEquality().hash(studied) ^
-      const DeepCollectionEquality().hash(color);
+      const DeepCollectionEquality().hash(color) ^
+      const DeepCollectionEquality().hash(tags);
 
   @override
   _$CardItemCopyWith<_CardItem> get copyWith =>
@@ -209,7 +225,8 @@ abstract class _CardItem extends CardItem {
       @required CardBack back,
       @required CardMe me,
       @required bool studied,
-      @required Color color}) = _$_CardItem;
+      @required Color color,
+      @required KtList<String> tags}) = _$_CardItem;
 
   @override
   UniqueId get id;
@@ -223,6 +240,8 @@ abstract class _CardItem extends CardItem {
   bool get studied;
   @override
   Color get color;
+  @override
+  KtList<String> get tags;
   @override
   _$CardItemCopyWith<_CardItem> get copyWith;
 }

@@ -23,7 +23,8 @@ class FilterDropdown extends HookWidget {
             .primaryTextTheme
             .caption
             .copyWith(color: Colors.black),
-        border: OutlineInputBorder(borderSide: BorderSide(color: primaryColor)),
+        enabledBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: primaryColor)),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(

@@ -1,9 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-// ignore: must_be_immutable
+/// Checks the similarity between the original definition
+/// and the users definition, then outputs a double value
+/// between 0 - 1
 class Similarity extends Equatable {
-  double similarityScore;
+  final double similarityScore;
   Similarity({@required this.similarityScore})
       : assert(similarityScore != null);
 

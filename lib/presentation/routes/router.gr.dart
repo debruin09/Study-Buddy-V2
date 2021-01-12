@@ -10,13 +10,17 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../../application/deck/deck_form/deck_form_bloc.dart';
 import '../../domain/auth/user.dart';
 import '../../domain/deck/deck.dart';
 import '../auth/login/login_screen.dart';
 import '../auth/register/register_screen.dart';
 import '../core/widgets/image_viewer.dart';
+import '../decks/card_form_page.dart';
 import '../decks/deck_form_page.dart';
 import '../home/home_page.dart';
+import '../pomodoro/pomodoro_page.dart';
+import '../settings/settings_page.dart';
 import '../splash/splash_page.dart';
 import '../studied_cards/studied_cards_page.dart';
 import '../study/study_page.dart';
@@ -26,6 +30,9 @@ class Routes {
   static const String landingPage = '/';
   static const String deckFormPage = '/deck-form-page';
   static const String studyPage = '/study-page';
+  static const String pomodoroPage = '/pomodoro-page';
+  static const String settingsPage = '/settings-page';
+  static const String cardFormPage = '/card-form-page';
   static const String loginScreen = '/login-screen';
   static const String imageViewerPage = '/image-viewer-page';
   static const String studiedCardsPage = '/studied-cards-page';
@@ -35,6 +42,9 @@ class Routes {
     landingPage,
     deckFormPage,
     studyPage,
+    pomodoroPage,
+    settingsPage,
+    cardFormPage,
     loginScreen,
     imageViewerPage,
     studiedCardsPage,
@@ -50,6 +60,9 @@ class Router extends RouterBase {
     RouteDef(Routes.landingPage, page: LandingPage),
     RouteDef(Routes.deckFormPage, page: DeckFormPage),
     RouteDef(Routes.studyPage, page: StudyPage),
+    RouteDef(Routes.pomodoroPage, page: PomodoroPage),
+    RouteDef(Routes.settingsPage, page: SettingsPage),
+    RouteDef(Routes.cardFormPage, page: CardFormPage),
     RouteDef(Routes.loginScreen, page: LoginScreen),
     RouteDef(Routes.imageViewerPage, page: ImageViewerPage),
     RouteDef(Routes.studiedCardsPage, page: StudiedCardsPage),
@@ -93,6 +106,33 @@ class Router extends RouterBase {
         builder: (context) => StudyPage(
           key: args.key,
           deck: args.deck,
+          withPomodoro: args.withPomodoro,
+        ),
+        settings: data,
+        fullscreenDialog: true,
+      );
+    },
+    PomodoroPage: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => PomodoroPage(),
+        settings: data,
+        fullscreenDialog: true,
+      );
+    },
+    SettingsPage: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => SettingsPage(),
+        settings: data,
+        fullscreenDialog: true,
+      );
+    },
+    CardFormPage: (data) {
+      final args = data.getArgs<CardFormPageArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => CardFormPage(
+          key: args.key,
+          deckFormBloc: args.deckFormBloc,
+          index: args.index,
         ),
         settings: data,
         fullscreenDialog: true,
@@ -158,10 +198,27 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
   Future<dynamic> pushStudyPage({
     Key key,
     @required Deck deck,
+    @required bool withPomodoro,
   }) =>
       push<dynamic>(
         Routes.studyPage,
-        arguments: StudyPageArguments(key: key, deck: deck),
+        arguments: StudyPageArguments(
+            key: key, deck: deck, withPomodoro: withPomodoro),
+      );
+
+  Future<dynamic> pushPomodoroPage() => push<dynamic>(Routes.pomodoroPage);
+
+  Future<dynamic> pushSettingsPage() => push<dynamic>(Routes.settingsPage);
+
+  Future<dynamic> pushCardFormPage({
+    Key key,
+    @required DeckFormBloc deckFormBloc,
+    @required int index,
+  }) =>
+      push<dynamic>(
+        Routes.cardFormPage,
+        arguments: CardFormPageArguments(
+            key: key, deckFormBloc: deckFormBloc, index: index),
       );
 
   Future<dynamic> pushLoginScreen() => push<dynamic>(Routes.loginScreen);
@@ -203,7 +260,18 @@ class DeckFormPageArguments {
 class StudyPageArguments {
   final Key key;
   final Deck deck;
-  StudyPageArguments({this.key, @required this.deck});
+  final bool withPomodoro;
+  StudyPageArguments(
+      {this.key, @required this.deck, @required this.withPomodoro});
+}
+
+/// CardFormPage arguments holder class
+class CardFormPageArguments {
+  final Key key;
+  final DeckFormBloc deckFormBloc;
+  final int index;
+  CardFormPageArguments(
+      {this.key, @required this.deckFormBloc, @required this.index});
 }
 
 /// ImageViewerPage arguments holder class

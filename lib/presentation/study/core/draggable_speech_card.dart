@@ -61,6 +61,9 @@ class DraggableSpeechCard extends StatelessWidget {
                             ),
                           );
                         },
+                        fromDatabase: (_) {
+                          return Container();
+                        },
                       );
                     }),
               ),

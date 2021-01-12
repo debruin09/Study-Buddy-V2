@@ -6,4 +6,5 @@ abstract class SpeechState with _$SpeechState {
       _Initial;
   const factory SpeechState.isListening({@required SpeechEntity speechEntity}) =
       _IsListening;
+  const factory SpeechState.fromDatabase() = _FromDatabase;
 }

@@ -2,8 +2,10 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:dartz/dartz.dart';
 import 'package:study_buddy/domain/similarity/api_client_repository.dart';
 import 'package:study_buddy/domain/similarity/similarity.dart';
+import 'package:study_buddy/domain/similarity/similarity_failure.dart';
 // import 'package:dartz/dartz.dart';
 // import 'package:http/http.dart' as http;
 
@@ -21,7 +23,7 @@ class ApiClientService implements ApiClientRepository {
   FakeHttpService fakeHttpService = FakeHttpService();
 
   @override
-  Future<Similarity> getSimilarityScore(
+  Future<Either<SimilarityFailure, Similarity>> getSimilarityScore(
       {String original, String myDefinition}) async {
     try {
       // final baseUrl = "";
@@ -29,19 +31,10 @@ class ApiClientService implements ApiClientRepository {
       // final Map decodedJson = jsonDecode(res.body);
 
       final result = await fakeHttpService.getData();
-      return Similarity(similarityScore: result);
-    } on SocketException {
-      throw Failure('No Internet connection 😑');
-    } on HttpException {
-      throw Failure("Couldn't find the post 😱");
-    } on FormatException {
-      throw Failure("Bad response format 👎");
+      return right(Similarity(similarityScore: result));
+    } catch (e) {
+      print("ERROR FROM SIMILARITY API: {${e.toString()}");
+      return left(SimilarityFailure.unexpected(failedMessage: e.toString()));
     }
   }
-}
-
-class Failure {
-  final String message;
-
-  Failure(this.message);
 }

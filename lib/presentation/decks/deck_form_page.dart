@@ -3,15 +3,14 @@ import 'package:dartz/dartz.dart';
 import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:study_buddy/application/deck/deck_form/deck_form_bloc.dart';
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/core/theme_colors.dart';
 import 'package:study_buddy/presentation/core/widgets/shared_widgets.dart';
 import 'package:study_buddy/presentation/decks/widgets/add_card_tile.dart';
-import 'package:study_buddy/presentation/decks/widgets/card_form_fields.dart';
 import 'package:study_buddy/presentation/decks/widgets/card_list.dart';
 import 'package:study_buddy/presentation/decks/widgets/deck_name_field.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
@@ -47,16 +46,20 @@ class DeckFormPage extends StatelessWidget {
                       insufficientPermission: (_) =>
                           'Insufficient permissions ❌',
                       unableToUpdate: (_) =>
-                          "Couldn't update the note. Was it deleted from another device?",
+                          "Couldn't update the deck. Was it deleted from another device?",
                       unexpected: (_) =>
                           'Unexpected error occured, please contact support.',
                     ),
                   ).show(context);
                 },
                 (_) {
-                  ExtendedNavigator.of(context).popUntil(
-                    (route) => route.settings.name == Routes.homePage,
-                  );
+                  state.isEditing
+                      ? ExtendedNavigator.of(context).popUntil(
+                          (route) => route.settings.name == Routes.deckFormPage,
+                        )
+                      : ExtendedNavigator.of(context).popUntil(
+                          (route) => route.settings.name == Routes.homePage,
+                        );
                 },
               );
             },
@@ -98,7 +101,7 @@ class SavingInProgressOverlay extends StatelessWidget {
           child: Container(
             width: 120.0,
             height: 30.0,
-            color: Colors.white,
+            color: Colors.white.withOpacity(0.4),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -135,6 +138,7 @@ class DeckFormPageScaffold extends StatelessWidget {
       key: _gKey,
       backgroundColor: bgColor,
       appBar: AppBar(
+          brightness: Brightness.dark,
           title: BlocBuilder<DeckFormBloc, DeckFormState>(
             buildWhen: (p, c) => p.isEditing != c.isEditing,
             builder: (context, state) => Text(
@@ -158,17 +162,16 @@ class DeckFormPageScaffold extends StatelessWidget {
           builder: (context, state) {
             return Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const DeckNameField(),
-                    if (state.isEditing) ...[
-                      const AddCardTile(),
-                      const Divider(),
-                      const CardList(),
-                    ],
+              child: CustomScrollView(
+                shrinkWrap: true,
+                slivers: [
+                  const DeckNameField(),
+                  if (state.isEditing) ...[
+                    const AddCardTile(),
+                    const SliverToBoxAdapter(child: Divider()),
+                    const CardList(),
                   ],
-                ),
+                ],
               ),
             );
           }),

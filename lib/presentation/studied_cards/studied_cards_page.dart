@@ -28,6 +28,7 @@ class StudiedCardsPage extends HookWidget {
       child: Scaffold(
         backgroundColor: bgColor,
         appBar: AppBar(
+          brightness: Brightness.dark,
           title: Text("Studied Cards"),
           actions: [
             IconButton(

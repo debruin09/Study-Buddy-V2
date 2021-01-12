@@ -16,10 +16,8 @@ Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: primaryColor,
-      statusBarIconBrightness: Brightness.light,
     ),
   );
-
   WidgetsFlutterBinding.ensureInitialized();
   lz.initializeTimeZones();
   configureInjection(Environment.dev);

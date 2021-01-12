@@ -12,6 +12,13 @@ class DeckSearch extends SearchDelegate<String> {
   final _deckSingleton = locator<DeckSingleton>();
 
   @override
+  ThemeData appBarTheme(BuildContext context) {
+    return Theme.of(context).copyWith(
+        primaryColorBrightness: Brightness.dark,
+        appBarTheme: AppBarTheme(brightness: Brightness.dark));
+  }
+
+  @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
@@ -45,7 +52,8 @@ class DeckSearch extends SearchDelegate<String> {
           return ListTile(
             onTap: () {
               showResults(context);
-              ExtendedNavigator.root.pushStudyPage(deck: suggestionList[index]);
+              ExtendedNavigator.root.pushStudyPage(
+                  deck: suggestionList[index], withPomodoro: false);
               ExtendedNavigator.root.pop();
             },
             leading: Icon(Icons.search),
@@ -83,7 +91,8 @@ class DeckSearch extends SearchDelegate<String> {
           return ListTile(
             onTap: () {
               showResults(context);
-              ExtendedNavigator.root.pushStudyPage(deck: suggestionList[index]);
+              ExtendedNavigator.root.pushStudyPage(
+                  deck: suggestionList[index], withPomodoro: false);
             },
             leading: Icon(Icons.search),
             title: RichText(

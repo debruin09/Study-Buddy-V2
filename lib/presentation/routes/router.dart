@@ -5,11 +5,13 @@ import 'package:study_buddy/presentation/core/widgets/image_viewer.dart';
 import 'package:study_buddy/presentation/decks/card_form_page.dart';
 import 'package:study_buddy/presentation/decks/deck_form_page.dart';
 import 'package:study_buddy/presentation/pomodoro/pomodoro_page.dart';
+import 'package:study_buddy/presentation/pomodoro/widgets/pomodoro_clock_page.dart';
 import 'package:study_buddy/presentation/settings/settings_page.dart';
 import 'package:study_buddy/presentation/studied_cards/studied_cards_page.dart';
 import 'package:study_buddy/presentation/study/study_page.dart';
 import 'package:study_buddy/presentation/home/home_page.dart';
 import 'package:study_buddy/presentation/splash/splash_page.dart';
+import 'package:study_buddy/presentation/vocab/vocab_page.dart';
 
 @MaterialAutoRouter(
     generateNavigationHelperExtension: true,
@@ -25,5 +27,7 @@ import 'package:study_buddy/presentation/splash/splash_page.dart';
       MaterialRoute(page: ImageViewerPage),
       MaterialRoute(page: StudiedCardsPage, fullscreenDialog: true),
       MaterialRoute(page: RegisterScreen),
+      MaterialRoute(page: VocabularyPage, fullscreenDialog: true),
+      MaterialRoute(page: PomodoroClockPage, fullscreenDialog: true),
     ])
 class $Router {}

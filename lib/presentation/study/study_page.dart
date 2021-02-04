@@ -9,7 +9,6 @@ import 'package:study_buddy/application/speech/speech_bloc.dart';
 
 import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/injection.dart';
-// import 'package:study_buddy/presentation/pomodoro/widgets/pomodoro_clock.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
 import 'package:study_buddy/presentation/study/misc/providers.dart';
@@ -50,7 +49,6 @@ class StudyPage extends StatelessWidget {
       ],
       child: Scaffold(
           appBar: AppBar(
-            brightness: Brightness.dark,
             title: Text(deck.name.getOrCrash()),
             actions: [
               _popupMenuButton(context, deck),

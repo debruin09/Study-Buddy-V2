@@ -10,6 +10,7 @@ import 'package:study_buddy/domain/deck/deck.dart';
 import 'package:study_buddy/domain/deck/deck_failure.dart';
 import 'package:study_buddy/domain/deck/i_deck_repository.dart';
 import 'package:study_buddy/domain/deck/value_objects.dart';
+import 'package:study_buddy/domain/notification/local_notification_repository.dart';
 import 'package:study_buddy/presentation/decks/misc/card_item_presentation_classes.dart';
 
 part 'deck_form_event.dart';

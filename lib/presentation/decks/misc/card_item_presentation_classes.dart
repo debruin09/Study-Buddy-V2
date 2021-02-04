@@ -15,6 +15,14 @@ class FormCards extends ValueNotifier<KtList<CardItemPrimitive>> {
   FormCards() : super(emptyList<CardItemPrimitive>());
 }
 
+/// Use for holding the deck data so that search delegate can update the data accordingly
+// final deckProvider =
+//     ChangeNotifierProvider.autoDispose((ref) => DecksContainer());
+
+// class DecksContainer extends ValueNotifier<KtList<Deck>> {
+//   DecksContainer() : super(emptyList<Deck>());
+// }
+
 @freezed
 abstract class CardItemPrimitive implements _$CardItemPrimitive {
   const CardItemPrimitive._();

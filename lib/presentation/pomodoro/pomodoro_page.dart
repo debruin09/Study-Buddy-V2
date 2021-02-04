@@ -43,7 +43,6 @@ class PomodoroPage extends ConsumerWidget {
                 _chosenDeck.deck = state.decks.firstOrNull();
 
                 return Scaffold(
-                  backgroundColor: bgColor,
                   appBar: AppBar(
                     brightness: Brightness.dark,
                     title: Text(
@@ -93,7 +92,8 @@ class PomodoroPage extends ConsumerWidget {
                                               .copyWith(color: Colors.black),
                                           enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                  color: primaryColor,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
                                                   style: BorderStyle.solid)),
                                         ),
                                         child: DropdownButtonHideUnderline(
@@ -123,13 +123,14 @@ class PomodoroPage extends ConsumerWidget {
                                 )),
                                 const SizedBox(height: 10.0),
                                 Card(
-                                  child: CheckboxListTile(
-                                      title: Text('Use without a deck'),
-                                      value: _isChecked.state,
-                                      onChanged: (bool newVal) =>
-                                          BuildContextX(context)
-                                              .read(isCheckedProvider)
-                                              .state = newVal),
+                                  child: ListTile(
+                                    title: Text('Use without a deck'),
+                                    onTap: () {
+                                      ExtendedNavigator.root
+                                          .pushPomodoroClockPage();
+                                      ExtendedNavigator.root.pop();
+                                    },
+                                  ),
                                 ),
                                 const SizedBox(height: 10.0),
                                 Card(
@@ -163,25 +164,36 @@ class PomodoroPage extends ConsumerWidget {
                                     backgroundColor:
                                         MaterialStateProperty.all(Colors.red),
                                   ),
-                                  child: Text("Start the session"),
+                                  child: Text(
+                                    "Start the session",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        .copyWith(
+                                            color: Colors.white,
+                                            fontSize: 14.0),
+                                  ),
                                   onPressed: () {
-                                    BuildContextX(context)
-                                        .read(pomodoroSettingsProvider)
-                                        .state = new PomodoroSettings(
-                                      pomodoro:
-                                          int.parse(pomodoroController.text),
-                                      shortBreak:
-                                          int.parse(shortBreakController.text),
-                                      longBreak:
-                                          int.parse(longBreakController.text),
-                                      deckOption: !_isChecked.state
-                                          ? some(_chosenDeck.deck)
-                                          : none(),
-                                    );
+                                    if (!_isChecked.state) {
+                                      BuildContextX(context)
+                                          .read(pomodoroSettingsProvider)
+                                          .state = new PomodoroSettings(
+                                        pomodoro:
+                                            int.parse(pomodoroController.text),
+                                        shortBreak: int.parse(
+                                            shortBreakController.text),
+                                        longBreak:
+                                            int.parse(longBreakController.text),
+                                        deckOption: !_isChecked.state
+                                            ? some(_chosenDeck.deck)
+                                            : none(),
+                                      );
 
-                                    ExtendedNavigator.root.pushStudyPage(
-                                        deck: _chosenDeck.deck,
-                                        withPomodoro: true);
+                                      ExtendedNavigator.root.pushStudyPage(
+                                          deck: _chosenDeck.deck,
+                                          withPomodoro: true);
+                                    }
+
                                     ExtendedNavigator.root.popUntil((route) =>
                                         route.settings.name == Routes.homePage);
                                   },
@@ -192,7 +204,13 @@ class PomodoroPage extends ConsumerWidget {
                                     backgroundColor:
                                         MaterialStateProperty.all(Colors.grey),
                                   ),
-                                  child: Text("How does this work ?"),
+                                  child: Text("How does this work ?",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .copyWith(
+                                              color: Colors.white,
+                                              fontSize: 14.0)),
                                   onPressed: () => _pomodoroDefDialog(context),
                                 ),
                               ],

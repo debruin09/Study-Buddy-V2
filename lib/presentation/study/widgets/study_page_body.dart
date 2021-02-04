@@ -105,22 +105,20 @@ class StudyPageBodyDisplay extends StatelessWidget {
                   firstUnstudiedCard.me.getOrCrash().isNotEmpty
                       ? BlocBuilder<SpeechBloc, SpeechState>(
                           builder: (context, state) {
-                          return state.map(initial: (_) {
-                            return DraggableCard(
+                          return state.map(
+                            initial: (_) => DraggableCard(
                               initialSize: 0.5,
                               text: _.speechEntity.text,
-                            );
-                          }, isListening: (listening) {
-                            return DraggableCard(
+                            ),
+                            isListening: (listening) => DraggableCard(
                               initialSize: 0.5,
                               text: listening.speechEntity.text,
-                            );
-                          }, fromDatabase: (_) {
-                            return DraggableCard(
+                            ),
+                            fromDatabase: (_) => DraggableCard(
                               initialSize: 0.5,
                               text: firstUnstudiedCard.me.getOrCrash(),
-                            );
-                          });
+                            ),
+                          );
                         })
                       : Container(),
                 ],

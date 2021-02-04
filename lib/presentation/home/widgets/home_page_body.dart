@@ -20,47 +20,44 @@ class HomePageBody extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: primaryColor,
-        statusBarIconBrightness: Brightness.light,
-      ),
-    );
+    // SystemChrome.setSystemUIOverlayStyle(
+    //   SystemUiOverlayStyle(
+    //     // statusBarColor: primaryColor,
+    //     statusBarIconBrightness: Brightness.light,
+    //   ),
+    // );
     final _deckSingleton = locator<DeckSingleton>();
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: BlocBuilder<DeckWatcherBloc, DeckWatcherState>(
-        builder: (context, state) {
-          return state.map(
-              initial: (_) => Container(),
-              loadInProgress: (_) => Loader(color: primaryColor),
-              loadSuccess: (state) {
-                if (state.decks.isEmpty()) {
-                  return Center(
-                    child: Text(
-                      "No deck's found. Start studying!!",
-                      style: TextStyle(color: Colors.black38, fontSize: 20.0),
-                    ),
-                  );
-                }
-                _deckSingleton.decks = state.decks;
-
-                return ListView.builder(
-                  itemCount: state.decks.size,
-                  itemBuilder: (context, index) {
-                    final deck = state.decks[index];
-                    if (deck.failureOption.isSome()) {
-                      return ErrorDeckCard(deck: deck);
-                    } else {
-                      return DeckCard(gKey: gKey, deck: deck);
-                    }
-                  },
+    return BlocBuilder<DeckWatcherBloc, DeckWatcherState>(
+      builder: (context, state) {
+        return state.map(
+            initial: (_) => Container(),
+            loadInProgress: (_) => Loader(color: primaryColor),
+            loadSuccess: (state) {
+              if (state.decks.isEmpty()) {
+                return Center(
+                  child: Text(
+                    "No deck's found. Start studying!!",
+                    style: TextStyle(color: Colors.black38, fontSize: 20.0),
+                  ),
                 );
-              },
-              loadFailure: (state) =>
-                  CriticalFailureDisplay(failure: state.deckFailure));
-        },
-      ),
+              }
+              _deckSingleton.decks = state.decks;
+
+              return ListView.builder(
+                itemCount: state.decks.size,
+                itemBuilder: (context, index) {
+                  final deck = state.decks[index];
+                  if (deck.failureOption.isSome()) {
+                    return ErrorDeckCard(deck: deck);
+                  } else {
+                    return DeckCard(gKey: gKey, deck: deck);
+                  }
+                },
+              );
+            },
+            loadFailure: (state) =>
+                CriticalFailureDisplay(failure: state.deckFailure));
+      },
     );
   }
 }

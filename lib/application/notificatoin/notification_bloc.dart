@@ -91,8 +91,8 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
 
         failureOrSuccess = await _localNotificationRepository.notificationDelay(
           deck: e.deck,
-          timeDelayType: TimeDelayType.minutes,
-          timeValue: 1,
+          timeDelayType: TimeDelayType.seconds,
+          timeValue: 10,
           cards: e.cards,
         );
 

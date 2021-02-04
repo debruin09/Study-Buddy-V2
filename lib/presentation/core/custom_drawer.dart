@@ -1,9 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:study_buddy/application/auth/auth_bloc.dart';
-import 'package:study_buddy/presentation/core/theme_colors.dart';
+import 'package:study_buddy/application/theme/theme_bloc.dart';
+import 'package:study_buddy/presentation/core/misc/providers.dart';
+import 'package:study_buddy/presentation/core/theme_styles.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -16,13 +20,7 @@ class CustomDrawer extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(bottom: 20.0),
       margin: EdgeInsets.only(top: 25.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(20.0),
-          topRight: Radius.circular(15.0),
-        ),
-      ),
+      color: Theme.of(context).primaryColor,
       width: screenSize.width * 0.75,
       height: screenSize.height,
       child: ListView(
@@ -38,102 +36,88 @@ class CustomDrawer extends StatelessWidget {
             ),
             child: Text(
               "Study Buddy",
-              style: GoogleFonts.courgette(
-                  color: Colors.red,
+              style: TextStyle(
+                  color: Theme.of(context).accentColor,
                   letterSpacing: 2.0,
                   fontSize: 26.0,
                   fontWeight: FontWeight.bold),
             ),
           ),
           Divider(),
-          Card(
-            elevation: 0.0,
-            child: ListTile(
-              onTap: () => print("Vocab"),
-              leading: Icon(
-                Icons.local_library,
-                color: primaryColor,
-              ),
-              title: Text("Vocabulary"),
-            ),
+          DrawerTile(
+            onTap: () => ExtendedNavigator.root.pushVocabularyPage(),
+            icon: Icons.local_library,
+            title: "Vocabulary",
           ),
           Card(
-            elevation: 0.0,
             child: ListTile(
               leading: Icon(
                 Icons.wb_sunny,
-                color: primaryColor,
               ),
-              title: Text("Night mode"),
-              trailing: Switch(
-                  value: false,
-                  onChanged: (isNightMode) {
-                    isNightMode = !isNightMode;
-                  }),
+              title: Text("Night mode",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      .copyWith(fontSize: 14.0)),
+              trailing: Consumer(
+                builder: (context, watch, child) {
+                  final themeState = watch(themeProvider).state;
+                  return Switch(
+                      activeColor: Colors.blue[400],
+                      value: themeState,
+                      onChanged: (_) {
+                        BuildContextX(context).read(themeProvider).state =
+                            !BuildContextX(context).read(themeProvider).state;
+
+                        !themeState
+                            ? ReadContext(context).read<ThemeBloc>().add(
+                                ThemeEvent.changed(appTheme: AppTheme.dark))
+                            : ReadContext(context).read<ThemeBloc>().add(
+                                ThemeEvent.changed(appTheme: AppTheme.light));
+                      });
+                },
+              ),
             ),
           ),
           Divider(
             height: 2.0,
           ),
-          Card(
-            elevation: 0.0,
-            child: ListTile(
-              onTap: () => print("settings"),
-              leading: Icon(
-                Icons.settings_applications,
-                color: primaryColor,
-              ),
-              title: Text("Settings"),
-            ),
+          DrawerTile(
+            onTap: () => ExtendedNavigator.root.pushSettingsPage(),
+            icon: Icons.settings_applications,
+            title: "Settings",
           ),
-          Card(
-            elevation: 0.0,
-            child: ListTile(
-              leading: Icon(
-                Icons.my_library_books,
-                color: primaryColor,
-              ),
-              title: Text("studied cards"),
-              onTap: () {
-                ExtendedNavigator.root.pushStudiedCardsPage();
-              },
-            ),
+          DrawerTile(
+            icon: Icons.my_library_books,
+            title: "studied cars",
+            onTap: () {
+              ExtendedNavigator.root.pushStudiedCardsPage();
+            },
           ),
-          Card(
-            elevation: 0.0,
-            child: ListTile(
-              leading: Icon(
-                Icons.person,
-                color: primaryColor,
-              ),
-              title: Text("logout"),
-              onTap: () {
-                ReadContext(context).read<AuthBloc>()
-                  ..add(const AuthEvent.signedOut());
-              },
-            ),
+          DrawerTile(
+            icon: Icons.timelapse,
+            title: "pomodoro clok",
+            onTap: () {
+              ExtendedNavigator.root.pushPomodoroClockPage();
+            },
           ),
-          Card(
-            elevation: 0.0,
-            child: ListTile(
-              onTap: () => print("help"),
-              leading: Icon(
-                Icons.help_outline,
-                color: primaryColor,
-              ),
-              title: Text("Help"),
-            ),
+          DrawerTile(
+            icon: Icons.person,
+            title: "logout",
+            onTap: () {
+              ReadContext(context).read<AuthBloc>()
+                ..add(const AuthEvent.signedOut());
+            },
           ),
-          Card(
-            elevation: 0.0,
-            child: ListTile(
-              onTap: () => print("feedback"),
-              leading: Icon(
-                Icons.feedback,
-                color: primaryColor,
-              ),
-              title: Text("Send feedback"),
-            ),
+          DrawerTile(
+            onTap: () => print("help"),
+            icon: Icons.help_outline,
+            title: "Help",
+          ),
+          DrawerTile(
+            onTap: () => print("feedback"),
+            icon: Icons.feedback,
+            title: "Send feedback",
           ),
           Divider(
             height: 2.0,
@@ -152,6 +136,34 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class DrawerTile extends StatelessWidget {
+  final String title;
+  final Function onTap;
+  final IconData icon;
+
+  const DrawerTile({
+    Key key,
+    this.title,
+    this.onTap,
+    this.icon,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0.0,
+      child: ListTile(
+        onTap: onTap,
+        leading: Icon(
+          icon,
+        ),
+        title: Text(title,
+            style:
+                Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14.0)),
       ),
     );
   }

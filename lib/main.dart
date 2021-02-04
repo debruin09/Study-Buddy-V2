@@ -6,18 +6,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:injectable/injectable.dart';
 import 'package:study_buddy/application/auth/auth_bloc.dart';
+import 'package:study_buddy/application/theme/theme_bloc.dart';
 import 'package:study_buddy/injection.dart';
 import 'package:study_buddy/presentation/core/theme_colors.dart';
 import 'package:study_buddy/presentation/routes/router.gr.dart' as auto;
 import 'package:timezone/data/latest.dart' as lz;
-import 'presentation/core/theme_styles.dart';
 
 Future<void> main() async {
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      statusBarColor: primaryColor,
-    ),
-  );
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   SystemUiOverlayStyle(
+  //       // statusBarColor: primaryColor,
+  //       ),
+  // );
   WidgetsFlutterBinding.ensureInitialized();
   lz.initializeTimeZones();
   configureInjection(Environment.dev);
@@ -34,12 +34,17 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 locator<AuthBloc>()..add(const AuthEvent.authCheckRequested())),
+        BlocProvider(create: (context) => locator<ThemeBloc>()),
       ],
       child: ProviderScope(
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: appThemeStyle,
-          builder: e.ExtendedNavigator<auto.Router>(router: auto.Router()),
+        child: BlocBuilder<ThemeBloc, ThemeState>(
+          builder: (context, state) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: state.themeData,
+              builder: e.ExtendedNavigator<auto.Router>(router: auto.Router()),
+            );
+          },
         ),
       ),
     );

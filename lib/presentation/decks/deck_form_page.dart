@@ -136,7 +136,6 @@ class DeckFormPageScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _gKey,
-      backgroundColor: bgColor,
       appBar: AppBar(
           brightness: Brightness.dark,
           title: BlocBuilder<DeckFormBloc, DeckFormState>(
@@ -148,7 +147,9 @@ class DeckFormPageScaffold extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                context.form.add(const DeckFormEvent.saved());
+                ReadContext(context)
+                    .read<DeckFormBloc>()
+                    .add(const DeckFormEvent.saved());
               },
               icon: Icon(
                 Icons.check,

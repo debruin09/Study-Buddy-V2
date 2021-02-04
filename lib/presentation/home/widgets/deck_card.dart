@@ -21,30 +21,21 @@ class DeckCard extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     final formProvider = watch(formCardsProvider);
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: Material(
         elevation: 1.0,
         clipBehavior: Clip.antiAlias,
-        color: cardColor,
+        color: Theme.of(context).cardColor,
         child: InkWell(
           splashColor: primaryColor.withOpacity(0.5),
           onTap: () async {
             ExtendedNavigator.root.pushDeckFormPage(deck: deck);
           },
           child: ListTile(
-            contentPadding: const EdgeInsets.all(0.0),
-            leading: Container(
-              color: Colors.blue[800],
-              height: double.infinity,
-              width: 5.0,
-            ),
+            contentPadding: const EdgeInsets.only(left: 20.0),
             title: Text(
               "${deck.name.getOrCrash()}",
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w600,
-                color: Colors.black87,
-              ),
+              style: Theme.of(context).textTheme.headline6,
             ),
             onTap: () {
               formProvider.value = deck.cards
@@ -73,7 +64,8 @@ class DeckCard extends ConsumerWidget {
               },
               icon: Icon(
                 Icons.edit_outlined,
-                color: Colors.blue[800],
+                color:
+                    Theme.of(context).floatingActionButtonTheme.backgroundColor,
                 size: 25.0,
               ),
             ),
@@ -89,6 +81,9 @@ class DeckCard extends ConsumerWidget {
         context: context,
         builder: (context) {
           return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
             title: Text("Are you sure you want to delete: "),
             content: Text(deck.name.getOrCrash()),
             actions: [

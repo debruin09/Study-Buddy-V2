@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:study_buddy/presentation/core/theme_colors.dart';
 
 class PomodoroField extends StatelessWidget {
   final TextEditingController controller;
@@ -25,8 +24,10 @@ class PomodoroField extends StatelessWidget {
               ),
               Text(
                 subtext,
-                style: TextStyle(
-                    color: Colors.black.withOpacity(0.4), fontSize: 12.0),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1
+                    .copyWith(fontSize: 12.0),
               ),
             ],
           ),
@@ -39,13 +40,13 @@ class PomodoroField extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5.0),
                   borderSide: BorderSide(
-                    color: primaryColor,
+                    color: Theme.of(context).accentColor,
                     style: BorderStyle.solid,
                   )),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5.0),
                   borderSide: BorderSide(
-                    color: primaryColor,
+                    color: Theme.of(context).accentColor,
                     style: BorderStyle.solid,
                   )),
             ),

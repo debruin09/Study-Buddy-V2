@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:study_buddy/application/similarity/similarity_bloc.dart';
 import 'package:study_buddy/application/speech/speech_bloc.dart';
+import 'package:study_buddy/application/theme/theme_bloc.dart';
 import 'package:study_buddy/domain/similarity/api_client_repository.dart';
 import 'package:study_buddy/infrastructure/core/helper_service.dart';
 import 'package:study_buddy/infrastructure/core/image_service.dart';
@@ -22,6 +23,7 @@ void setupLocator() {
   locator.registerLazySingleton<StorageService>(() => StorageService());
   locator.registerLazySingleton<ChosenDeck>(() => ChosenDeck());
   locator.registerFactory<SpeechBloc>(() => SpeechBloc());
+  locator.registerFactory<ThemeBloc>(() => ThemeBloc());
 }
 
 @injectableInit

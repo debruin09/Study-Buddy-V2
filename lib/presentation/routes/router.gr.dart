@@ -20,10 +20,12 @@ import '../decks/card_form_page.dart';
 import '../decks/deck_form_page.dart';
 import '../home/home_page.dart';
 import '../pomodoro/pomodoro_page.dart';
+import '../pomodoro/widgets/pomodoro_clock_page.dart';
 import '../settings/settings_page.dart';
 import '../splash/splash_page.dart';
 import '../studied_cards/studied_cards_page.dart';
 import '../study/study_page.dart';
+import '../vocab/vocab_page.dart';
 
 class Routes {
   static const String homePage = '/home-page';
@@ -37,6 +39,8 @@ class Routes {
   static const String imageViewerPage = '/image-viewer-page';
   static const String studiedCardsPage = '/studied-cards-page';
   static const String registerScreen = '/register-screen';
+  static const String vocabularyPage = '/vocabulary-page';
+  static const String pomodoroClockPage = '/pomodoro-clock-page';
   static const all = <String>{
     homePage,
     landingPage,
@@ -49,6 +53,8 @@ class Routes {
     imageViewerPage,
     studiedCardsPage,
     registerScreen,
+    vocabularyPage,
+    pomodoroClockPage,
   };
 }
 
@@ -67,6 +73,8 @@ class Router extends RouterBase {
     RouteDef(Routes.imageViewerPage, page: ImageViewerPage),
     RouteDef(Routes.studiedCardsPage, page: StudiedCardsPage),
     RouteDef(Routes.registerScreen, page: RegisterScreen),
+    RouteDef(Routes.vocabularyPage, page: VocabularyPage),
+    RouteDef(Routes.pomodoroClockPage, page: PomodoroClockPage),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -167,6 +175,20 @@ class Router extends RouterBase {
         settings: data,
       );
     },
+    VocabularyPage: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => VocabularyPage(),
+        settings: data,
+        fullscreenDialog: true,
+      );
+    },
+    PomodoroClockPage: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => PomodoroClockPage(),
+        settings: data,
+        fullscreenDialog: true,
+      );
+    },
   };
 }
 
@@ -236,6 +258,11 @@ extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
       push<dynamic>(Routes.studiedCardsPage);
 
   Future<dynamic> pushRegisterScreen() => push<dynamic>(Routes.registerScreen);
+
+  Future<dynamic> pushVocabularyPage() => push<dynamic>(Routes.vocabularyPage);
+
+  Future<dynamic> pushPomodoroClockPage() =>
+      push<dynamic>(Routes.pomodoroClockPage);
 }
 
 /// ************************************************************************

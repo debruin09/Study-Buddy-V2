@@ -7,8 +7,6 @@ part of 'deck_failure.dart';
 // FreezedGenerator
 // **************************************************************************
 
-T _$identity<T>(T value) => value;
-
 /// @nodoc
 class _$DeckFailureTearOff {
   const _$DeckFailureTearOff();

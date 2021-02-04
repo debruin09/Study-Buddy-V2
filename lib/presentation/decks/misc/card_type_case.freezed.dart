@@ -7,8 +7,6 @@ part of 'card_type_case.dart';
 // FreezedGenerator
 // **************************************************************************
 
-T _$identity<T>(T value) => value;
-
 /// @nodoc
 class _$CardTypeCaseTearOff {
   const _$CardTypeCaseTearOff();

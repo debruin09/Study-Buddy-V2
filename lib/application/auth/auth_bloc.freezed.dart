@@ -7,8 +7,6 @@ part of 'auth_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
-T _$identity<T>(T value) => value;
-
 /// @nodoc
 class _$AuthEventTearOff {
   const _$AuthEventTearOff();

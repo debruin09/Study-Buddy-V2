@@ -7,8 +7,6 @@ part of 'notification_failures.dart';
 // FreezedGenerator
 // **************************************************************************
 
-T _$identity<T>(T value) => value;
-
 /// @nodoc
 class _$NotificationFailureTearOff {
   const _$NotificationFailureTearOff();
